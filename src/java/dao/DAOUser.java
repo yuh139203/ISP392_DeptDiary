@@ -1,0 +1,178 @@
+/*
+     * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+     * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package dao;
+
+import java.sql.Date;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.Vector;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import model.DBContext;
+import model.DBContextSQLserver;
+import model.User;
+
+/**
+ *
+ * @author yuh
+ */
+public class DAOUser extends DBContextSQLserver {
+
+    private DBContext db;
+
+    public DAOUser() {
+        db = DBContext.getInstance();
+    }
+
+    public Vector<User> getAll(String sql) {
+        Vector<User> vector = new Vector<User>();
+        try {
+            Statement state = conn.createStatement(
+                    ResultSet.TYPE_SCROLL_SENSITIVE,
+                    ResultSet.CONCUR_UPDATABLE);
+            ResultSet rs = state.executeQuery(sql);
+            while (rs.next()) {
+                int id = rs.getInt("ID");
+                int idRole = rs.getInt(2);
+                String firstName = rs.getString(3);
+                String lastName = rs.getString(4);
+                Date dateOfBirth = rs.getDate(5);
+                String userName = rs.getString(6);
+                String passWord = rs.getString(7);
+                String phoneNumber = rs.getString(8);
+                String email = rs.getString(9);
+                String address = rs.getString(10);
+                int temp = rs.getInt(11);
+                boolean isDelete = (temp == 1 ? true : false);
+                Date createdAt = rs.getDate(12);
+                String createdBy = rs.getString(13);
+                Date updatedAt = rs.getDate(14);
+                Date deletedAt = rs.getDate(15);
+                String deletedBy = rs.getString(16);
+                User pro = new User(id, idRole, firstName, lastName, dateOfBirth, userName,
+                        passWord, phoneNumber, email, address, isDelete, createdAt, createdBy, updatedAt, deletedAt, deletedBy);
+                vector.add(pro);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DAOUser.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return vector;
+    }
+
+    public User checkExistentUser(String userName, String passWord) {
+        String query = "select * from UserInfor where UserName = ? and Password = ? ";
+        try {
+            PreparedStatement st = conn.prepareStatement(query);
+            st.setString(1, userName);
+            st.setString(2, passWord);
+            ResultSet rs = st.executeQuery();
+            if (rs.next()) {
+                User u = new User(
+                        rs.getInt("ID"),
+                        rs.getInt("IDRole"),
+                        rs.getString("FirstName"),
+                        rs.getString("LastName"),
+                        rs.getDate("DateOfBirth"),
+                        rs.getString("UserName"),
+                        rs.getString("PassWord"),
+                        rs.getString("PhoneNumber"),
+                        rs.getString("Email"),
+                        rs.getString("Address"),
+                        rs.getBoolean("isDelete"),
+                        rs.getDate("CreatedAt"),
+                        rs.getString("CreatedBy"),
+                        rs.getDate("UpdatedAt"),
+                        rs.getDate("DeletedAt"),
+                        rs.getString("DeletedBy")
+                );
+                return u;
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return null;
+    }
+    
+    public User findByID(int id) {
+        String sql = "SELECT * FROM UserInfor where ID = ?";
+        try {
+            PreparedStatement ptm = conn.prepareStatement(sql);
+            ptm.setInt(1, id);
+            ResultSet rs = ptm.executeQuery();
+            if (rs.next()) {
+                User u = new User();
+                u.setId(rs.getInt(1));
+                u.setIdRole(rs.getInt(2));
+                u.setFirstName(rs.getString(3));
+                u.setLastName(rs.getString(4));
+                u.setDateOfBirth(rs.getDate(5));
+                u.setUserName(rs.getString(6));
+                u.setPassWord(rs.getString(7));
+                u.setPhoneNumber(rs.getString(8));
+                u.setEmail(rs.getString(9));
+                u.setAddress(rs.getString(10));
+                return u;
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(DAOUser.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+
+    public int update(User user) {
+        String sql = "UPDATE UserInfor\n"
+                + "SET FirstName   = ?\n"
+                + "  , LastName    = ?\n"
+                + "  , DateOfBirth = ?\n"
+                + "  , UserName    = ?\n"
+                + "  , Password    = ?\n"
+                + "  , PhoneNumber = ?\n"
+                + "  , Email       = ?\n"
+                + "  , Address     = ?\n"
+                + "  , UpdatedAt   = getdate()\n"
+                + "WHERE ID = ?";
+
+        try {
+            PreparedStatement ptm = conn.prepareStatement(sql);
+            ptm.setString(1, user.getFirstName());
+            ptm.setString(2, user.getLastName());
+            ptm.setDate(3, user.getDateOfBirth());
+            ptm.setString(4, user.getUserName());
+            ptm.setString(5, user.getPassWord());
+            ptm.setString(6, user.getPhoneNumber());
+            ptm.setString(7, user.getEmail());
+            ptm.setString(8, user.getAddress());
+            ptm.setInt(9, user.getId());
+            return ptm.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(DAOUser.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return -1;
+    }
+
+    
+
+    public static void main(String[] args) {
+
+        DAOUser daoUser = new DAOUser();
+        String testUsername = "huy123";
+        String testPassword = "123456";
+        User user = daoUser.checkExistentUser(testUsername, testPassword);
+        if (user != null) {
+            System.out.println("User found:");
+            System.out.println(user.toString());
+        } else {
+            System.out.println("User not found.");
+        }
+
+//            Vector<User> vector = daoUser.getAll("select * from UserInfor");
+//            for (User users : vector) {
+//                System.out.println(users);
+//            }
+    }
+
+}

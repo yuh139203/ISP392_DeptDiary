@@ -1,0 +1,46 @@
+body {
+    font-family: Arial, sans-serif;
+}
+
+#signupForm {
+    margin: 0 auto;
+    background-color: #ffffff;
+    width:80%;
+    padding: 20px;
+    border-radius: 10px;
+    border:1px solid rgba(17, 12, 46, 0.15);
+    box-shadow: rgba(17, 12, 46, 0.15) 0px 48px 100px 0px;
+}
+.input-group-text {
+    cursor: pointer;
+}
+
+.preview {
+    color: #555;
+    width: 100%;
+    text-align: center;
+    height: 40px;
+    line-height: 40px;
+    letter-spacing: 8px;
+    border: 1px dashed #888;
+    border-radius: 4px;
+    font-family: "monospace";
+}
+
+.captcha-refresh {
+    width: 40px;
+    border: none;
+    outline: none;
+    background: #888;
+    border-radius: 4px;
+    color: #eee;
+    cursor: pointer;
+}
+
+.form-title{
+    text-align:center;
+    font-size:30px;
+    font-weight:600;
+    margin:20px 0px 30px;
+    color:#111;
+}
