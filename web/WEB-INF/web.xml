@@ -32,6 +32,14 @@
         <servlet-name>UpdateProfileController</servlet-name>
         <url-pattern>/profile</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>ResetPasswordController</servlet-name>
+        <servlet-class>controller.ResetPasswordController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ResetPasswordController</servlet-name>
+        <url-pattern>/reset_password</url-pattern>
+    </servlet-mapping>
     
     
     

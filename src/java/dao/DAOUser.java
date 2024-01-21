@@ -153,6 +153,23 @@ public class DAOUser extends DBContextSQLserver {
         }
         return -1;
     }
+    
+    public int updatePassWord(User user) {
+        String sql = "UPDATE UserInfor\n"
+                + "SET Password    = ?\n"
+                + "WHERE ID = ?";
+
+        try {
+            PreparedStatement ptm = conn.prepareStatement(sql);
+            ptm.setString(1, user.getPassWord());
+           
+            ptm.setInt(2, user.getId());
+            return ptm.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(DAOUser.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return -1;
+    }
 
     
 

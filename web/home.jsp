@@ -48,7 +48,7 @@
           <li><a class="nav-link scrollto" href="#about">About</a></li>
           <li><a class="nav-link scrollto" href="#team">Team</a></li>
           <li><a class="nav-link scrollto" href="#contact">Contact</a></li>
-          <li><a class="getstarted scrollto" href="http://localhost:9999/ISP392_DeptDiary/login">Login</a></li>
+          <li><a class="getstarted scrollto" href="login">Login</a></li>
         </ul>
         <i class="bi bi-list mobile-nav-toggle"></i>
       </nav><!-- .navbar -->

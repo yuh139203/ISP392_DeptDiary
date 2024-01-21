@@ -4,8 +4,6 @@
  */
 package controller;
 
-
-import dao.DAORole;
 import dao.DAOUser;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
@@ -13,21 +11,13 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.sql.Date;
-import java.util.List;
-import java.util.TimeZone;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import model.Role;
 import model.User;
 
 /**
  *
- * @author kienb
+ * @author admin
  */
-public class UpdateProfileController extends HttpServlet {
+public class ResetPasswordController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -56,14 +46,12 @@ public class UpdateProfileController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        processRequest(request, response);
+        DAOUser userDao = new DAOUser();
         int id = Integer.parseInt(request.getParameter("id"));
-        DAORole roleDAO = new DAORole();
-        List<Role> list = roleDAO.getAll();
-        request.setAttribute("roles", list);
-        DAOUser userDAO = new DAOUser();
-        User user = userDAO.findByID(id);
+        User user = userDao.findByID(id);
         request.setAttribute("user", user);
-        request.getRequestDispatcher("Profile.jsp").forward(request, response);
+        request.getRequestDispatcher("ResetPassword.jsp").forward(request, response);
     }
 
     /**
@@ -77,41 +65,44 @@ public class UpdateProfileController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        processRequest(request, response);
         HttpSession session = request.getSession();
-        int id = Integer.parseInt(request.getParameter("id"));
-        String firstname = request.getParameter("firstname");
-        String lastname = request.getParameter("lastname");
-        String dob = request.getParameter("dob");
-        String address = request.getParameter("address");
-        String phone = request.getParameter("phone");
-        String email = request.getParameter("email");
-        String username = request.getParameter("username");
-        String password = request.getParameter("password");
-//        String role = request.getParameter("role");
-        User user = new User();
-        user.setId(id);
-        user.setFirstName(firstname);
-        user.setAddress(address);
-        user.setLastName(lastname);
-        user.setPhoneNumber(phone);
-        user.setEmail(email);
-        user.setUserName(username);
-        user.setPassWord(password);
-//        user.setIdRole(Integer.parseInt(role));
-        try {
-            user.setDateOfBirth(convertStringToDate(dob));
-            DAOUser userDAO = new DAOUser();
-            int update = userDAO.update(user);
-            if (update == 1) {
-                session.setAttribute("noti", "Update success!");
-                response.sendRedirect("profile?id=" + user.getId());
+        DAOUser userDao = new DAOUser();
+
+        int userId = Integer.parseInt(request.getParameter("id"));
+        String oldPassword = request.getParameter("oldPassword");
+        String newPassword = request.getParameter("newPassword");
+        String retypePassword = request.getParameter("retypePassword");
+
+        if (newPassword.isEmpty() || retypePassword.isEmpty()) {
+            String noti = "New password and re-type password must not be blank";
+            session.setAttribute("noti", noti);
+            response.sendRedirect("reset_password?id=" + userId);
+        } else if (newPassword.equals(oldPassword)) {
+            String noti = "New password must not be the same as old password";
+            session.setAttribute("noti", noti);
+            response.sendRedirect("reset_password?id=" + userId);
+        } else if (!newPassword.equals(retypePassword)) {
+            String noti = "Re-type password must be the same as new password";
+            session.setAttribute("noti", noti);
+            response.sendRedirect("reset_password?id=" + userId);
+        } else {
+            User user = userDao.findByID(userId);
+            user.setPassWord(newPassword);
+            int updatePassword = userDao.updatePassWord(user);
+            if (updatePassword == 1) {
+                String noti = "Update password success";
+                session.setAttribute("noti", noti);
+                response.sendRedirect("reset_password?id=" + userId);
+
             } else {
-                session.setAttribute("noti", "Update fail!");
-                response.sendRedirect("profile?id=" + user.getId());
+                String noti = "Update password fail.";
+                session.setAttribute("noti", noti);
+                response.sendRedirect("reset_password?id=" + userId);
+
             }
-        } catch (ParseException ex) {
-            Logger.getLogger(UpdateProfileController.class.getName()).log(Level.SEVERE, null, ex);
         }
+
     }
 
     /**
@@ -124,10 +115,4 @@ public class UpdateProfileController extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
-    public Date convertStringToDate(String date) throws ParseException {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        sdf.setTimeZone(TimeZone.getTimeZone("Asia/Ho_Chi_Minh"));
-        java.util.Date dateConvert = sdf.parse(date);
-        return new java.sql.Date(dateConvert.getTime());
-    }
 }
