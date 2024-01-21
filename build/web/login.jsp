@@ -21,32 +21,34 @@
         <div class="login-form">
             <c:set var="cookie" value="${pageContext.request.cookies}"/>
             <form action="login" method="post">
-                
+
                 <div class="form-title">
                     Login
                 </div>
-                
+
                 <div class="form-input">
                     <label for="username">Username</label>
                     <input type="text" id="username" name="username" value="${cookie.cuser.value}">
                 </div>
-                
+
                 <div class="form-input">
                     <label for="password">Password</label>
                     <input type="password" id="password" name="password" value="${cookie.cpass.value}">
                 </div>
-                
+
                 <div class="row mb-4">
                     <div class="col d-flex justify-content-center">
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" ${(cookie.crem!=null?'checked':'')} value="ON" name="rem" checked>
+                            <input class="form-check-input" type="checkbox" ${(cookie.crem!=null?'checked':'')} value="OFF" name="rem" checked>
                             <label class="form-check-label" for="rem"> Remember me </label>
                         </div>
                         <div>
-                            <span class="error-message">${error}</span></div> 
+                            <span class="error-message">${error}</span>
+                            <span class="error-message">${noti}</span>
+                        </div> 
                     </div>
                 </div>
-                    
+
                 <div class="captcha">
                     <label for="captcha-input">Enter Captcha</label>
                     <div class="preview"></div>
@@ -57,13 +59,13 @@
                         </button>
                     </div>
                 </div>
-                        
+
                 <div class="form-input">
                     <button type="submit" id="login-btn">Login</button>
                 </div>
             </form>
             <div class="form-links">
-                <a href="register.html">Register</a> | <a href="forgot-password.html">Forgot Password?</a>
+                <a href="register.html">Register</a> | <a href="forgot_password">Forgot Password?</a> | <a href="home">Back</a>
             </div>
         </div>
         <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>

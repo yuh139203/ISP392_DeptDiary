@@ -161,14 +161,47 @@ public class DAOUser extends DBContextSQLserver {
 
         try {
             PreparedStatement ptm = conn.prepareStatement(sql);
-            ptm.setString(1, user.getPassWord());
-           
+            ptm.setString(1, user.getPassWord());     
             ptm.setInt(2, user.getId());
             return ptm.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(DAOUser.class.getName()).log(Level.SEVERE, null, ex);
         }
         return -1;
+    }
+    
+    
+    public User findByUserName(String userName) {
+        String query = "select * from UserInfor where UserName = ? ";
+        try {
+            PreparedStatement st = conn.prepareStatement(query);
+            st.setString(1, userName);
+            ResultSet rs = st.executeQuery();
+            if (rs.next()) {
+                User u = new User(
+                        rs.getInt("ID"),
+                        rs.getInt("IDRole"),
+                        rs.getString("FirstName"),
+                        rs.getString("LastName"),
+                        rs.getDate("DateOfBirth"),
+                        rs.getString("UserName"),
+                        rs.getString("PassWord"),
+                        rs.getString("PhoneNumber"),
+                        rs.getString("Email"),
+                        rs.getString("Address"),
+                        rs.getBoolean("isDelete"),
+                        rs.getDate("CreatedAt"),
+                        rs.getString("CreatedBy"),
+                        rs.getDate("UpdatedAt"),
+                        rs.getDate("DeletedAt"),
+                        rs.getString("deletedBy")
+                );
+                return u;
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return null;
     }
 
     
@@ -178,7 +211,7 @@ public class DAOUser extends DBContextSQLserver {
         DAOUser daoUser = new DAOUser();
         String testUsername = "huy123";
         String testPassword = "123456";
-        User user = daoUser.checkExistentUser(testUsername, testPassword);
+        User user = daoUser.findByUserName(testUsername);
         if (user != null) {
             System.out.println("User found:");
             System.out.println(user.toString());

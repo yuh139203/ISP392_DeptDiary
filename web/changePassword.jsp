@@ -31,7 +31,8 @@
 </head>
 <body>
     <div class="container">
-        <form action="reset_password" method="post">
+        <form action="change_password" method="post">
+            
             <input type="hidden" name="id" value="${user.id}">
 
             <div class="row">
@@ -41,18 +42,19 @@
                         <input type="text" readonly name="account" value="${user.userName}" class="form-control" placeholder="Account">
                     </div>
                 </div>
+                    <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="newPassword">New Password</label>
+                        <input type="password" name="newPassword" value="${newPassword}" class="form-control" id="newPassword" placeholder="New Password">
+                    </div>
+                </div>
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="oldPassword">Old Password</label>
                         <input type="password" name="oldPassword" value="${user.passWord}" class="form-control" id="oldPassword" placeholder="Old Password">
                     </div>
                 </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label for="newPassword">New Password</label>
-                        <input type="password" name="newPassword" value="${newPassword}" class="form-control" id="newPassword" placeholder="New Password">
-                    </div>
-                </div>
+                
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="retypePassword">Re-type Password</label>
@@ -62,7 +64,7 @@
             </div>
             <p>${noti}</p>
             <button type="submit" class="btn btn-primary">Update Password</button>
-            <a class="btn btn-primary ml-4" href="welcome?id=${user.id}">Back</a>
+            <a class="btn btn-primary ml-4" href="profile?id=${user.id}">Back</a>
         </form>
     </div>
 

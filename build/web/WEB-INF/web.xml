@@ -33,6 +33,30 @@
         <url-pattern>/profile</url-pattern>
     </servlet-mapping>
     <servlet>
+        <servlet-name>ChangePasswordController</servlet-name>
+        <servlet-class>controller.ChangePasswordController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ChangePasswordController</servlet-name>
+        <url-pattern>/change_password</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>ForgotPasswordController</servlet-name>
+        <servlet-class>controller.ForgotPasswordController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ForgotPasswordController</servlet-name>
+        <url-pattern>/forgot_password</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>TokenController</servlet-name>
+        <servlet-class>controller.TokenController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>TokenController</servlet-name>
+        <url-pattern>/token</url-pattern>
+    </servlet-mapping>
+    <servlet>
         <servlet-name>ResetPasswordController</servlet-name>
         <servlet-class>controller.ResetPasswordController</servlet-class>
     </servlet>
@@ -40,9 +64,6 @@
         <servlet-name>ResetPasswordController</servlet-name>
         <url-pattern>/reset_password</url-pattern>
     </servlet-mapping>
-    
-    
-    
     <session-config>
         <session-timeout>
             30

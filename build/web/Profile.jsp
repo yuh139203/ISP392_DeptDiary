@@ -21,6 +21,7 @@
             <h1 class="mb-4">Update Profile</h1>
             <p style="color: green;">${noti}</p>
             <form action="profile" method="post">
+                
                 <input type="hidden" name="id" value="${user.id}">
 
                 <div class="row">
@@ -61,7 +62,7 @@
                 <button type="submit" class="btn btn-success">
                     <span style="color: white;">Update Profile &#10004;</span>
                 </button>
-                <button class="btn btn-primary"><a style="color: white"href="reset_password?id=${user.id}">Change Password</a></button>
+                <button class="btn btn-primary"><a style="color: white"href="change_password?id=${user.id}">Change Password</a></button>
                 <a class="btn btn-primary ml-4" href="welcome?id=${user.id}">Back</a>
             </form>
         </div>
