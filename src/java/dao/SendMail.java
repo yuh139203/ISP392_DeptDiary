@@ -25,7 +25,7 @@ public class SendMail {
         return String.valueOf(random.nextInt(9999));
     }
 
-    public static void sendMail(String recepient, String token, String user) throws Exception {
+    public static void sendMail(String recepient, String token) throws Exception {
         System.out.println("Prepare to sent email.");
         Properties properties = new Properties();
         properties.put("mail.smtp.auth", "true");
@@ -33,8 +33,8 @@ public class SendMail {
         properties.put("mail.smtp.host", "smtp.gmail.com");
         properties.put("mail.smtp.port", "587");
         properties.put("mail.smtp.ssl.protocols", "TLSv1.2");
-        String myAccountEmail = "deptdiary1704@gmail.com";
-        String password = "hvezechvsbdkcnwf";
+        String myAccountEmail = "huydang139203@gmail.com";
+        String password = "gdhwygwcnhlnbzzz";
 
         Session session = Session.getInstance(properties, new Authenticator() {
             @Override
@@ -46,14 +46,14 @@ public class SendMail {
             MimeMessage message = new MimeMessage(session);
             message.setFrom(new InternetAddress(myAccountEmail));
             message.setRecipient(Message.RecipientType.TO, new InternetAddress(recepient));
-            message.setSubject("Forgot Password Token");
+            message.setSubject("Confirm Token");
             message.setContent("<!DOCTYPE html>\r\n"
                     + "<html>\r\n"
                     + "<body>\r\n"
                     + "\r\n"
                     + "<p>Hi,</p>\r\n"
-                    + "<p>You recently requested a password for account " + user + ".  Take the token below.</p>\r\n"
-                    + "<p>Your password token is: " + token + "</p>\r\n"
+                    + "<p>You recently requested a token for your account. Take the token below.</p>\r\n"
+                    + "<p>Your token is: " + token + "</p>\r\n"
                     + "<p>Many Thanks!</p>\r\n"
                     + "\r\n"
                     + "</body>\r\n"
@@ -64,5 +64,8 @@ public class SendMail {
             e.printStackTrace();
         }
     }
+    
+
+    
 
 }

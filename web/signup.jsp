@@ -1,14 +1,12 @@
 <%-- 
     Document   : signup
-    Created on : Jan 15, 2024, 8:37:01 PM
-    Author     : yuh
+    Created on : 20 Jan 2024, 6:44:09 pm
+    Author     : ussat
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
-<html lang="en">
-
+<html>
     <head>
         <meta charset="utf-8" />
         <meta content="width=device-width, initial-scale=1.0" name="viewport" />
@@ -25,42 +23,51 @@
         <section class="container mt-5" id="signup">
             <div class="row justify-content-center">
                 <div class="col-md-6">
-                    <form id="signupForm">
+                    <form id="signupForm" method="post" action="signup">
                         <div class ="form-title">Sign Up</div>
                         <div class="form-group">
-                            <label for="name">Name:</label>
-                            <input class="form-control" id="name" placeholder="Enter your name" required="" type="text" />
+                            <label for="name">UserName</label>
+                            <input class="form-control" id="name" name="name" placeholder="Enter your name" value="${username}" type="text" />
+                        </div>
+                        <div>
+                            <span class="error-message" style="color: red;">${userNameErrorMessage}</span>                            
                         </div>
                         <div class="form-group">
-                            <label for="email">Email:</label>
-                            <input class="form-control" id="email" placeholder="Enter your email" required=""
+                            <label for="email">Email</label>
+                            <input class="form-control" id="email" name="email" placeholder="Enter your email" value="${email}"
                                    type="email" />
                         </div>
+
                         <div class="form-group">
-                            <label for="password">Password:</label>
-                            <input class="form-control" id="password" placeholder="Enter your password" required=""
+                            <label for="password">Password</label>
+                            <input class="form-control" id="password" name="password" placeholder="Enter your password" value="${password}"
                                    type="password" />
                         </div>
                         <div class="form-group">
-                            <label for="confirmPassword">Confirm Password:</label>
-                            <input class="form-control" id="confirmPassword" placeholder="Confirm your password" required=""
+                            <label for="confirmPassword">Confirm Password</label>
+                            <input class="form-control" id="confirmPassword" name="confirmPassword" placeholder="Confirm your password" value="${confirmPassword}"
                                    type="password" />
                         </div>
-                        <div class="captcha">
-                            <label for="captcha">Enter Captcha:</label>
-                            <div class="preview"></div>
-                            <div class="input-group">
-                                <input class="form-control" id="captcha" placeholder="Enter the captcha" required=""
-                                       type="text" />
-                                <button class="captcha-refresh">
-                                    <i class="fa fa-refresh"></i>
-                                </button>
-                            </div>
+                        <div>
+                            <span class="error-message" style="color: red;">${confirmPasswordErrorMessage}</span>                            
                         </div>
-                        <button class="btn btn-primary w-100" type="submit">
-                            Sign Up
+                        <div>
+                            <img src="login" alt="CAPTCHA">
+                            <input class="input" type="text" name="captchaInput" placeholder="Enter CAPTCHA" required>
+                            <c:if test="${not empty captchaError}">
+                                <div style="color: red;">${captchaError}</div>
+                            </c:if>
+                            <button type="submit" name="refreshCaptcha" value="true">Refresh Captcha</button>
+                        </div>
+                        <div>
+                            <span class="error-message" style="color: red;">${error}</span>                            
+                        </div>
+                        <button 
+                            class="btn btn-primary w-100" type="submit">Sign Up
                         </button>
+                        <a href="login.jsp">Back to Login</a>
                     </form>
+                    
                 </div>
             </div>
         </section>
@@ -70,4 +77,3 @@
     </body>
 
 </html>
-

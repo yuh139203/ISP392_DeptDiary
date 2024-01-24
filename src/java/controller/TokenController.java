@@ -14,17 +14,17 @@ public class TokenController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String tokenInput = (String) request.getParameter("tokenInput");
+        
         HttpSession session = request.getSession();
         String generatedToken = (String) session.getAttribute("generatedToken");
+        String enteredToken = (String) request.getParameter("enteredToken");
         
-        if (tokenInput != null && tokenInput.equals(generatedToken)) {
+        if (enteredToken != null && enteredToken.equals(generatedToken)) {
             response.sendRedirect("resetPassword.jsp");
         } else {
             request.setAttribute("error", "Token invalid!!!");
             request.getRequestDispatcher("token.jsp").forward(request, response);
-
-        }
+        }  
 
     }
 

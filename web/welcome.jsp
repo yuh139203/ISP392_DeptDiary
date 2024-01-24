@@ -47,10 +47,10 @@
                         <li><a class="nav-link scrollto" href="#about">About</a></li>
                         <li><a class="nav-link scrollto" href="#team">Team</a></li>
                         <li><a class="nav-link scrollto" href="#contact">Contact</a></li>
-                        <li class="dropdown  "><a href="#"><span>Hello: ${sessionScope.user.firstName} ${sessionScope.user.lastName}</span> <i class="bi bi-chevron-down"></i></a>
+                        <li class="dropdown  "><a href="#"><span>Hello: ${sessionScope.userLogin.firstName} ${sessionScope.userLogin.lastName}</span> <i class="bi bi-chevron-down"></i></a>
                             <ul>
-                                <li><a href="profile?id=${sessionScope.user.id}">Your information</a></li>
-                                <li><a href="profile?id=${sessionScope.user.id}">Log Out</a></li>
+                                <li><a href="profile?id=${sessionScope.userLogin.id}">Your information</a></li>
+                                <li><a href="logout">Log Out</a></li>
                             </ul>
                         </li>
 <!--                        <li><a class="getstarted scrollto" href="#">Log Out</a></li>-->

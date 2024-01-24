@@ -4,7 +4,6 @@
  */
 package controller;
 
-
 import dao.DAORole;
 import dao.DAOUser;
 import java.io.IOException;
@@ -56,13 +55,9 @@ public class UpdateProfileController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        int id = Integer.parseInt(request.getParameter("id"));
-        DAORole roleDAO = new DAORole();
-        List<Role> list = roleDAO.getAll();
-        request.setAttribute("roles", list);
-        DAOUser userDAO = new DAOUser();
-        User user = userDAO.findByID(id);
-        request.setAttribute("user", user);
+        HttpSession session = request.getSession();
+        User user = (User)session.getAttribute("userLogin");
+        request.setAttribute("userLogin", user);
         request.getRequestDispatcher("profile.jsp").forward(request, response);
     }
 
@@ -78,6 +73,7 @@ public class UpdateProfileController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();
+        
         int id = Integer.parseInt(request.getParameter("id"));
         String firstname = request.getParameter("firstname");
         String lastname = request.getParameter("lastname");
@@ -87,7 +83,6 @@ public class UpdateProfileController extends HttpServlet {
         String email = request.getParameter("email");
         String username = request.getParameter("username");
         String password = request.getParameter("password");
-//        String role = request.getParameter("role");
         User user = new User();
         user.setId(id);
         user.setFirstName(firstname);
@@ -97,11 +92,10 @@ public class UpdateProfileController extends HttpServlet {
         user.setEmail(email);
         user.setUserName(username);
         user.setPassWord(password);
-//        user.setIdRole(Integer.parseInt(role));
         try {
             user.setDateOfBirth(convertStringToDate(dob));
             DAOUser userDAO = new DAOUser();
-            int update = userDAO.update(user);
+            int update = userDAO.updateProfile(user);
             if (update == 1) {
                 session.setAttribute("noti", "Update success!");
                 response.sendRedirect("profile?id=" + user.getId());

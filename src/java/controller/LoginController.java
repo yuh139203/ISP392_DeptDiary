@@ -13,7 +13,12 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.awt.image.BufferedImage;
+import java.io.OutputStream;
+import javax.imageio.ImageIO;
 import model.User;
+import utils.Captcha;
+import utils.MD5;
 
 /**
  *
@@ -59,6 +64,18 @@ public class LoginController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        String captchaText = Captcha.generateCaptchaText();
+
+        // Lưu CAPTCHA text vào session để kiểm tra sau này
+        HttpSession session = request.getSession();
+        session.setAttribute("captchaText", captchaText);
+
+        // Tạo hình ảnh CAPTCHA và gửi về client
+        BufferedImage image = Captcha.generateCaptchaImage(captchaText);
+        response.setContentType("image/png");
+        OutputStream os = response.getOutputStream();
+        ImageIO.write(image, "png", os);
+        os.close();
         request.getRequestDispatcher("login.jsp").forward(request, response);
     }
 
@@ -77,6 +94,9 @@ public class LoginController extends HttpServlet {
         String user = request.getParameter("username");
         String pass = request.getParameter("password");
         String rem = request.getParameter("rem");
+        String captchaInput = request.getParameter("captchaInput");
+        String captchaGen = (String) session.getAttribute("captchaText");
+        String encryptedPassword = MD5.hashPassword(pass);
 
         //tao cookie
         Cookie cu = new Cookie("cuser", user);
@@ -86,7 +106,7 @@ public class LoginController extends HttpServlet {
         if (rem != null) {
             cu.setMaxAge(60 * 60 * 24 * 7); //7 ngay
             cp.setMaxAge(60 * 60 * 24 * 7); //7 ngay
-            cr.setMaxAge(60 * 60 * 24 * 7); //7 ngay
+            // cr.setMaxAge(60 * 60 * 24 * 7); //7 ngay
         } else {// khong tich
             cu.setMaxAge(0);
             cp.setMaxAge(0);
@@ -96,17 +116,28 @@ public class LoginController extends HttpServlet {
         response.addCookie(cp);
         response.addCookie(cr);
 
+        if ("true".equals(request.getParameter("refreshCaptcha"))) {
+            // Redirect back to the login page to regenerate the captcha
+            response.sendRedirect("login.jsp");
+            return;
+        }
+
         DAOUser daoUser = new DAOUser();
-        User u = daoUser.checkExistentUser(user, pass);
+        User u = daoUser.checkExistentUser(user, encryptedPassword);
         if (u == null) {
             //khong thay
             request.setAttribute("error", "Username or Password invalid!!!");
             request.getRequestDispatcher("login.jsp").forward(request, response);
         } else {
             //tim thay
-            session.setAttribute("user", u);
-            response.sendRedirect("welcome.jsp");
-        }      
+            if (captchaInput != null && captchaInput.equals(captchaGen)) {
+                session.setAttribute("userLogin", u);
+                response.sendRedirect("welcome.jsp");
+            } else {
+                request.setAttribute("error", "Captcha invalid!!!");
+                request.getRequestDispatcher("login.jsp").forward(request, response);
+            }
+        }
     }
 
     /**

@@ -123,13 +123,11 @@ public class DAOUser extends DBContextSQLserver {
         return null;
     }
 
-    public int update(User user) {
+    public int updateProfile(User user) {
         String sql = "UPDATE UserInfor\n"
                 + "SET FirstName   = ?\n"
                 + "  , LastName    = ?\n"
                 + "  , DateOfBirth = ?\n"
-                + "  , UserName    = ?\n"
-                + "  , Password    = ?\n"
                 + "  , PhoneNumber = ?\n"
                 + "  , Email       = ?\n"
                 + "  , Address     = ?\n"
@@ -141,12 +139,10 @@ public class DAOUser extends DBContextSQLserver {
             ptm.setString(1, user.getFirstName());
             ptm.setString(2, user.getLastName());
             ptm.setDate(3, user.getDateOfBirth());
-            ptm.setString(4, user.getUserName());
-            ptm.setString(5, user.getPassWord());
-            ptm.setString(6, user.getPhoneNumber());
-            ptm.setString(7, user.getEmail());
-            ptm.setString(8, user.getAddress());
-            ptm.setInt(9, user.getId());
+            ptm.setString(4, user.getPhoneNumber());
+            ptm.setString(5, user.getEmail());
+            ptm.setString(6, user.getAddress());
+            ptm.setInt(7, user.getId());
             return ptm.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(DAOUser.class.getName()).log(Level.SEVERE, null, ex);
@@ -202,6 +198,59 @@ public class DAOUser extends DBContextSQLserver {
             System.out.println(e);
         }
         return null;
+    }
+    
+    
+    public boolean insertUser(String username, String password, String email) {
+        int defaultRoleId = 1; // Mặc định role ID cho 'Base User'
+        String createdBy = "System"; // Mặc định người tạo là 'System'
+
+        String sql = "INSERT INTO UserInfor (UserName, Password, Email, IDRole, isDelete, CreatedAt, CreatedBy) "
+                + "VALUES (?, ?, ?, ?, ?, GETDATE(), ?)";
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, username);
+            ps.setString(2, password); // Nên mã hóa mật khẩu trước khi lưu
+            ps.setString(3, email);
+            ps.setInt(4, defaultRoleId); // Sử dụng role ID mặc định
+            ps.setBoolean(5, false);
+            
+            ps.setString(6, createdBy); // Đặt người tạo là 'System'
+            int result = ps.executeUpdate();
+            return result > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+    
+    public boolean isEmailExists(String email) {
+        String sql = "SELECT COUNT(*) FROM UserInfor WHERE Email = ?";
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, email);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt(1) > 0;
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+    
+    public boolean isUserNameExists(String userName) {
+        String sql = "SELECT COUNT(*) FROM UserInfor WHERE UserName = ?";
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, userName);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt(1) > 0;
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 
     

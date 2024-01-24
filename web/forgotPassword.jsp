@@ -9,10 +9,11 @@
 <html>
     <head>
         <meta charset="UTF-8" />
-        <title>Forgot Password</title>
+        <title>DeptDiary</title>
         <meta name="viewport" content="width=device-width" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <link rel="stylesheet" href="css/forgotPassword.css">
+        <link rel="icon" href="assets/img/logo.png" type="image/png">
     </head>
 
     <body>
@@ -25,25 +26,23 @@
 
                 <div class="forgot-input">
                     <label for="username">Enter username:</label>
-                    <input type="text" id="username" placeholder="Enter your username" name="username" value="">
+                    <input type="text" id="username" placeholder="Enter your username" name="username" required="">
                     <div>
                         <span class="error-message">${error}</span>
                     </div> 
+
+                </div>
+                <div>
+                    <img src="login" alt="CAPTCHA">
+                    <input class="input" type="text" name="captchaInput" placeholder="Enter CAPTCHA" required>
+                    <c:if test="${not empty captchaError}">
+                        <div style="color: red;">${captchaError}</div>
+                    </c:if>
+                    <button type="submit" name="refreshCaptcha" value="true">Refresh Captcha</button>
                 </div>
 
-<!--                <div class="captcha">
-                    <label for="captcha-input">Enter Captcha</label>
-                    <div class="preview"></div>
-                    <div class="captcha-form">
-                        <input type="text" id="captcha-form" placeholder="Enter captcha text">
-                        <button class="captcha-refresh" type="button">
-                            <i class="fa fa-refresh"></i>
-                        </button>
-                    </div>
-                </div>-->
-                <button class="forgot-input" id="forgot-btn"> Confirm</button>
-                
-                <a class="forgot-input" id="forgot-btn" href="login">Back</a>
+                    <button id="forgot-btn"> Confirm</button>
+                    <a  href="login.jsp">Back to Login</a>
             </form>
         </div>
         <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>

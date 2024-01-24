@@ -12,6 +12,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import model.User;
+import utils.MD5;
 
 /**
  *
@@ -74,28 +75,29 @@ public class ChangePasswordController extends HttpServlet {
         String retypePassword = request.getParameter("retypePassword");
 
         if (newPassword.isEmpty() || retypePassword.isEmpty()) {
-            String noti = "New password and re-type password must not be blank";
-            session.setAttribute("noti", noti);
+            String notification = "New password and re-type password must not be blank";
+            session.setAttribute("notification", notification);
             response.sendRedirect("change_password?id=" + userId);
         } else if (newPassword.equals(oldPassword)) {
-            String noti = "New password must not be the same as old password";
-            session.setAttribute("noti", noti);
+            String notification = "New password must not be the same as old password";
+            session.setAttribute("notification", notification);
             response.sendRedirect("change_password?id=" + userId);
         } else if (!newPassword.equals(retypePassword)) {
-            String noti = "Re-type password must be the same as new password";
-            session.setAttribute("noti", noti);
+            String notification = "Re-type password must be the same as new password";
+            session.setAttribute("notification", notification);
             response.sendRedirect("change_password?id=" + userId);
         } else {
             User user = userDao.findByID(userId);
-            user.setPassWord(newPassword);
+            String encryptedPassword = MD5.hashPassword(newPassword);
+            user.setPassWord(encryptedPassword);
             int updatePassword = userDao.updatePassWord(user);
             if (updatePassword == 1) {
-                String noti = "Update password success";
-                session.setAttribute("noti", noti);
+                String notification = "Update password success";
+                session.setAttribute("notification", notification);
                 response.sendRedirect("change_password?id=" + userId);
             } else {
-                String noti = "Update password fail.";
-                session.setAttribute("noti", noti);
+                String notification = "Update password fail.";
+                session.setAttribute("notification", notification);
                 response.sendRedirect("change_password?id=" + userId);
             }
         }
