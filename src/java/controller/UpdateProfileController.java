@@ -56,8 +56,11 @@ public class UpdateProfileController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();
-        User user = (User)session.getAttribute("userLogin");
-        request.setAttribute("userLogin", user);
+        User userLogin = (User) session.getAttribute("userLogin");
+        int id = userLogin.getId();
+        DAOUser daoUser = new DAOUser();
+        User user = daoUser.findByID(id);
+        request.setAttribute("user", user);
         request.getRequestDispatcher("profile.jsp").forward(request, response);
     }
 
@@ -73,7 +76,7 @@ public class UpdateProfileController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();
-        
+
         int id = Integer.parseInt(request.getParameter("id"));
         String firstname = request.getParameter("firstname");
         String lastname = request.getParameter("lastname");
@@ -94,18 +97,20 @@ public class UpdateProfileController extends HttpServlet {
         user.setPassWord(password);
         try {
             user.setDateOfBirth(convertStringToDate(dob));
-            DAOUser userDAO = new DAOUser();
-            int update = userDAO.updateProfile(user);
-            if (update == 1) {
-                session.setAttribute("noti", "Update success!");
-                response.sendRedirect("profile?id=" + user.getId());
-            } else {
-                session.setAttribute("noti", "Update fail!");
-                response.sendRedirect("profile?id=" + user.getId());
-            }
         } catch (ParseException ex) {
             Logger.getLogger(UpdateProfileController.class.getName()).log(Level.SEVERE, null, ex);
         }
+        DAOUser userDAO = new DAOUser();
+        int update = userDAO.updateProfile(user);
+        User updatedUser = userDAO.findByID(id);
+        request.setAttribute("user", updatedUser);
+        if (update == 1) {
+            request.setAttribute("noti", "Update success!");
+        } else {
+            request.setAttribute("noti", "Update fail!");
+        }
+        request.getRequestDispatcher("profile.jsp").forward(request, response);
+
     }
 
     /**
@@ -124,4 +129,5 @@ public class UpdateProfileController extends HttpServlet {
         java.util.Date dateConvert = sdf.parse(date);
         return new java.sql.Date(dateConvert.getTime());
     }
+
 }

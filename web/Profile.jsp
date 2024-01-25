@@ -13,57 +13,63 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <title>Update Profile</title>
+        <link href="assets/img/logo.png" rel="icon">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.2.1/dist/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
     </head>
     <body class="bg-light">
 
         <div class="container mt-5">
             <h1 class="mb-4">Update Profile</h1>
-            <p style="color: green;">${noti}</p>
-            <form action="profile" method="post">
+<!--            <p style="color: green;">${noti}</p>-->
+
+            <c:if test="${noti ne null}">
+                <p style="color: green;">${noti}</p>
+            </c:if>
                 
+            <form action="profile" method="post">
+
                 <input type="hidden" name="id" value="${userLogin.id}">
 
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="firstName">First Name</label>
-                            <input type="text" name="firstname" value="${userLogin.firstName}" class="form-control" id="firstName" placeholder="First Name">
+                            <input type="text" name="firstname" value="${user.firstName}" class="form-control" id="firstName" placeholder="First Name">
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="lastName">Last Name</label>
-                            <input type="text" name="lastname" value="${userLogin.lastName}" class="form-control" id="lastName" placeholder="Last Name">
+                            <input type="text" name="lastname" value="${user.lastName}" class="form-control" id="lastName" placeholder="Last Name">
                         </div>
                     </div>
                 </div>
 
                 <div class="form-group">
                     <label for="dob">Date Of Birth</label>
-                    <fmt:formatDate value="${userLogin.dateOfBirth}" pattern="yyyy-MM-dd" var="formattedDate" />
+                    <fmt:formatDate value="${user.dateOfBirth}" pattern="yyyy-MM-dd" var="formattedDate" />
                     <input type="date" name="dob" value="${formattedDate}" class="form-control" id="dob" placeholder="Date Of Birth">
                 </div>
 
                 <div class="form-group">
                     <label for="address">Address</label>
-                    <input type="text" name="address" value="${userLogin.address}" class="form-control" id="address" placeholder="Address">
+                    <input type="text" name="address" value="${user.address}" class="form-control" id="address" placeholder="Address">
                 </div>
 
                 <div class="form-group">
                     <label for="phone">Phone Number</label>
-                    <input type="text" name="phone" value="${userLogin.phoneNumber}" class="form-control" id="phone" placeholder="Phone Number">
+                    <input type="text" name="phone" value="${user.phoneNumber}" class="form-control" id="phone" placeholder="Phone Number">
                 </div>
 
                 <div class="form-group">
                     <label for="email">Email</label>
-                    <input type="email" name="email" value="${userLogin.email}" class="form-control" id="email" placeholder="Email">
+                    <input type="email" name="email" value="${user.email}" class="form-control" id="email" placeholder="Email">
                 </div>
                 <button type="submit" class="btn btn-success">
                     <span style="color: white;">Update Profile &#10004;</span>
                 </button>
-                <button class="btn btn-primary"><a style="color: white"href="change_password?id=${userLogin.id}">Change Password</a></button>
-                <a class="btn btn-primary ml-4" href="welcome?id=${userLogin.id}">Back</a>
+                <button class="btn btn-primary"><a style="color: white"href="change_password?id=${user.id}">Change Password</a></button>
+                <a class="btn btn-primary ml-4" href="welcome?id=${user.id}">Back</a>
             </form>
         </div>
 

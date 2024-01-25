@@ -4,6 +4,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Reset Password</title>
+        <link href="assets/img/logo.png" rel="icon">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.2.1/dist/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
         <style>
             body {
@@ -34,7 +35,13 @@
             <form action="change_password" method="post">
 
                 <input type="hidden" name="id" value="${user.id}">
-                <p style="color: green;">${notification}</p>
+
+                <c:if test="${noti ne null}">
+                    <p style="color: green;">${notification}</p>
+                </c:if>
+                <c:if test="${noti ne null}">
+                    <p style="color: red;">${notificationError}</p>
+                </c:if>
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
@@ -62,14 +69,14 @@
                         </div>
                     </div>
                 </div>
-<!--                <div>
-                    <img src="login" alt="CAPTCHA">
-                    <input class="input" type="text" name="captchaInput" placeholder="Enter CAPTCHA" required>
-                    <c:if test="${not empty captchaError}">
-                        <div style="color: red;">${captchaError}</div>
-                    </c:if>
-                    <button type="submit" name="refreshCaptcha" value="true">Refresh Captcha</button>
-                </div>-->
+                <!--                <div>
+                                    <img src="login" alt="CAPTCHA">
+                                    <input class="input" type="text" name="captchaInput" placeholder="Enter CAPTCHA" required>
+                                    <c:if test="${not empty captchaError}">
+                                        <div style="color: red;">${captchaError}</div>
+                                    </c:if>
+                                    <button type="submit" name="refreshCaptcha" value="true">Refresh Captcha</button>
+                                </div>-->
 
 
                 <button type="submit" class="btn btn-primary">Update Password</button>

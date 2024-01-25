@@ -16,6 +16,7 @@
         <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet" />
         <meta content="noindex, nofollow" name="robots" />
         <link rel="stylesheet" href="css/signup.css">
+        <link href="assets/img/logo.png" rel="icon">
     </head>
 
     <body>

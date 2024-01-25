@@ -34,7 +34,6 @@ public class ChangePasswordController extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
 
     }
-
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -73,34 +72,28 @@ public class ChangePasswordController extends HttpServlet {
         String oldPassword = request.getParameter("oldPassword");
         String newPassword = request.getParameter("newPassword");
         String retypePassword = request.getParameter("retypePassword");
-
+        User user = userDao.findByID(userId);
+        request.setAttribute("user", user);
         if (newPassword.isEmpty() || retypePassword.isEmpty()) {
-            String notification = "New password and re-type password must not be blank";
-            session.setAttribute("notification", notification);
-            response.sendRedirect("change_password?id=" + userId);
-        } else if (newPassword.equals(oldPassword)) {
-            String notification = "New password must not be the same as old password";
-            session.setAttribute("notification", notification);
-            response.sendRedirect("change_password?id=" + userId);
+            request.setAttribute("notificationError", "New password and re-type password must not be blank");
+        } else if (MD5.hashPassword(newPassword).equals(oldPassword)) {
+            request.setAttribute("notificationError", "New password must not be the same as old password");
         } else if (!newPassword.equals(retypePassword)) {
-            String notification = "Re-type password must be the same as new password";
-            session.setAttribute("notification", notification);
-            response.sendRedirect("change_password?id=" + userId);
+            request.setAttribute("notificationError", "Re-type password must be the same as new password");
         } else {
-            User user = userDao.findByID(userId);
+//            User user = userDao.findByID(userId);
+//            request.setAttribute("user", user);
             String encryptedPassword = MD5.hashPassword(newPassword);
             user.setPassWord(encryptedPassword);
             int updatePassword = userDao.updatePassWord(user);
             if (updatePassword == 1) {
-                String notification = "Update password success";
-                session.setAttribute("notification", notification);
-                response.sendRedirect("change_password?id=" + userId);
+                request.setAttribute("notification", "Update password success");
             } else {
-                String notification = "Update password fail.";
-                session.setAttribute("notification", notification);
-                response.sendRedirect("change_password?id=" + userId);
+                request.setAttribute("notificationError", "Update password fail.");
             }
+            request.getRequestDispatcher("changePassword.jsp").forward(request, response);
         }
+        request.getRequestDispatcher("changePassword.jsp").forward(request, response);
 
     }
 

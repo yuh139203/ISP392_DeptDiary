@@ -6,18 +6,14 @@
     <head>
         <meta charset="utf-8">
         <meta content="width=device-width, initial-scale=1.0" name="viewport">
-
         <title>DeptDiary</title>
         <meta content="" name="description">
         <meta content="" name="keywords">
-
         <!-- Favicons -->
         <link href="assets/img/logo.png" rel="icon">
         <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
-
         <!-- Google Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
-
         <!-- Vendor CSS Files -->
         <link href="vendor/aos/aos.css" rel="stylesheet">
         <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -25,7 +21,6 @@
         <link href="vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
         <link href="vendor/remixicon/remixicon.css" rel="stylesheet">
         <link href="vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
-
         <!-- Template Main CSS File -->
         <link href="css/home.css" rel="stylesheet">
 
@@ -47,7 +42,7 @@
                         <li><a class="nav-link scrollto" href="#about">About</a></li>
                         <li><a class="nav-link scrollto" href="#team">Team</a></li>
                         <li><a class="nav-link scrollto" href="#contact">Contact</a></li>
-                        <li class="dropdown  "><a href="#"><span>Hello: ${sessionScope.userLogin.firstName} ${sessionScope.userLogin.lastName}</span> <i class="bi bi-chevron-down"></i></a>
+                        <li class="dropdown  "><a href="#"><span>Hello: ${sessionScope.userLogin.userName} </span> <i class="bi bi-chevron-down"></i></a>
                             <ul>
                                 <li><a href="profile?id=${sessionScope.userLogin.id}">Your information</a></li>
                                 <li><a href="logout">Log Out</a></li>

@@ -12,20 +12,17 @@ public class ResetPasswordController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        PrintWriter out = response.getWriter();
-        HttpSession session = request.getSession();
-        User user = (User)session.getAttribute("userToken");
-        request.setAttribute("user", user);
         request.getRequestDispatcher("resetPassword.jsp").forward(request, response);
     }
-
+    
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        PrintWriter out = response.getWriter();
-        
-        DAOUser userDao = new DAOUser();        
-        int userId = Integer.parseInt(request.getParameter("id"));
+        DAOUser userDao = new DAOUser();  
+        HttpSession session = request.getSession();
+        User userForgotPass = (User)session.getAttribute("userForgotPass");
+        int userId = userForgotPass.getId();
+
         String oldPassword = request.getParameter("oldPassword");
         String newPassword = request.getParameter("newPassword");
         String retypePassword = request.getParameter("retypePassword"); 

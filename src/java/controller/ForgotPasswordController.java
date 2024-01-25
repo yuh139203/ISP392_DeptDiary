@@ -45,7 +45,7 @@ public class ForgotPasswordController extends HttpServlet {
 
         DAOUser daoUser = new DAOUser();
         User u = daoUser.findByUserName(user);
-        session.setAttribute("user", u);
+        session.setAttribute("userForgotPass", u);
         
         if ("true".equals(request.getParameter("refreshCaptcha"))) {
             // Redirect back to the login page to regenerate the captcha
@@ -69,7 +69,7 @@ public class ForgotPasswordController extends HttpServlet {
                 }
             } else {
                 request.setAttribute("error", "Captcha invalid!!!");
-                request.getRequestDispatcher("login.jsp").forward(request, response);
+                request.getRequestDispatcher("forgotPassword.jsp").forward(request, response);
             }
 
         }

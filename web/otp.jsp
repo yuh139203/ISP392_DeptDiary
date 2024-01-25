@@ -11,6 +11,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <link rel="stylesheet" href="css/token.css">
+        <link href="assets/img/logo.png" rel="icon">
     </head>
     <body>
         <div class="token-form">
@@ -20,7 +21,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
                 </div>
                 <div class="token-input">
                     <label for="token">Token:</label>
-                    <input type="text" placeholder="Enter token" name="tokenIn" >
+                    <input type="text" placeholder="Enter token" name="enteredToken" >
                     <div>
                         <span class="error-message">${error}</span>
                     </div>

@@ -15,6 +15,7 @@
             Reset Password
         </div>
         <form action="reset_password" method="post">
+            
                 <input type="hidden" name="id" value="${user.id}">
                 <input type="hidden" name="oldPassword" value="${user.passWord}">
                 

@@ -69,8 +69,6 @@ public class LoginController extends HttpServlet {
         // Lưu CAPTCHA text vào session để kiểm tra sau này
         HttpSession session = request.getSession();
         session.setAttribute("captchaText", captchaText);
-
-        // Tạo hình ảnh CAPTCHA và gửi về client
         BufferedImage image = Captcha.generateCaptchaImage(captchaText);
         response.setContentType("image/png");
         OutputStream os = response.getOutputStream();

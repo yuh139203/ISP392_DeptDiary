@@ -51,6 +51,7 @@ public class OTPController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         request.getRequestDispatcher("otp.jsp").forward(request, response);
+        String enteredToken = request.getParameter("enteredToken");
     }
 
     @Override
@@ -62,28 +63,28 @@ public class OTPController extends HttpServlet {
         String emailSignUp = (String) session.getAttribute("emailSignUp");
         String username = (String) session.getAttribute("username");
         String password = (String) session.getAttribute("password");
-        String tokenIn = request.getParameter("tokenIn");
+        String enteredToken = request.getParameter("enteredToken");
 
         // Kiểm tra xem token đã được tạo và lưu trong phiên làm việc chưa
-        String token = (String) session.getAttribute("token");
+        String generatedToken = (String) session.getAttribute("generatedToken");
         // Nếu token không tồn tại trong phiên làm việc, hãy tạo một token mới
-        if (token == null) {
-            token = SendMail.generateRandomToken();
+        if (generatedToken == null) {
+            generatedToken = SendMail.generateRandomToken();
             try {
-                SendMail.sendMail(emailSignUp, token);
+                SendMail.sendMail(emailSignUp, generatedToken);
             } catch (Exception e) {
                 e.printStackTrace();
             }
             // Lưu trữ token được tạo trong phiên làm việc
-            session.setAttribute("token", token);
+            session.setAttribute("generatedToken", generatedToken);
         }
-        System.out.println("token input "+tokenIn);
-        System.out.println("token gen "+ token);
+        System.out.println("token input "+enteredToken);
+        System.out.println("token gen "+ generatedToken);
         System.out.println("username "+ username);
         System.out.println("password "+ password);
         System.out.println("emailSignUp "+ emailSignUp);
         
-        if (tokenIn != null && tokenIn.equals(token)) {
+        if (enteredToken != null && enteredToken.equals(generatedToken)) {
             String encryptedPassword = MD5.hashPassword(password);
             daoUser.insertUser(username, encryptedPassword, emailSignUp);
             response.sendRedirect("login.jsp");
