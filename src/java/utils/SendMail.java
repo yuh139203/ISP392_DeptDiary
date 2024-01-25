@@ -1,4 +1,4 @@
-package dao;
+package utils;
 
 import java.util.Properties;
 import java.util.Random;
@@ -22,7 +22,7 @@ public class SendMail {
 
     public static String generateRandomToken() {
         Random random = new Random();
-        return String.valueOf(random.nextInt(9999));
+        return String.valueOf(1000+random.nextInt(9999));
     }
 
     public static void sendMail(String recepient, String token) throws Exception {

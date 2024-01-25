@@ -20,6 +20,18 @@
         <servlet-name>OTPController</servlet-name>
         <servlet-class>controller.OTPController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>AdminController</servlet-name>
+        <servlet-class>controller.AdminController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CaptchaController</servlet-name>
+        <servlet-class>controller.CaptchaController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ListUserController</servlet-name>
+        <servlet-class>controller.ListUserController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginController</servlet-name>
         <url-pattern>/login</url-pattern>
@@ -79,6 +91,18 @@
     <servlet-mapping>
         <servlet-name>OTPController</servlet-name>
         <url-pattern>/otp</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AdminController</servlet-name>
+        <url-pattern>/admin</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CaptchaController</servlet-name>
+        <url-pattern>/captcha</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ListUserController</servlet-name>
+        <url-pattern>/list_user</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

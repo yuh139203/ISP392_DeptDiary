@@ -5,7 +5,7 @@
 package controller;
 
 import dao.DAOUser;
-import dao.SendMail;
+import utils.SendMail;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;

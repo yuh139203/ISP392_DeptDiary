@@ -1,6 +1,6 @@
 package controller;
 
-import dao.SendMail;
+import utils.SendMail;
 import dao.DAOUser;
 import java.io.*;
 import jakarta.servlet.*;

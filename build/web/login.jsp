@@ -28,12 +28,12 @@
 
                 <div class="form-input">
                     <label for="username">Username</label>
-                    <input type="text" id="username" name="username" value="${cookie.cuser.value}">
+                    <input type="text" id="username" name="username" placeholder="Enter username" value="${cookie.cuser.value}">
                 </div>
 
                 <div class="form-input">
                     <label for="password">Password</label>
-                    <input type="password" id="password" name="password" value="${cookie.cpass.value}">
+                    <input type="password" id="password" name="password" placeholder="Enter password" value="${cookie.cpass.value}">
                 </div>
 
                 <div class="row mb-4">
@@ -48,26 +48,19 @@
                             <span class="error-message">${noti}</span> 
                         </div>
                     </div>
-                </div>
+                </div>  
 
-                <div>
-                    <img src="login" alt="CAPTCHA">
-                    <input class="input" type="text" name="captchaInput" placeholder="Enter CAPTCHA" required>
+
+                <div class="captcha"> 
+                    <img src="captcha" alt="CAPTCHA">
+                    <input class="input" type="text" name="captchaInput" placeholder="Enter captcha" >
                     <c:if test="${not empty captchaError}">
                         <div style="color: red;">${captchaError}</div>
                     </c:if>
-                    <button type="submit" name="refreshCaptcha" value="true">Refresh Captcha</button>
+                    <img class="captcha-image" src="assets/img/refreshIcon.png" alt="Refresh Captcha" class="refresh-icon" onclick="refreshCaptcha()">
                 </div>
 
-                <!--<div>
-                            <label for="captcha-input">Captcha</label>
-                            <img src="Captcha" alt="CAPTCHA"><br>
-                            <input type="text" name="captchaText" placeholder="Enter captcha text" required>
-                             Hiển thị thông báo lỗi CAPTCHA 
-                            <c:if test="${not empty requestScope.captchaError}">
-                                <div style="color: red;">${requestScope.captchaError}</div>
-                </c:if>
-                        </div>-->
+
 
 
                 <div class="form-input">
@@ -80,9 +73,6 @@
         </div>
         <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
         <script src="js/login.js"></script>
-
-
-
     </body>
 
 </html>

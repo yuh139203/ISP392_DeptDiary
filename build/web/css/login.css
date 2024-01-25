@@ -138,6 +138,61 @@ body {
 }
 .error-message {
     color: red;
-    
+
     font-size: 14px; /* Adjust font size if needed */
+}
+
+
+
+.captcha-image {
+    max-width: 7%;
+    height: auto;
+    cursor: pointer;
+}
+
+
+.error-message {
+    color: red;
+}
+.captcha {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.captcha img{
+    order: 1;
+    margin-right: 10px; 
+    border-radius: 4px;
+}
+
+.captcha input{
+    order: 2; 
+    flex-grow: 1; 
+    margin-right: 10px;
+    width: 100px;
+    height: 50px;
+    font-size:15px;
+    border-radius: 4px;
+    border:1px solid #888;
+    padding:10px;
+}
+
+.captcha input:focus{
+    color: #495057;
+    background-color: #fff;
+    border-color: #80bdff;
+    outline: 0;
+    box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25);
+}
+.captcha input label{
+    display:block;
+    font-size:15px;
+    color:#111;
+    margin-bottom:10px;
+}
+ 
+.captcha button {
+    order: 3;
+    border-radius: 4px;
 }

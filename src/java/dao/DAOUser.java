@@ -97,6 +97,11 @@ public class DAOUser extends DBContextSQLserver {
         return null;
     }
     
+    public Vector<User> getAllUser() {
+        String sql = "select * from UserInfor";
+        return getAll(sql);
+    }
+    
     public User findByID(int id) {
         String sql = "SELECT * FROM UserInfor where ID = ?";
         try {

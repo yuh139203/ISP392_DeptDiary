@@ -64,16 +64,16 @@ public class LoginController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String captchaText = Captcha.generateCaptchaText();
-
-        // Lưu CAPTCHA text vào session để kiểm tra sau này
-        HttpSession session = request.getSession();
-        session.setAttribute("captchaText", captchaText);
-        BufferedImage image = Captcha.generateCaptchaImage(captchaText);
-        response.setContentType("image/png");
-        OutputStream os = response.getOutputStream();
-        ImageIO.write(image, "png", os);
-        os.close();
+//        String captchaText = Captcha.generateCaptchaText();
+//
+//        // Lưu CAPTCHA text vào session để kiểm tra sau này
+//        HttpSession session = request.getSession();
+//        session.setAttribute("captchaText", captchaText);
+//        BufferedImage image = Captcha.generateCaptchaImage(captchaText);
+//        response.setContentType("image/png");
+//        OutputStream os = response.getOutputStream();
+//        ImageIO.write(image, "png", os);
+//        os.close();
         request.getRequestDispatcher("login.jsp").forward(request, response);
     }
 
@@ -115,7 +115,7 @@ public class LoginController extends HttpServlet {
         response.addCookie(cr);
 
         if ("true".equals(request.getParameter("refreshCaptcha"))) {
-            // Redirect back to the login page to regenerate the captcha
+            // Redirect back to the captcha page to regenerate the captcha
             response.sendRedirect("login.jsp");
             return;
         }
@@ -129,8 +129,15 @@ public class LoginController extends HttpServlet {
         } else {
             //tim thay
             if (captchaInput != null && captchaInput.equals(captchaGen)) {
-                session.setAttribute("userLogin", u);
-                response.sendRedirect("welcome.jsp");
+                if (u.getIdRole() == 2) {
+                    // Nếu idRole là 2, chuyển hướng đến trang admin.jsp
+                    response.sendRedirect("admin.jsp");
+                    session.setAttribute("userLogin", u);
+                } else {
+                    // Nếu idRole không phải là 2, chuyển hướng đến trang welcome.jsp
+                    session.setAttribute("userLogin", u);
+                    response.sendRedirect("welcome.jsp");
+                }
             } else {
                 request.setAttribute("error", "Captcha invalid!!!");
                 request.getRequestDispatcher("login.jsp").forward(request, response);
