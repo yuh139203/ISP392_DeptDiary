@@ -8,23 +8,18 @@ import dao.DAOUser;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import java.awt.image.BufferedImage;
-import java.io.OutputStream;
-import javax.imageio.ImageIO;
 import model.User;
-import utils.Captcha;
 import utils.MD5;
 
 /**
  *
  * @author yuh
  */
-public class LoginController extends HttpServlet {
+public class AdminChangeUserPassController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -43,10 +38,10 @@ public class LoginController extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet LoginController</title>");
+            out.println("<title>Servlet AdminChangeUserPassController</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet LoginController at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet AdminChangeUserPassController at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -64,7 +59,11 @@ public class LoginController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.getRequestDispatcher("login.jsp").forward(request, response);
+        DAOUser userDao = new DAOUser();
+        int id = Integer.parseInt(request.getParameter("id"));
+        User user = userDao.findByID(id);
+        request.setAttribute("user", user);
+        request.getRequestDispatcher("adminChangePassUser.jsp").forward(request, response);
     }
 
     /**
@@ -78,61 +77,37 @@ public class LoginController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        processRequest(request, response);
         HttpSession session = request.getSession();
-        String user = request.getParameter("username");
-        String pass = request.getParameter("password");
-        String rem = request.getParameter("rem");
-        String captchaInput = request.getParameter("captchaInput");
-        String captchaGen = (String) session.getAttribute("captchaText");
-        String encryptedPassword = MD5.hashPassword(pass);
+        DAOUser userDao = new DAOUser();
 
-        //tao cookie
-        Cookie cu = new Cookie("cuser", user);
-        Cookie cp = new Cookie("cpass", pass);
-        Cookie cr = new Cookie("crem", rem);
-
-        if (rem != null) {
-            cu.setMaxAge(60 * 60 * 24 * 7); //7 ngay
-            cp.setMaxAge(60 * 60 * 24 * 7); //7 ngay
-            // cr.setMaxAge(60 * 60 * 24 * 7); //7 ngay
-        } else {// khong tich
-            cu.setMaxAge(0);
-            cp.setMaxAge(0);
-            cr.setMaxAge(0);
-        }
-        response.addCookie(cu);//luu vao browser
-        response.addCookie(cp);
-        response.addCookie(cr);
-
-        if ("true".equals(request.getParameter("refreshCaptcha"))) {
-            // Redirect back to the captcha page to regenerate the captcha
-            response.sendRedirect("login.jsp");
-            return;
-        }
-
-        DAOUser daoUser = new DAOUser();
-        User u = daoUser.checkExistentUser(user, encryptedPassword);
-        if (u == null) {
-            //khong thay
-            request.setAttribute("error", "Username or Password invalid!!!");
-            request.getRequestDispatcher("login.jsp").forward(request, response);
+        int userId = Integer.parseInt(request.getParameter("id"));
+        String oldPassword = request.getParameter("oldPassword");
+        String newPassword = request.getParameter("newPassword");
+        String retypePassword = request.getParameter("retypePassword");
+        User user = userDao.findByID(userId);
+        request.setAttribute("user", user);
+        if (newPassword.isEmpty() || retypePassword.isEmpty()) {
+            request.setAttribute("notificationError", "New password and re-type password must not be blank");
+        } else if (MD5.hashPassword(newPassword).equals(oldPassword)) {
+            request.setAttribute("notificationError", "New password must not be the same as old password");
+        } else if (!newPassword.equals(retypePassword)) {
+            request.setAttribute("notificationError", "Re-type password must be the same as new password");
         } else {
-            //tim thay
-            if (captchaInput != null && captchaInput.equals(captchaGen)) {
-                if (u.getIdRole() == 2) {
-                    // Nếu idRole là 2, chuyển hướng đến trang admin.jsp
-                    response.sendRedirect("admin.jsp");
-                    session.setAttribute("userLogin", u);
-                } else {
-                    // Nếu idRole không phải là 2, chuyển hướng đến trang welcome.jsp
-                    session.setAttribute("userLogin", u);
-                    response.sendRedirect("welcome.jsp");
-                }
+//            User user = userDao.findByID(userId);
+//            request.setAttribute("user", user);
+            String encryptedPassword = MD5.hashPassword(newPassword);
+            user.setPassWord(encryptedPassword);
+            int updatePassword = userDao.updatePassWord(user);
+            if (updatePassword == 1) {
+                request.setAttribute("notification", "Update password success");
             } else {
-                request.setAttribute("error", "Captcha invalid!!!");
-                request.getRequestDispatcher("login.jsp").forward(request, response);
+                request.setAttribute("notificationError", "Update password fail.");
             }
+            request.getRequestDispatcher("adminChangePassUser.jsp").forward(request, response);
         }
+        request.getRequestDispatcher("adminChangePassUser.jsp").forward(request, response);
+
     }
 
     /**

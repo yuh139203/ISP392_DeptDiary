@@ -78,7 +78,7 @@
                     <td>${user.phoneNumber}</td>
                     <td>${user.email}</td>
                     <td>${user.address}</td>
-                    <td><button><a href="profile?id=${user.id}">Update</a></button></td>
+                    <td><button><a href="edit_profile_user?id=${user.id}">Update</a></button></td>
                 </tr>
             </c:forEach>
         </tbody>

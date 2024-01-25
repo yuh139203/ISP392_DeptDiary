@@ -8,23 +8,23 @@ import dao.DAOUser;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import java.awt.image.BufferedImage;
-import java.io.OutputStream;
-import javax.imageio.ImageIO;
+import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.TimeZone;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import model.User;
-import utils.Captcha;
-import utils.MD5;
 
 /**
  *
  * @author yuh
  */
-public class LoginController extends HttpServlet {
+public class EditProfileUserController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -43,10 +43,10 @@ public class LoginController extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet LoginController</title>");
+            out.println("<title>Servlet EditProfileUserController</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet LoginController at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet EditProfileUserController at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -64,7 +64,13 @@ public class LoginController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.getRequestDispatcher("login.jsp").forward(request, response);
+        HttpSession session = request.getSession();
+        User userLogin = (User) session.getAttribute("userLogin");
+        int id = userLogin.getId();
+        DAOUser daoUser = new DAOUser();
+        User user = daoUser.findByID(id);
+        request.setAttribute("user", user);
+        request.getRequestDispatcher("editProfileUser.jsp").forward(request, response);
     }
 
     /**
@@ -79,60 +85,41 @@ public class LoginController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();
-        String user = request.getParameter("username");
-        String pass = request.getParameter("password");
-        String rem = request.getParameter("rem");
-        String captchaInput = request.getParameter("captchaInput");
-        String captchaGen = (String) session.getAttribute("captchaText");
-        String encryptedPassword = MD5.hashPassword(pass);
 
-        //tao cookie
-        Cookie cu = new Cookie("cuser", user);
-        Cookie cp = new Cookie("cpass", pass);
-        Cookie cr = new Cookie("crem", rem);
-
-        if (rem != null) {
-            cu.setMaxAge(60 * 60 * 24 * 7); //7 ngay
-            cp.setMaxAge(60 * 60 * 24 * 7); //7 ngay
-            // cr.setMaxAge(60 * 60 * 24 * 7); //7 ngay
-        } else {// khong tich
-            cu.setMaxAge(0);
-            cp.setMaxAge(0);
-            cr.setMaxAge(0);
+        int id = Integer.parseInt(request.getParameter("id"));
+        String firstname = request.getParameter("firstname");
+        String lastname = request.getParameter("lastname");
+        String dob = request.getParameter("dob");
+        String address = request.getParameter("address");
+        String phone = request.getParameter("phone");
+        String email = request.getParameter("email");
+        String username = request.getParameter("username");
+        String password = request.getParameter("password");
+        User user = new User();
+        user.setId(id);
+        user.setFirstName(firstname);
+        user.setAddress(address);
+        user.setLastName(lastname);
+        user.setPhoneNumber(phone);
+        user.setEmail(email);
+        user.setUserName(username);
+        user.setPassWord(password);
+        try {
+            user.setDateOfBirth(convertStringToDate(dob));
+        } catch (ParseException ex) {
+            Logger.getLogger(EditProfileUserController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        response.addCookie(cu);//luu vao browser
-        response.addCookie(cp);
-        response.addCookie(cr);
-
-        if ("true".equals(request.getParameter("refreshCaptcha"))) {
-            // Redirect back to the captcha page to regenerate the captcha
-            response.sendRedirect("login.jsp");
-            return;
-        }
-
-        DAOUser daoUser = new DAOUser();
-        User u = daoUser.checkExistentUser(user, encryptedPassword);
-        if (u == null) {
-            //khong thay
-            request.setAttribute("error", "Username or Password invalid!!!");
-            request.getRequestDispatcher("login.jsp").forward(request, response);
+        DAOUser userDAO = new DAOUser();
+        int update = userDAO.updateProfile(user);
+        User updatedUser = userDAO.findByID(id);
+        request.setAttribute("user", updatedUser);
+        if (update == 1) {
+            request.setAttribute("noti", "Update success!");
         } else {
-            //tim thay
-            if (captchaInput != null && captchaInput.equals(captchaGen)) {
-                if (u.getIdRole() == 2) {
-                    // Nếu idRole là 2, chuyển hướng đến trang admin.jsp
-                    response.sendRedirect("admin.jsp");
-                    session.setAttribute("userLogin", u);
-                } else {
-                    // Nếu idRole không phải là 2, chuyển hướng đến trang welcome.jsp
-                    session.setAttribute("userLogin", u);
-                    response.sendRedirect("welcome.jsp");
-                }
-            } else {
-                request.setAttribute("error", "Captcha invalid!!!");
-                request.getRequestDispatcher("login.jsp").forward(request, response);
-            }
+            request.setAttribute("noti", "Update fail!");
         }
+        request.getRequestDispatcher("editProfileUser.jsp").forward(request, response);
+
     }
 
     /**
@@ -144,5 +131,12 @@ public class LoginController extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
+
+    public Date convertStringToDate(String date) throws ParseException {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        sdf.setTimeZone(TimeZone.getTimeZone("Asia/Ho_Chi_Minh"));
+        java.util.Date dateConvert = sdf.parse(date);
+        return new java.sql.Date(dateConvert.getTime());
+    }
 
 }

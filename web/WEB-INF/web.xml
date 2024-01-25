@@ -32,6 +32,14 @@
         <servlet-name>ListUserController</servlet-name>
         <servlet-class>controller.ListUserController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>EditProfileUserController</servlet-name>
+        <servlet-class>controller.EditProfileUserController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AdminChangeUserPassController</servlet-name>
+        <servlet-class>controller.AdminChangeUserPassController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginController</servlet-name>
         <url-pattern>/login</url-pattern>
@@ -103,6 +111,14 @@
     <servlet-mapping>
         <servlet-name>ListUserController</servlet-name>
         <url-pattern>/list_user</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EditProfileUserController</servlet-name>
+        <url-pattern>/edit_profile_user</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AdminChangeUserPassController</servlet-name>
+        <url-pattern>/admin_change_user_pass</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

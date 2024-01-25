@@ -21,9 +21,15 @@ import javax.mail.internet.MimeMessage;
 public class SendMail {
 
     public static String generateRandomToken() {
+        StringBuilder otp = new StringBuilder();
         Random random = new Random();
-        return String.valueOf(1000+random.nextInt(9999));
+        for (int i = 0; i < 4; i++) {
+            int digit = random.nextInt(10);
+            otp.append(digit);
+        }
+        return otp.toString();
     }
+    
 
     public static void sendMail(String recepient, String token) throws Exception {
         System.out.println("Prepare to sent email.");
@@ -64,7 +70,17 @@ public class SendMail {
             e.printStackTrace();
         }
     }
-    
+     public static void main(String[] args) {
+        // Sử dụng hàm để tạo mã OTP và in ra kết quả
+        String otpCode = generateRandomToken();
+        System.out.println("Mã OTP mới của bạn là: " + otpCode);
+
+        // Kiểm tra hàm generateOTP nhiều lần
+        for (int i = 0; i < 5; i++) {
+            String newOTP = generateRandomToken();
+            System.out.println("Mã OTP mới #" + (i + 1) + ": " + newOTP);
+        }
+    }
 
     
 
