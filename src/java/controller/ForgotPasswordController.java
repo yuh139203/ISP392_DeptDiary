@@ -18,25 +18,12 @@ public class ForgotPasswordController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String captchaText = Captcha.generateCaptchaText();
-
-        // Lưu CAPTCHA text vào session để kiểm tra sau này
-        HttpSession session = request.getSession();
-        session.setAttribute("captchaText", captchaText);
-
-        // Tạo hình ảnh CAPTCHA và gửi về client
-        BufferedImage image = Captcha.generateCaptchaImage(captchaText);
-        response.setContentType("image/png");
-        OutputStream os = response.getOutputStream();
-        ImageIO.write(image, "png", os);
-        os.close();
         request.getRequestDispatcher("forgotPassword.jsp").forward(request, response);
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-
         HttpSession session = request.getSession();
         String token = SendMail.generateRandomToken();
         String user = request.getParameter("username");

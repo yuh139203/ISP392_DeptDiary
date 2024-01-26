@@ -51,49 +51,91 @@ public class OTPController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         request.getRequestDispatcher("otp.jsp").forward(request, response);
-        String enteredToken = request.getParameter("enteredToken");
+
     }
 
     @Override
+//    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+//            throws ServletException, IOException {
+//
+//        DAOUser daoUser = new DAOUser();
+//        HttpSession session = request.getSession();
+//        String emailSignUp = (String) session.getAttribute("emailSignUp");
+//        String username = (String) session.getAttribute("username");
+//        String password = (String) session.getAttribute("password");
+//        String enteredToken = request.getParameter("enteredToken");
+//
+//        // Kiểm tra xem token đã được tạo và lưu trong phiên làm việc chưa
+//        String generatedToken = (String) session.getAttribute("generatedToken");
+//        // Nếu token không tồn tại trong phiên làm việc, hãy tạo một token mới
+//        if (generatedToken == null) {
+//            generatedToken = SendMail.generateRandomToken();
+//            try {
+//                SendMail.sendMail(emailSignUp, generatedToken);
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
+//            // Lưu trữ token được tạo trong phiên làm việc
+//            session.setAttribute("generatedToken", generatedToken);
+//        }
+//        System.out.println("token input "+enteredToken);
+//        System.out.println("token gen "+ generatedToken);
+//        System.out.println("username "+ username);
+//        System.out.println("password "+ password);
+//        System.out.println("emailSignUp "+ emailSignUp);
+//        
+//        if (enteredToken != null && enteredToken.equals(generatedToken)) {
+//            String encryptedPassword = MD5.hashPassword(password);
+//            daoUser.insertUser(username, encryptedPassword, emailSignUp);
+//            response.sendRedirect("login.jsp");
+//        }
+//        else {
+//            request.setAttribute("error", "Token không hợp lệ!!!");
+//            request.getRequestDispatcher("otp.jsp").forward(request, response);
+//        }
+//    }
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+        throws ServletException, IOException {
 
-        DAOUser daoUser = new DAOUser();
-        HttpSession session = request.getSession();
-        String emailSignUp = (String) session.getAttribute("emailSignUp");
-        String username = (String) session.getAttribute("username");
-        String password = (String) session.getAttribute("password");
-        String enteredToken = request.getParameter("enteredToken");
+    DAOUser daoUser = new DAOUser();
+    HttpSession session = request.getSession();
+    String emailSignUp = (String) session.getAttribute("emailSignUp");
+    String username = (String) session.getAttribute("username");
+    String password = (String) session.getAttribute("password");
+    String enteredToken = request.getParameter("enteredToken");
 
-        // Kiểm tra xem token đã được tạo và lưu trong phiên làm việc chưa
-        String generatedToken = (String) session.getAttribute("generatedToken");
-        // Nếu token không tồn tại trong phiên làm việc, hãy tạo một token mới
-        if (generatedToken == null) {
-            generatedToken = SendMail.generateRandomToken();
-            try {
-                SendMail.sendMail(emailSignUp, generatedToken);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            // Lưu trữ token được tạo trong phiên làm việc
-            session.setAttribute("generatedToken", generatedToken);
+    // Kiểm tra xem token đã được tạo và lưu trong phiên làm việc chưa
+    String generatedToken = (String) session.getAttribute("generatedToken");
+    // Nếu token không tồn tại trong phiên làm việc, hãy tạo một token mới
+    if (generatedToken == null) {
+        generatedToken = SendMail.generateRandomToken();
+        try {
+            SendMail.sendMail(emailSignUp, generatedToken);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        System.out.println("token input "+enteredToken);
-        System.out.println("token gen "+ generatedToken);
-        System.out.println("username "+ username);
-        System.out.println("password "+ password);
-        System.out.println("emailSignUp "+ emailSignUp);
-        
-        if (enteredToken != null && enteredToken.equals(generatedToken)) {
-            String encryptedPassword = MD5.hashPassword(password);
-            daoUser.insertUser(username, encryptedPassword, emailSignUp);
-            response.sendRedirect("login.jsp");
-        }
-        else {
-            request.setAttribute("error", "Token không hợp lệ!!!");
-            request.getRequestDispatcher("otp.jsp").forward(request, response);
-        }
+        // Lưu trữ token được tạo trong phiên làm việc
+        session.setAttribute("generatedToken", generatedToken);
     }
+    System.out.println("token input " + enteredToken);
+    System.out.println("token gen " + generatedToken);
+    System.out.println("username " + username);
+    System.out.println("password " + password);
+    System.out.println("emailSignUp " + emailSignUp);
+
+    // Check if enteredToken is empty before comparing
+    if (enteredToken != null && !enteredToken.isEmpty() && enteredToken.equals(generatedToken)) {
+        String encryptedPassword = MD5.hashPassword(password);
+        daoUser.insertUser(username, encryptedPassword, emailSignUp);
+        response.sendRedirect("login.jsp");
+    } else {
+        // Only set the error attribute if the enteredToken is not empty
+        if (enteredToken != null && !enteredToken.isEmpty()) {
+            request.setAttribute("error", "Token không hợp lệ!!!");
+        }
+        request.getRequestDispatcher("otp.jsp").forward(request, response);
+    }
+}
 
     /**
      * Returns a short description of the servlet.

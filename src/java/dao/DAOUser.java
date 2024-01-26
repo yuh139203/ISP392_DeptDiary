@@ -98,7 +98,7 @@ public class DAOUser extends DBContextSQLserver {
     }
     
     public Vector<User> getAllUser() {
-        String sql = "select * from UserInfor";
+        String sql = "select * from UserInfor where IDRole=1";
         return getAll(sql);
     }
     

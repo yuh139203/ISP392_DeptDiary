@@ -32,13 +32,13 @@
                     </div> 
 
                 </div>
-                <div>
-                    <img src="login" alt="CAPTCHA">
-                    <input class="input" type="text" name="captchaInput" placeholder="Enter CAPTCHA" required>
+                <div class="captcha"> 
+                    <img src="captcha" alt="CAPTCHA">
+                    <input class="input" type="text" name="captchaInput" placeholder="Enter captcha" >
                     <c:if test="${not empty captchaError}">
                         <div style="color: red;">${captchaError}</div>
                     </c:if>
-                    <button type="submit" name="refreshCaptcha" value="true">Refresh Captcha</button>
+                    <img class="captcha-image" src="assets/img/refreshIcon.png" alt="Refresh Captcha" class="refresh-icon" onclick="refreshCaptcha()">
                 </div>
 
                     <button id="forgot-btn"> Confirm</button>

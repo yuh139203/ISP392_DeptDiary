@@ -104,11 +104,7 @@ public class LoginController extends HttpServlet {
         response.addCookie(cp);
         response.addCookie(cr);
 
-        if ("true".equals(request.getParameter("refreshCaptcha"))) {
-            // Redirect back to the captcha page to regenerate the captcha
-            response.sendRedirect("login.jsp");
-            return;
-        }
+
 
         DAOUser daoUser = new DAOUser();
         User u = daoUser.checkExistentUser(user, encryptedPassword);

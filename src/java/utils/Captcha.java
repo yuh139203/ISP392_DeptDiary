@@ -40,7 +40,7 @@ public class Captcha {
         ((Graphics2D) g).setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         ((Graphics2D) g).setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
 
-        g.setColor(Color.WHITE);
+        g.setColor(Color.DARK_GRAY);
         g.fillRect(0, 0, width, height);
 
         Random random = new Random();
