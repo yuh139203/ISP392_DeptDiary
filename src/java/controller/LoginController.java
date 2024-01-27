@@ -18,7 +18,7 @@ import java.io.OutputStream;
 import javax.imageio.ImageIO;
 import model.User;
 import utils.Captcha;
-import utils.MD5;
+import utils.SHA256;
 
 /**
  *
@@ -84,7 +84,7 @@ public class LoginController extends HttpServlet {
         String rem = request.getParameter("rem");
         String captchaInput = request.getParameter("captchaInput");
         String captchaGen = (String) session.getAttribute("captchaText");
-        String encryptedPassword = MD5.hashPassword(pass);
+        String encryptedPassword = SHA256.hashPassword(pass);
 
         //tao cookie
         Cookie cu = new Cookie("cuser", user);

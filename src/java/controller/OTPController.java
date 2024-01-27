@@ -13,7 +13,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import utils.MD5;
+import utils.SHA256;
 
 /**
  *
@@ -85,7 +85,7 @@ public class OTPController extends HttpServlet {
 //        System.out.println("emailSignUp "+ emailSignUp);
 //        
 //        if (enteredToken != null && enteredToken.equals(generatedToken)) {
-//            String encryptedPassword = MD5.hashPassword(password);
+//            String encryptedPassword = SHA256.hashPassword(password);
 //            daoUser.insertUser(username, encryptedPassword, emailSignUp);
 //            response.sendRedirect("login.jsp");
 //        }
@@ -125,13 +125,13 @@ public class OTPController extends HttpServlet {
 
     // Check if enteredToken is empty before comparing
     if (enteredToken != null && !enteredToken.isEmpty() && enteredToken.equals(generatedToken)) {
-        String encryptedPassword = MD5.hashPassword(password);
+        String encryptedPassword = SHA256.hashPassword(password);
         daoUser.insertUser(username, encryptedPassword, emailSignUp);
         response.sendRedirect("login.jsp");
     } else {
         // Only set the error attribute if the enteredToken is not empty
         if (enteredToken != null && !enteredToken.isEmpty()) {
-            request.setAttribute("error", "Token không hợp lệ!!!");
+            request.setAttribute("error", "Token incorrect");
         }
         request.getRequestDispatcher("otp.jsp").forward(request, response);
     }

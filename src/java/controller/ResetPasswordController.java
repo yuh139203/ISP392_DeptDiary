@@ -5,7 +5,7 @@ import java.io.*;
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import model.User;
-import utils.MD5;
+import utils.SHA256;
 
 public class ResetPasswordController extends HttpServlet {
 
@@ -41,7 +41,7 @@ public class ResetPasswordController extends HttpServlet {
             response.sendRedirect("reset_password?id=" + userId);
         } else {
             User user = userDao.findByID(userId);
-            String encryptedPassword = MD5.hashPassword(newPassword);
+            String encryptedPassword = SHA256.hashPassword(newPassword);
             user.setPassWord(encryptedPassword);
             
             int updatePassword = userDao.updatePassWord(user);

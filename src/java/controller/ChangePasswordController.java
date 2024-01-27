@@ -12,7 +12,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import model.User;
-import utils.MD5;
+import utils.SHA256;
 
 /**
  *
@@ -76,14 +76,14 @@ public class ChangePasswordController extends HttpServlet {
         request.setAttribute("user", user);
         if (newPassword.isEmpty() || retypePassword.isEmpty()) {
             request.setAttribute("notificationError", "New password and re-type password must not be blank");
-        } else if (MD5.hashPassword(newPassword).equals(oldPassword)) {
+        } else if (SHA256.hashPassword(newPassword).equals(oldPassword)) {
             request.setAttribute("notificationError", "New password must not be the same as old password");
         } else if (!newPassword.equals(retypePassword)) {
             request.setAttribute("notificationError", "Re-type password must be the same as new password");
         } else {
 //            User user = userDao.findByID(userId);
 //            request.setAttribute("user", user);
-            String encryptedPassword = MD5.hashPassword(newPassword);
+            String encryptedPassword = SHA256.hashPassword(newPassword);
             user.setPassWord(encryptedPassword);
             int updatePassword = userDao.updatePassWord(user);
             if (updatePassword == 1) {

@@ -20,15 +20,7 @@ import javax.mail.internet.MimeMessage;
  */
 public class SendMail {
 
-    public static String generateRandomToken() {
-        StringBuilder otp = new StringBuilder();
-        Random random = new Random();
-        for (int i = 0; i < 4; i++) {
-            int digit = random.nextInt(10);
-            otp.append(digit);
-        }
-        return otp.toString();
-    }
+
     
 
     public static void sendMail(String recepient, String token) throws Exception {
@@ -84,4 +76,40 @@ public class SendMail {
 
     
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    public static String generateRandomToken() {
+        StringBuilder otp = new StringBuilder();
+        Random random = new Random();
+        for (int i = 0; i < 4; i++) {
+            int digit = random.nextInt(10);
+            otp.append(digit);
+        }
+        return otp.toString();
+    }
 }
