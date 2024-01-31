@@ -127,7 +127,8 @@ public class OTPController extends HttpServlet {
     if (enteredToken != null && !enteredToken.isEmpty() && enteredToken.equals(generatedToken)) {
         String encryptedPassword = SHA256.hashPassword(password);
         daoUser.insertUser(username, encryptedPassword, emailSignUp);
-        response.sendRedirect("login.jsp");
+        request.setAttribute("notif", "Successful registration");
+        request.getRequestDispatcher("login.jsp").forward(request, response);
     } else {
         // Only set the error attribute if the enteredToken is not empty
         if (enteredToken != null && !enteredToken.isEmpty()) {

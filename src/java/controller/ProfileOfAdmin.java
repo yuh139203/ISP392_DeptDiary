@@ -12,13 +12,19 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-
+import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.TimeZone;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import model.User;
 
 /**
  *
  * @author yuh
  */
-public class SignUpController extends HttpServlet {
+public class ProfileOfAdmin extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -37,10 +43,10 @@ public class SignUpController extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet SignUpController</title>");
+            out.println("<title>Servlet ProfileOfAdmin</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet SignUpController at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet ProfileOfAdmin at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -58,7 +64,13 @@ public class SignUpController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.getRequestDispatcher("signup.jsp").forward(request, response);
+        HttpSession session = request.getSession();
+        User userLogin = (User) session.getAttribute("userLogin");
+        int id = userLogin.getId();
+        DAOUser daoUser = new DAOUser();
+        User user = daoUser.findByID(id);
+        request.setAttribute("user", user);
+        request.getRequestDispatcher("profileOfAdmin.jsp").forward(request, response);
     }
 
     /**
@@ -72,51 +84,42 @@ public class SignUpController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        //get về giá trị username và password và gmail
         HttpSession session = request.getSession();
-        String username = request.getParameter("name");
-        String password = request.getParameter("password");
+
+        int id = Integer.parseInt(request.getParameter("id"));
+        String firstname = request.getParameter("firstname");
+        String lastname = request.getParameter("lastname");
+        String dob = request.getParameter("dob");
+        String address = request.getParameter("address");
+        String phone = request.getParameter("phone");
         String email = request.getParameter("email");
-        String confirmPassword = request.getParameter("confirmPassword");
-        String captchaInput = request.getParameter("captchaInput");
-        String captchaGen = (String) session.getAttribute("captchaText");
-          
-        
-        // đối chứng 2 mật khẩu xem có đúng không
-        if (!password.equals(confirmPassword)) {
-            // Nếu mật khẩu không khớp, gửi thông báo lỗi
-            request.setAttribute("username", username);
-            request.setAttribute("password", password);
-            request.setAttribute("email", email);
-            request.setAttribute("confirmPassword", confirmPassword);
-            request.setAttribute("confirmPasswordErrorMessage", "The confirmation password doesn't match.");
-            request.getRequestDispatcher("signup.jsp").forward(request, response);
-            return;
+        String username = request.getParameter("username");
+        String password = request.getParameter("password");
+        User user = new User();
+        user.setId(id);
+        user.setFirstName(firstname);
+        user.setAddress(address);
+        user.setLastName(lastname);
+        user.setPhoneNumber(phone);
+        user.setEmail(email);
+        user.setUserName(username);
+        user.setPassWord(password);
+        try {
+            user.setDateOfBirth(convertStringToDate(dob));
+        } catch (ParseException ex) {
+            Logger.getLogger(UpdateProfileController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        // tạo đối tượng từ giữ liệu đã get về 
-        DAOUser daoUser = new DAOUser();
-        // check xem username đã tồn tại hay chưa    
-        if (daoUser.isUserNameExists(username)) {
-            request.setAttribute("username", username);
-            request.setAttribute("password", password);
-            request.setAttribute("email", email);
-            request.setAttribute("confirmPassword", confirmPassword);
-            request.setAttribute("userNameErrorMessage", "UserName is existed.");
-            request.getRequestDispatcher("signup.jsp").forward(request, response);
-            return;
+        DAOUser userDAO = new DAOUser();
+        int update = userDAO.updateProfile(user);
+        User updatedUser = userDAO.findByID(id);
+        request.setAttribute("user", updatedUser);
+        if (update == 1) {
+            request.setAttribute("noti", "Update success!");
+        } else {
+            request.setAttribute("noti", "Update fail!");
         }
+        request.getRequestDispatcher("profileOfAdmin.jsp").forward(request, response);
 
-
-        session.setAttribute("emailSignUp", email);   
-        session.setAttribute("username", username);   
-        session.setAttribute("password", password);
-        if (captchaInput != null && captchaInput.equals(captchaGen)) {
-                request.getRequestDispatcher("otp").forward(request, response);
-            } else {
-                request.setAttribute("error", "Captcha invalid!!!");
-                request.getRequestDispatcher("signup.jsp").forward(request, response);
-            }
-        
     }
 
     /**
@@ -128,5 +131,12 @@ public class SignUpController extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
+
+    public Date convertStringToDate(String date) throws ParseException {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        sdf.setTimeZone(TimeZone.getTimeZone("Asia/Ho_Chi_Minh"));
+        java.util.Date dateConvert = sdf.parse(date);
+        return new java.sql.Date(dateConvert.getTime());
+    }
 
 }

@@ -25,10 +25,10 @@
             <c:if test="${noti ne null}">
                 <p style="color: green;">${noti}</p>
             </c:if>
-                
+
             <form action="edit_profile_user" method="post">
 
-                <input type="hidden" name="id" value="${userLogin.id}">
+                <input type="hidden" name="id" value="${user.id}">
 
                 <div class="row">
                     <div class="col-md-6">
@@ -61,10 +61,20 @@
                     <input type="text" name="phone" value="${user.phoneNumber}" class="form-control" id="phone" placeholder="Phone Number">
                 </div>
 
-                <div class="form-group">
-                    <label for="email">Email</label>
-                    <input type="email" name="email" value="${user.email}" class="form-control" id="email" placeholder="Email">
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="email">Email</label>
+                        <input type="email" name="email" value="${user.email}" class="form-control" id="email" placeholder="Email">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="IDRole" >Set user type:</label>
+                        <select id="userType" name="idRole" class="form-control">
+                            <option value="1" ${user.idRole == 1 ? 'selected' : ''}>User</option>
+                            <option value="2" ${user.idRole == 2 ? 'selected' : ''}>Admin</option>
+                        </select>
+                    </div>
                 </div>
+
                 <button type="submit" class="btn btn-success">
                     <span style="color: white;">Update Profile &#10004;</span>
                 </button>

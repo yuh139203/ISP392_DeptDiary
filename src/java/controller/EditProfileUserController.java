@@ -43,7 +43,7 @@ public class EditProfileUserController extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet EditProfileUserController</title>");            
+            out.println("<title>Servlet EditProfileUserController</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet EditProfileUserController at " + request.getContextPath() + "</h1>");
@@ -64,9 +64,7 @@ public class EditProfileUserController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        HttpSession session = request.getSession();
-        User userLogin = (User) session.getAttribute("userLogin");
-        int id = userLogin.getId();
+        int id = Integer.parseInt(request.getParameter("id"));
         DAOUser daoUser = new DAOUser();
         User user = daoUser.findByID(id);
         request.setAttribute("user", user);
@@ -84,7 +82,6 @@ public class EditProfileUserController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        HttpSession session = request.getSession();
 
         int id = Integer.parseInt(request.getParameter("id"));
         String firstname = request.getParameter("firstname");
@@ -95,6 +92,8 @@ public class EditProfileUserController extends HttpServlet {
         String email = request.getParameter("email");
         String username = request.getParameter("username");
         String password = request.getParameter("password");
+        int idRole = Integer.parseInt(request.getParameter("idRole"));
+        
         User user = new User();
         user.setId(id);
         user.setFirstName(firstname);
@@ -104,6 +103,7 @@ public class EditProfileUserController extends HttpServlet {
         user.setEmail(email);
         user.setUserName(username);
         user.setPassWord(password);
+        user.setIdRole(idRole);
         try {
             user.setDateOfBirth(convertStringToDate(dob));
         } catch (ParseException ex) {

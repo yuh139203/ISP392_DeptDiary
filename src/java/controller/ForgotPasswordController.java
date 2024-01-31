@@ -5,13 +5,9 @@ import dao.DAOUser;
 import java.io.*;
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
-import java.awt.image.BufferedImage;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.imageio.ImageIO;
-
 import model.User;
-import utils.Captcha;
 
 public class ForgotPasswordController extends HttpServlet {
 

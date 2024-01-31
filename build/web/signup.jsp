@@ -53,7 +53,7 @@
                             <span class="error-message" style="color: red;">${confirmPasswordErrorMessage}</span>                            
                         </div>
                         <div class="captcha"> 
-                            <img src="captcha" alt="CAPTCHA">
+                            <img src="captcha" alt="CAPTCHA" style="border: 1px solid #000;">
                             <input class="input" type="text" name="captchaInput" placeholder="Enter captcha" >
                             <c:if test="${not empty captchaError}">
                                 <div style="color: red;">${captchaError}</div>

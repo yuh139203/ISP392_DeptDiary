@@ -9,6 +9,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -96,12 +98,12 @@ public class DAOUser extends DBContextSQLserver {
         }
         return null;
     }
-    
+
     public Vector<User> getAllUser() {
-        String sql = "select * from UserInfor where IDRole=1";
+        String sql = "select * from UserInfor where IDRole=1 and isDelete = 0";
         return getAll(sql);
     }
-    
+
     public User findByID(int id) {
         String sql = "SELECT * FROM UserInfor where ID = ?";
         try {
@@ -136,6 +138,7 @@ public class DAOUser extends DBContextSQLserver {
                 + "  , PhoneNumber = ?\n"
                 + "  , Email       = ?\n"
                 + "  , Address     = ?\n"
+                + "  , IDRole     = ?\n"
                 + "  , UpdatedAt   = getdate()\n"
                 + "WHERE ID = ?";
 
@@ -147,14 +150,15 @@ public class DAOUser extends DBContextSQLserver {
             ptm.setString(4, user.getPhoneNumber());
             ptm.setString(5, user.getEmail());
             ptm.setString(6, user.getAddress());
-            ptm.setInt(7, user.getId());
+            ptm.setInt(7, user.getIdRole());
+            ptm.setInt(8, user.getId());
             return ptm.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(DAOUser.class.getName()).log(Level.SEVERE, null, ex);
         }
         return -1;
     }
-    
+
     public int updatePassWord(User user) {
         String sql = "UPDATE UserInfor\n"
                 + "SET Password    = ?\n"
@@ -162,7 +166,7 @@ public class DAOUser extends DBContextSQLserver {
 
         try {
             PreparedStatement ptm = conn.prepareStatement(sql);
-            ptm.setString(1, user.getPassWord());     
+            ptm.setString(1, user.getPassWord());
             ptm.setInt(2, user.getId());
             return ptm.executeUpdate();
         } catch (SQLException ex) {
@@ -170,8 +174,7 @@ public class DAOUser extends DBContextSQLserver {
         }
         return -1;
     }
-    
-    
+
     public User findByUserName(String userName) {
         String query = "select * from UserInfor where UserName = ? ";
         try {
@@ -204,21 +207,20 @@ public class DAOUser extends DBContextSQLserver {
         }
         return null;
     }
-    
-    
+
     public boolean insertUser(String username, String password, String email) {
         int defaultRoleId = 1; // Mặc định role ID cho 'Base User'
         String createdBy = "System"; // Mặc định người tạo là 'System'
 
         String sql = "INSERT INTO UserInfor (UserName, Password, Email, IDRole, isDelete, CreatedAt, CreatedBy) "
                 + "VALUES (?, ?, ?, ?, ?, GETDATE(), ?)";
-        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+        try ( PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setString(1, username);
             ps.setString(2, password); // Nên mã hóa mật khẩu trước khi lưu
             ps.setString(3, email);
             ps.setInt(4, defaultRoleId); // Sử dụng role ID mặc định
             ps.setBoolean(5, false);
-            
+
             ps.setString(6, createdBy); // Đặt người tạo là 'System'
             int result = ps.executeUpdate();
             return result > 0;
@@ -227,27 +229,20 @@ public class DAOUser extends DBContextSQLserver {
             return false;
         }
     }
-    
+
+    public List<User> getListByPage(List<User> list, int start, int end) {
+        ArrayList<User> arr = new ArrayList<>();
+        for (int i = start; i < end; i++) {
+            arr.add(list.get(i));
+        }
+        return arr;
+    }
+
     public boolean isEmailExists(String email) {
         String sql = "SELECT COUNT(*) FROM UserInfor WHERE Email = ?";
-        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+        try ( PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setString(1, email);
-            try (ResultSet rs = ps.executeQuery()) {
-                if (rs.next()) {
-                    return rs.getInt(1) > 0;
-                }
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return false;
-    }
-    
-    public boolean isUserNameExists(String userName) {
-        String sql = "SELECT COUNT(*) FROM UserInfor WHERE UserName = ?";
-        try (PreparedStatement ps = conn.prepareStatement(sql)) {
-            ps.setString(1, userName);
-            try (ResultSet rs = ps.executeQuery()) {
+            try ( ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
                     return rs.getInt(1) > 0;
                 }
@@ -258,25 +253,53 @@ public class DAOUser extends DBContextSQLserver {
         return false;
     }
 
-    
+    public boolean isUserNameExists(String userName) {
+        String sql = "SELECT COUNT(*) FROM UserInfor WHERE UserName = ?";
+        try ( PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, userName);
+            try ( ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt(1) > 0;
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public int deleteUser(User user) {
+        String sql = "UPDATE UserInfor\n"
+                + "SET isDelete = ?\n"
+                + "WHERE ID = ?";
+        try {
+            PreparedStatement ptm = conn.prepareStatement(sql);
+            ptm.setInt(1, 1);
+            ptm.setInt(2, user.getId());
+            return ptm.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(DAOUser.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return -1;
+    }
 
     public static void main(String[] args) {
 
         DAOUser daoUser = new DAOUser();
-        String testUsername = "huy123";
-        String testPassword = "123456";
-        User user = daoUser.findByUserName(testUsername);
-        if (user != null) {
-            System.out.println("User found:");
-            System.out.println(user.toString());
-        } else {
-            System.out.println("User not found.");
-        }
+//        String testUsername = "huy123";
+//        String testPassword = "123456";
+//        User user = daoUser.findByUserName(testUsername);
+//        if (user != null) {
+//            System.out.println("User found:");
+//            System.out.println(user.toString());
+//        } else {
+//            System.out.println("User not found.");
+//        }
 
-//            Vector<User> vector = daoUser.getAll("select * from UserInfor");
-//            for (User users : vector) {
-//                System.out.println(users);
-//            }
+        Vector<User> vector = daoUser.getAllUser();
+        for (User users : vector) {
+            System.out.println(users);
+        }
     }
 
 }

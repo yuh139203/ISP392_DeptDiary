@@ -12,13 +12,14 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-
+import model.User;
+import utils.SHA256;
 
 /**
  *
  * @author yuh
  */
-public class SignUpController extends HttpServlet {
+public class ChangePasswordAdmin extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -37,10 +38,10 @@ public class SignUpController extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet SignUpController</title>");
+            out.println("<title>Servlet ChangePasswordAdmin</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet SignUpController at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet ChangePasswordAdmin at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -58,7 +59,11 @@ public class SignUpController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.getRequestDispatcher("signup.jsp").forward(request, response);
+        DAOUser userDao = new DAOUser();
+        int id = Integer.parseInt(request.getParameter("id"));
+        User user = userDao.findByID(id);
+        request.setAttribute("user", user);
+        request.getRequestDispatcher("adminChangePassword.jsp").forward(request, response);
     }
 
     /**
@@ -72,51 +77,34 @@ public class SignUpController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        //get về giá trị username và password và gmail
+        processRequest(request, response);
         HttpSession session = request.getSession();
-        String username = request.getParameter("name");
-        String password = request.getParameter("password");
-        String email = request.getParameter("email");
-        String confirmPassword = request.getParameter("confirmPassword");
-        String captchaInput = request.getParameter("captchaInput");
-        String captchaGen = (String) session.getAttribute("captchaText");
-          
-        
-        // đối chứng 2 mật khẩu xem có đúng không
-        if (!password.equals(confirmPassword)) {
-            // Nếu mật khẩu không khớp, gửi thông báo lỗi
-            request.setAttribute("username", username);
-            request.setAttribute("password", password);
-            request.setAttribute("email", email);
-            request.setAttribute("confirmPassword", confirmPassword);
-            request.setAttribute("confirmPasswordErrorMessage", "The confirmation password doesn't match.");
-            request.getRequestDispatcher("signup.jsp").forward(request, response);
-            return;
-        }
-        // tạo đối tượng từ giữ liệu đã get về 
-        DAOUser daoUser = new DAOUser();
-        // check xem username đã tồn tại hay chưa    
-        if (daoUser.isUserNameExists(username)) {
-            request.setAttribute("username", username);
-            request.setAttribute("password", password);
-            request.setAttribute("email", email);
-            request.setAttribute("confirmPassword", confirmPassword);
-            request.setAttribute("userNameErrorMessage", "UserName is existed.");
-            request.getRequestDispatcher("signup.jsp").forward(request, response);
-            return;
-        }
+        DAOUser userDao = new DAOUser();
 
-
-        session.setAttribute("emailSignUp", email);   
-        session.setAttribute("username", username);   
-        session.setAttribute("password", password);
-        if (captchaInput != null && captchaInput.equals(captchaGen)) {
-                request.getRequestDispatcher("otp").forward(request, response);
+        int userId = Integer.parseInt(request.getParameter("id"));
+        String oldPassword = request.getParameter("oldPassword");
+        String newPassword = request.getParameter("newPassword");
+        String retypePassword = request.getParameter("retypePassword");
+        User user = userDao.findByID(userId);
+        request.setAttribute("user", user);
+        if (newPassword.isEmpty() || retypePassword.isEmpty()) {
+            request.setAttribute("notificationError", "New password and re-type password must not be blank");
+        } else if (SHA256.hashPassword(newPassword).equals(oldPassword)) {
+            request.setAttribute("notificationError", "New password must not be the same as old password");
+        } else if (!newPassword.equals(retypePassword)) {
+            request.setAttribute("notificationError", "Re-type password must be the same as new password");
+        } else {
+            String encryptedPassword = SHA256.hashPassword(newPassword);
+            user.setPassWord(encryptedPassword);
+            int updatePassword = userDao.updatePassWord(user);
+            if (updatePassword == 1) {
+                request.setAttribute("notification", "Update password success");
             } else {
-                request.setAttribute("error", "Captcha invalid!!!");
-                request.getRequestDispatcher("signup.jsp").forward(request, response);
+                request.setAttribute("notificationError", "Update password fail.");
             }
-        
+            request.getRequestDispatcher("adminChangePassword.jsp").forward(request, response);
+        }
+        request.getRequestDispatcher("adminChangePassword.jsp").forward(request, response);
     }
 
     /**

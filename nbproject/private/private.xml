@@ -1,11 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
-    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="1">
+        <file>
+            <url>src/java/controller/EditProfileUserController.java</url>
+            <bookmark id="1">
+                <name/>
+                <line>65</line>
+                <key/>
+            </bookmark>
+        </file>
+    </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/FPT%20University/Spring_2024/ISP392/Project/ISP392_DeptDiary/src/java/utils/SendMail.java</file>
+            <file>file:/D:/FPT%20University/Spring_2024/ISP392/Project/ISP392_DeptDiary/src/java/controller/ForgotPasswordController.java</file>
+            <file>file:/D:/FPT%20University/Spring_2024/ISP392/Project/ISP392_DeptDiary/src/java/controller/TokenController.java</file>
             <file>file:/D:/FPT%20University/Spring_2024/ISP392/Project/ISP392_DeptDiary/src/java/controller/ResetPasswordController.java</file>
-            <file>file:/D:/FPT%20University/Spring_2024/ISP392/Project/ISP392_DeptDiary/src/java/utils/SHA256.java</file>
+            <file>file:/D:/FPT%20University/Spring_2024/ISP392/Project/ISP392_DeptDiary/src/java/controller/SignUpController.java</file>
+            <file>file:/D:/FPT%20University/Spring_2024/ISP392/Project/ISP392_DeptDiary/src/java/controller/OTPController.java</file>
+            <file>file:/D:/FPT%20University/Spring_2024/ISP392/Project/ISP392_DeptDiary/web/token.jsp</file>
         </group>
     </open-files>
 </project-private>

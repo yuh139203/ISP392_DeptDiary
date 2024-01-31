@@ -15,12 +15,12 @@ public class SHA256 {
     
     public static void main(String[] args) {
         // Test password
-        String passwordToHash = "admin";
+        String passwordToHash = "12345678";
         String hashedPassword = hashPassword(passwordToHash);
         System.out.println("Original Password: " + passwordToHash);
         System.out.println("Hashed Password  : " + hashedPassword);
         
-        String passwordToHash2 = "admin";
+        String passwordToHash2 = "12345678";
         String hashedPassword2 = hashPassword(passwordToHash);
         System.out.println("Original Password 2: " + passwordToHash2);
         System.out.println("Hashed Password  2: " + hashedPassword2);

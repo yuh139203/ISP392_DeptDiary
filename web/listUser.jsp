@@ -3,85 +3,60 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
-<head>
-    <meta charset="UTF-8">
-    <title>Update Employee</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            margin: 0;
-            padding: 0;
-        }
+    <head>
+        <meta charset="UTF-8">
+        <title>List of Users</title>
+        <link href="assets/img/logo.png" rel="icon">
+        <link href="css/listUser.css" rel="stylesheet">
+    </head>
+    <body>
+           
+        <h1 class="title">List of users</h1>
+        <p style="color: green;">${noti}</p>
+        <c:set var="page" value="${page}" />
 
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
-
-        th, td {
-            padding: 10px;
-            text-align: left;
-            border: 1px solid #ddd;
-        }
-
-        th {
-            background-color: #4CAF50;
-            color: white;
-        }
-
-        tr:hover {
-            background-color: #f5f5f5;
-        }
-
-        button {
-            background-color: #008CBA;
-            color: white;
-            padding: 8px 12px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-
-        a {
-            text-decoration: none;
-            color: white;
-        }
-
-        button:hover {
-            background-color: #005a75;
-        }
-    </style>
-</head>
-<body>
-    <table>
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>First Name</th>
-                <th>Last Name</th>
-                <th>Date of Birth</th>
-                <th>Phone Number</th>
-                <th>Email</th>
-                <th>Address</th>
-                <th>Action</th>
-            </tr>
-        </thead>
-        <tbody>
-            <c:forEach var="user" items="${users}">
+        <table >
+            <thead>
                 <tr>
-                    <td>${user.id}</td>
-                    <td>${user.firstName}</td>
-                    <td>${user.lastName}</td>
-                    <td>${user.dateOfBirth}</td>
-                    <td>${user.phoneNumber}</td>
-                    <td>${user.email}</td>
-                    <td>${user.address}</td>
-                    <td><button><a href="edit_profile_user?id=${user.id}">Update</a></button></td>
+                    <th>ID</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Date of Birth</th>
+                    <th>Phone Number</th>
+                    <th>Email</th>
+                    <th>Address</th>
+                    <th>Action</th>
                 </tr>
+            </thead>
+            <tbody>
+                <c:forEach var="user" items="${data}" varStatus="loop">
+                    <tr>
+                        <td>${loop.count}</td>
+                        <td>${user.firstName}</td>
+                        <td>${user.lastName}</td>
+                        <td>${user.dateOfBirth}</td>
+                        <td>${user.phoneNumber}</td>
+                        <td>${user.email}</td>
+                        <td>${user.address}</td>
+                        <td class="action-buttons" >
+                            <form action="edit_profile_user" method="get">
+                                <input type="hidden" name="id" value="${user.id}">
+                                <button type="submit" class="update-button">Update</button>
+                            </form>
+                            <form action="delete_user_account" method="post">
+                                <input type="hidden" name="id" value="${user.id}">
+                                <button type="submit" class="delete-button" >Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                </c:forEach>
+            </tbody>
+        </table>
+        <div class="pagination"> 
+            <c:forEach begin="${1}" end="${num}" var="i">
+                <a class="${i==page?"active":""}" href="list_user?page=${i}">${i}</a>
             </c:forEach>
-        </tbody>
-    </table>
-</body>
+        </div>
+        <a href="admin?id= ${sessionScope.userLogin.id}" class="back-button"><button>Back</button></a>
+    </body>
 </html>

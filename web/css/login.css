@@ -138,16 +138,19 @@ body {
 }
 .error-message {
     color: red;
-
+    font-size: 14px; /* Adjust font size if needed */
+}
+.success-message {
+    color: #146c43;
     font-size: 14px; /* Adjust font size if needed */
 }
 
 
-
 .captcha-image {
-    max-width: 7%;
+    max-width: 5%;
     height: auto;
     cursor: pointer;
+    border: 1px solid #000;
 }
 
 
