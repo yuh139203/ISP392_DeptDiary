@@ -32,10 +32,14 @@ public class DBContextSQLserver {
     }
 
     public DBContextSQLserver() {
-       this("jdbc:sqlserver://localhost:1433;databaseName=ISP392_Gr3_Project", 
-                    "sa","123456");
+       this("jdbc:sqlserver://DESKTOP-NV0CHEA\\\\SQLEXPRESS:1433;databaseName=ISP392", 
+                    "sa","12345678");
     }
     public static void main(String[] args) {
         new DBContextSQLserver();
     }
+
+
+// khaild
+
 }
