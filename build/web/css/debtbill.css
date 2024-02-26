@@ -1,0 +1,203 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : 14/02/2024, 9:31:09 PM
+    Author     : ussat
+*/
+
+/* Modal base styles */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.4);
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 10% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 30%;
+    border-radius: 5px;
+}
+
+.close-button {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.close-button:hover {
+    color: black;
+}
+
+.open-modal-button {
+    display: block;
+    margin: 20px auto;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+/* Toggle button styles */
+.toggle-buttons {
+    display: flex;
+    justify-content: start;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.toggle-buttons .btn {
+    background-color: #f0f8ff;
+    color: #333;
+    padding: 10px 20px;
+    border: 1px solid #ccc;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.toggle-buttons input[type="radio"] {
+    display: none; /* Hide radio button */
+}
+
+.toggle-buttons input[type="radio"]:checked + .btn {
+    background-color: #007bff;
+    color: white;
+}
+
+/* Form field styles */
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.5;
+}
+#debtBill {
+    margin: 0 auto;
+    background-color: #ffffff;
+    width:90%;
+    padding: 20px;
+    border-radius: 10px;
+    border:1px solid rgba(17, 12, 46, 0.15);
+    box-shadow: rgba(17, 12, 46, 0.15) 0px 48px 100px 0px;
+}
+
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.form-group input[type="text"],
+.form-group input[type="number"],
+.form-group input[type="datetime-local"],
+.form-group textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.form-actions {
+    display: flex;
+    justify-content: space-between;
+}
+
+.form-actions button {
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+    background-color: #007bff;
+    color: white;
+    font-size: 16px;
+}
+
+.form-actions button:first-child {
+    background-color: #6c757d;
+}
+.custom-file-input {
+    color: #28a745;
+}
+.text-danger {
+    color: #dc3545;
+}
+
+#amountInWords {
+    color: #555;
+    margin-top: 5px;
+
+}
+/* Custom file upload button style */
+.custom-file-upload {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    text-align: center;
+    background-color: #f0f0f0;
+    border: 2px dashed #d6d6d6;
+    border-radius: 4px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+}
+
+.custom-file-upload:hover {
+    background-color: #e9e9e9;
+}
+
+.custom-file-upload i {
+    position: absolute;
+    left: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 20px;
+    color: #555;
+}
+
+.custom-file-input {
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    cursor: pointer;
+}
+.btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+    color: white;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+    border-color: #004085;
+}
+
+.custom-file-input {
+    display: none; /* Ẩn input file gốc */
+}
+
+.fa-plus-circle {
+    margin-right: 5px;
+}
