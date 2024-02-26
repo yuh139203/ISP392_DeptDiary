@@ -26,17 +26,18 @@
                 <div class="col-md-6">
                     <form id="signupForm" method="post" action="signup">
                         <div class ="form-title">Sign Up</div>
+
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input class="form-control" id="email" name="email" placeholder="Enter your email" value="${email}"
+                                   type="email" />
+                        </div>
                         <div class="form-group">
                             <label for="name">UserName</label>
                             <input class="form-control" id="name" name="name" placeholder="Enter your name" value="${username}" type="text" />
                         </div>
                         <div>
                             <span class="error-message" style="color: red;">${userNameErrorMessage}</span>                            
-                        </div>
-                        <div class="form-group">
-                            <label for="email">Email</label>
-                            <input class="form-control" id="email" name="email" placeholder="Enter your email" value="${email}"
-                                   type="email" />
                         </div>
 
                         <div class="form-group">

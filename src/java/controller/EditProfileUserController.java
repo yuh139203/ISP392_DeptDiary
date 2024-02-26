@@ -11,13 +11,6 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
-import java.sql.Date;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.TimeZone;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import model.User;
 
 /**
@@ -104,19 +97,16 @@ public class EditProfileUserController extends HttpServlet {
         user.setUserName(username);
         user.setPassWord(password);
         user.setIdRole(idRole);
-        try {
-            user.setDateOfBirth(convertStringToDate(dob));
-        } catch (ParseException ex) {
-            Logger.getLogger(EditProfileUserController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        user.setDateOfBirth(dob);
+
         DAOUser userDAO = new DAOUser();
-        int update = userDAO.updateProfile(user);
+        int update = userDAO.editProfileOfUser(user);
         User updatedUser = userDAO.findByID(id);
         request.setAttribute("user", updatedUser);
         if (update == 1) {
             request.setAttribute("noti", "Update success!");
         } else {
-            request.setAttribute("noti", "Update fail!");
+            request.setAttribute("errorNoti", "Update fail!");
         }
         request.getRequestDispatcher("editProfileUser.jsp").forward(request, response);
 
@@ -132,11 +122,6 @@ public class EditProfileUserController extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
-    public Date convertStringToDate(String date) throws ParseException {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        sdf.setTimeZone(TimeZone.getTimeZone("Asia/Ho_Chi_Minh"));
-        java.util.Date dateConvert = sdf.parse(date);
-        return new java.sql.Date(dateConvert.getTime());
-    }
+
 
 }

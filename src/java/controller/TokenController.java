@@ -21,7 +21,7 @@ public class TokenController extends HttpServlet {
         String enteredToken = (String) request.getParameter("enteredToken");
 
         if (enteredToken != null && enteredToken.equals(generatedToken)) {
-            response.sendRedirect("resetPassword.jsp");
+            response.sendRedirect("reset_password");
             session.removeAttribute("generatedToken");
         } else {
             request.setAttribute("error", "Token invalid!!!");

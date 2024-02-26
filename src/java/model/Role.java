@@ -14,16 +14,16 @@ public class Role {
     private int id;
     private String position;
     private boolean isDelete;
-    private Date createdAt;
+    private String createdAt;
     private String createdBy;
-    private Date updatedAt;
-    private Date deletedAt;
+    private String updatedAt;
+    private String deletedAt;
     private String deletedBy;
 
     public Role() {
     }
 
-    public Role(int id, String position, boolean isDelete, Date createdAt, String createdBy, Date updatedAt, Date deletedAt, String deletedBy) {
+    public Role(int id, String position, boolean isDelete, String createdAt, String createdBy, String updatedAt, String deletedAt, String deletedBy) {
         this.id = id;
         this.position = position;
         this.isDelete = isDelete;
@@ -58,11 +58,11 @@ public class Role {
         this.isDelete = isDelete;
     }
 
-    public Date getCreatedAt() {
+    public String getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(Date createdAt) {
+    public void setCreatedAt(String createdAt) {
         this.createdAt = createdAt;
     }
 
@@ -74,19 +74,19 @@ public class Role {
         this.createdBy = createdBy;
     }
 
-    public Date getUpdatedAt() {
+    public String getUpdatedAt() {
         return updatedAt;
     }
 
-    public void setUpdatedAt(Date updatedAt) {
+    public void setUpdatedAt(String updatedAt) {
         this.updatedAt = updatedAt;
     }
 
-    public Date getDeletedAt() {
+    public String getDeletedAt() {
         return deletedAt;
     }
 
-    public void setDeletedAt(Date deletedAt) {
+    public void setDeletedAt(String deletedAt) {
         this.deletedAt = deletedAt;
     }
 
@@ -102,5 +102,7 @@ public class Role {
     public String toString() {
         return "Role{" + "id=" + id + ", position=" + position + ", isDelete=" + isDelete + ", createdAt=" + createdAt + ", createdBy=" + createdBy + ", updatedAt=" + updatedAt + ", deletedAt=" + deletedAt + ", deletedBy=" + deletedBy + '}';
     }
+
+    
 
 }

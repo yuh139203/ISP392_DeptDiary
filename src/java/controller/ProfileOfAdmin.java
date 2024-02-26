@@ -12,12 +12,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import java.sql.Date;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.TimeZone;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
 import model.User;
 
 /**
@@ -104,11 +99,8 @@ public class ProfileOfAdmin extends HttpServlet {
         user.setEmail(email);
         user.setUserName(username);
         user.setPassWord(password);
-        try {
-            user.setDateOfBirth(convertStringToDate(dob));
-        } catch (ParseException ex) {
-            Logger.getLogger(UpdateProfileController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        user.setDateOfBirth(dob);
+
         DAOUser userDAO = new DAOUser();
         int update = userDAO.updateProfile(user);
         User updatedUser = userDAO.findByID(id);
@@ -132,11 +124,6 @@ public class ProfileOfAdmin extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
-    public Date convertStringToDate(String date) throws ParseException {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        sdf.setTimeZone(TimeZone.getTimeZone("Asia/Ho_Chi_Minh"));
-        java.util.Date dateConvert = sdf.parse(date);
-        return new java.sql.Date(dateConvert.getTime());
-    }
+
 
 }

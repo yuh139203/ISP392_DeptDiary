@@ -13,11 +13,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import java.awt.image.BufferedImage;
-import java.io.OutputStream;
-import javax.imageio.ImageIO;
 import model.User;
-import utils.Captcha;
 import utils.SHA256;
 
 /**
@@ -67,14 +63,7 @@ public class LoginController extends HttpServlet {
         request.getRequestDispatcher("login.jsp").forward(request, response);
     }
 
-    /**
-     * Handles the HTTP <code>POST</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
+
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -86,7 +75,6 @@ public class LoginController extends HttpServlet {
         String captchaGen = (String) session.getAttribute("captchaText");
         String encryptedPassword = SHA256.hashPassword(pass);
 
-        //tao cookie
         Cookie cu = new Cookie("cuser", user);
         Cookie cp = new Cookie("cpass", pass);
         Cookie cr = new Cookie("crem", rem);
@@ -104,28 +92,27 @@ public class LoginController extends HttpServlet {
         response.addCookie(cp);
         response.addCookie(cr);
 
-
-
         DAOUser daoUser = new DAOUser();
         User u = daoUser.checkExistentUser(user, encryptedPassword);
-        if (u == null) {
+        
+        if (u == null ) {
             //khong thay
-            request.setAttribute("error", "Username or Password invalid!!!");
+            request.setAttribute("errorWrongInforLogin", "Incorrect username or password.");
             request.getRequestDispatcher("login.jsp").forward(request, response);
         } else {
             //tim thay
             if (captchaInput != null && captchaInput.equals(captchaGen)) {
                 if (u.getIdRole() == 2) {
                     // Nếu idRole là 2, chuyển hướng đến trang admin.jsp
-                    response.sendRedirect("admin.jsp");
+                    response.sendRedirect("admin");
                     session.setAttribute("userLogin", u);
                 } else {
                     // Nếu idRole không phải là 2, chuyển hướng đến trang welcome.jsp
                     session.setAttribute("userLogin", u);
-                    response.sendRedirect("welcome.jsp");
+                    response.sendRedirect("welcome?id="+u.getId());
                 }
             } else {
-                request.setAttribute("error", "Captcha invalid!!!");
+                request.setAttribute("errorWrongCaptcha", "Captcha invalid!!!");
                 request.getRequestDispatcher("login.jsp").forward(request, response);
             }
         }

@@ -1,5 +1,6 @@
 package utils;
 
+import constant.IConstant;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
@@ -13,20 +14,12 @@ import java.util.Random;
  */
 public class Captcha {
 
-    // Define an array of fonts
-    private static final Font[] fonts = {
-        new Font("Arial", Font.BOLD, 30),
-        new Font("Times New Roman", Font.PLAIN, 30),
-        new Font("Courier New", Font.ITALIC, 30), // Add more fonts as needed
-    };
-
     public static String generateCaptchaText() {
-        int length = 6;
-        String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        int length = 4;
         Random random = new Random();
         StringBuilder captchaText = new StringBuilder();
         for (int i = 0; i < length; i++) {
-            captchaText.append(characters.charAt(random.nextInt(characters.length())));
+            captchaText.append(IConstant.CAPTCHA_CHARACTERS.charAt(random.nextInt(IConstant.CAPTCHA_CHARACTERS.length())));
         }
         return captchaText.toString();
     }
@@ -36,10 +29,8 @@ public class Captcha {
         int height = 50;
         BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
         Graphics g = image.getGraphics();
-
         ((Graphics2D) g).setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         ((Graphics2D) g).setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
-
         g.setColor(Color.WHITE);
         g.fillRect(0, 0, width, height);
 
@@ -61,7 +52,6 @@ public class Captcha {
             int y2 = random.nextInt(height);
             g.drawLine(x1, y1, x2, y2);
         }
-
         return image;
     }
 
@@ -72,6 +62,6 @@ public class Captcha {
 
     public static Font getRandomFont() {
         Random random = new Random();
-        return fonts[random.nextInt(fonts.length)];
+        return IConstant.FONTS[random.nextInt(IConstant.FONTS.length)];
     }
 }

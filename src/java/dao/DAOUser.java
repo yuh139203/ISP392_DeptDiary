@@ -42,7 +42,7 @@ public class DAOUser extends DBContextSQLserver {
                 int idRole = rs.getInt(2);
                 String firstName = rs.getString(3);
                 String lastName = rs.getString(4);
-                Date dateOfBirth = rs.getDate(5);
+                String dateOfBirth = rs.getString(5);
                 String userName = rs.getString(6);
                 String passWord = rs.getString(7);
                 String phoneNumber = rs.getString(8);
@@ -50,10 +50,10 @@ public class DAOUser extends DBContextSQLserver {
                 String address = rs.getString(10);
                 int temp = rs.getInt(11);
                 boolean isDelete = (temp == 1 ? true : false);
-                Date createdAt = rs.getDate(12);
+                String createdAt = rs.getString(12);
                 String createdBy = rs.getString(13);
-                Date updatedAt = rs.getDate(14);
-                Date deletedAt = rs.getDate(15);
+                String updatedAt = rs.getString(14);
+                String deletedAt = rs.getString(15);
                 String deletedBy = rs.getString(16);
                 User pro = new User(id, idRole, firstName, lastName, dateOfBirth, userName,
                         passWord, phoneNumber, email, address, isDelete, createdAt, createdBy, updatedAt, deletedAt, deletedBy);
@@ -78,17 +78,17 @@ public class DAOUser extends DBContextSQLserver {
                         rs.getInt("IDRole"),
                         rs.getString("FirstName"),
                         rs.getString("LastName"),
-                        rs.getDate("DateOfBirth"),
+                        rs.getString("DateOfBirth"),
                         rs.getString("UserName"),
                         rs.getString("PassWord"),
                         rs.getString("PhoneNumber"),
                         rs.getString("Email"),
                         rs.getString("Address"),
                         rs.getBoolean("isDelete"),
-                        rs.getDate("CreatedAt"),
+                        rs.getString("CreatedAt"),
                         rs.getString("CreatedBy"),
-                        rs.getDate("UpdatedAt"),
-                        rs.getDate("DeletedAt"),
+                        rs.getString("UpdatedAt"),
+                        rs.getString("DeletedAt"),
                         rs.getString("DeletedBy")
                 );
                 return u;
@@ -116,7 +116,7 @@ public class DAOUser extends DBContextSQLserver {
                 u.setIdRole(rs.getInt(2));
                 u.setFirstName(rs.getString(3));
                 u.setLastName(rs.getString(4));
-                u.setDateOfBirth(rs.getDate(5));
+                u.setDateOfBirth(rs.getString(5));
                 u.setUserName(rs.getString(6));
                 u.setPassWord(rs.getString(7));
                 u.setPhoneNumber(rs.getString(8));
@@ -129,8 +129,8 @@ public class DAOUser extends DBContextSQLserver {
         }
         return null;
     }
-
-    public int updateProfile(User user) {
+    
+    public int editProfileOfUser(User user) {
         String sql = "UPDATE UserInfor\n"
                 + "SET FirstName   = ?\n"
                 + "  , LastName    = ?\n"
@@ -146,12 +146,37 @@ public class DAOUser extends DBContextSQLserver {
             PreparedStatement ptm = conn.prepareStatement(sql);
             ptm.setString(1, user.getFirstName());
             ptm.setString(2, user.getLastName());
-            ptm.setDate(3, user.getDateOfBirth());
+            ptm.setString(3, user.getDateOfBirth());
             ptm.setString(4, user.getPhoneNumber());
             ptm.setString(5, user.getEmail());
             ptm.setString(6, user.getAddress());
             ptm.setInt(7, user.getIdRole());
             ptm.setInt(8, user.getId());
+            return ptm.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(DAOUser.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return -1;
+    }
+
+    public int updateProfile(User user) {
+        String sql = "UPDATE UserInfor\n"
+                + "SET FirstName   = ?\n"
+                + "  , LastName    = ?\n"
+                + "  , DateOfBirth = ?\n"
+                + "  , PhoneNumber = ?\n"
+                + "  , Address     = ?\n"
+                + "  , UpdatedAt   = getdate()\n"
+                + "WHERE ID = ?";
+
+        try {
+            PreparedStatement ptm = conn.prepareStatement(sql);
+            ptm.setString(1, user.getFirstName());
+            ptm.setString(2, user.getLastName());
+            ptm.setString(3, user.getDateOfBirth());
+            ptm.setString(4, user.getPhoneNumber());
+            ptm.setString(5, user.getAddress());
+            ptm.setInt(6, user.getId());
             return ptm.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(DAOUser.class.getName()).log(Level.SEVERE, null, ex);
@@ -187,17 +212,17 @@ public class DAOUser extends DBContextSQLserver {
                         rs.getInt("IDRole"),
                         rs.getString("FirstName"),
                         rs.getString("LastName"),
-                        rs.getDate("DateOfBirth"),
+                        rs.getString("DateOfBirth"),
                         rs.getString("UserName"),
                         rs.getString("PassWord"),
                         rs.getString("PhoneNumber"),
                         rs.getString("Email"),
                         rs.getString("Address"),
                         rs.getBoolean("isDelete"),
-                        rs.getDate("CreatedAt"),
+                        rs.getString("CreatedAt"),
                         rs.getString("CreatedBy"),
-                        rs.getDate("UpdatedAt"),
-                        rs.getDate("DeletedAt"),
+                        rs.getString("UpdatedAt"),
+                        rs.getString("DeletedAt"),
                         rs.getString("deletedBy")
                 );
                 return u;
@@ -296,10 +321,8 @@ public class DAOUser extends DBContextSQLserver {
 //            System.out.println("User not found.");
 //        }
 
-        Vector<User> vector = daoUser.getAllUser();
-        for (User users : vector) {
-            System.out.println(users);
-        }
+       User u = daoUser.findByID(22);
+        System.out.println(u);
     }
 
 }

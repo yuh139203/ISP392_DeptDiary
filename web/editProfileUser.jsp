@@ -25,6 +25,9 @@
             <c:if test="${noti ne null}">
                 <p style="color: green;">${noti}</p>
             </c:if>
+            <c:if test="${errorNoti ne null}">
+                <p style="color: red;">${errorNoti}</p>
+            </c:if> 
 
             <form action="edit_profile_user" method="post">
 
@@ -47,8 +50,8 @@
 
                 <div class="form-group">
                     <label for="dob">Date Of Birth</label>
-                    <fmt:formatDate value="${user.dateOfBirth}" pattern="yyyy-MM-dd" var="formattedDate" />
-                    <input type="date" name="dob" value="${formattedDate}" class="form-control" id="dob" placeholder="Date Of Birth">
+ 
+                    <input type="date" name="dob" value="${user.dateOfBirth}" class="form-control" id="dob" placeholder="Date Of Birth">
                 </div>
 
                 <div class="form-group">
@@ -60,11 +63,10 @@
                     <label for="phone">Phone Number</label>
                     <input type="text" name="phone" value="${user.phoneNumber}" class="form-control" id="phone" placeholder="Phone Number">
                 </div>
-
                 <div class="form-row">
                     <div class="form-group col-md-6">
                         <label for="email">Email</label>
-                        <input type="email" name="email" value="${user.email}" class="form-control" id="email" placeholder="Email">
+                        <input type="email" name="email" value="${user.email}" class="form-control" id="email" placeholder="Email" readonly>
                     </div>
                     <div class="form-group col-md-6">
                         <label for="IDRole" >Set user type:</label>
@@ -78,7 +80,7 @@
                 <button type="submit" class="btn btn-success">
                     <span style="color: white;">Update Profile &#10004;</span>
                 </button>
-                <button class="btn btn-primary"><a style="color: white"href="admin_change_user_pass?id=${user.id}">Change Password</a></button>
+                <a class="btn btn-primary" style="color: white"href="admin_change_user_pass?id=${user.id}">Change Password</a>
                 <a class="btn btn-primary ml-4" href="list_user?id=${user.id}">Back</a>
             </form>
         </div>

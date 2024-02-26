@@ -15,23 +15,25 @@ public class User {
     private int idRole;
     private String firstName;
     private String lastName;
-    private Date dateOfBirth;
+    private String dateOfBirth;
     private String userName;
     private String passWord;
     private String phoneNumber;
     private String email;
     private String address;
     private boolean isDelete;
-    private Date createdAt;
+    private String createdAt;
     private String createdBy;
-    private Date updatedAt;
-    private Date deletedAt;
+    private String updatedAt;
+    private String deletedAt;
     private String deletedBy;
 
     public User() {
     }
+    
+    
 
-    public User(int id, int idRole, String firstName, String lastName, Date dateOfBirth, String userName, String passWord, String phoneNumber, String email, String address, boolean isDelete, Date createdAt, String createdBy, Date updatedAt, Date deletedAt, String deletedBy) {
+    public User(int id, int idRole, String firstName, String lastName, String dateOfBirth, String userName, String passWord, String phoneNumber, String email, String address, boolean isDelete, String createdAt, String createdBy, String updatedAt, String deletedAt, String deletedBy) {
         this.id = id;
         this.idRole = idRole;
         this.firstName = firstName;
@@ -82,11 +84,11 @@ public class User {
         this.lastName = lastName;
     }
 
-    public Date getDateOfBirth() {
+    public String getDateOfBirth() {
         return dateOfBirth;
     }
 
-    public void setDateOfBirth(Date dateOfBirth) {
+    public void setDateOfBirth(String dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
     }
 
@@ -138,11 +140,11 @@ public class User {
         this.isDelete = isDelete;
     }
 
-    public Date getCreatedAt() {
+    public String getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(Date createdAt) {
+    public void setCreatedAt(String createdAt) {
         this.createdAt = createdAt;
     }
 
@@ -154,19 +156,19 @@ public class User {
         this.createdBy = createdBy;
     }
 
-    public Date getUpdatedAt() {
+    public String getUpdatedAt() {
         return updatedAt;
     }
 
-    public void setUpdatedAt(Date updatedAt) {
+    public void setUpdatedAt(String updatedAt) {
         this.updatedAt = updatedAt;
     }
 
-    public Date getDeletedAt() {
+    public String getDeletedAt() {
         return deletedAt;
     }
 
-    public void setDeletedAt(Date deletedAt) {
+    public void setDeletedAt(String deletedAt) {
         this.deletedAt = deletedAt;
     }
 
@@ -182,4 +184,7 @@ public class User {
     public String toString() {
         return "User{" + "id=" + id + ", idRole=" + idRole + ", firstName=" + firstName + ", lastName=" + lastName + ", dateOfBirth=" + dateOfBirth + ", userName=" + userName + ", passWord=" + passWord + ", phoneNumber=" + phoneNumber + ", email=" + email + ", address=" + address + ", isDelete=" + isDelete + ", createdAt=" + createdAt + ", createdBy=" + createdBy + ", updatedAt=" + updatedAt + ", deletedAt=" + deletedAt + ", deletedBy=" + deletedBy + '}';
     }
+
+    
+    
 }

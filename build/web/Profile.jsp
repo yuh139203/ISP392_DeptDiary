@@ -22,14 +22,14 @@
             <h1 class="mb-4">Update Profile</h1>
 <!--            <p style="color: green;">${noti}</p>-->
 
+            <c:if test="${phoneError ne null}">
+                <p style="color: red;">${phoneError}</p>
+            </c:if>
             <c:if test="${noti ne null}">
                 <p style="color: green;">${noti}</p>
             </c:if>
-                
+
             <form action="profile" method="post">
-
-                <input type="hidden" name="id" value="${userLogin.id}">
-
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
@@ -47,8 +47,7 @@
 
                 <div class="form-group">
                     <label for="dob">Date Of Birth</label>
-                    <fmt:formatDate value="${user.dateOfBirth}" pattern="yyyy-MM-dd" var="formattedDate" />
-                    <input type="date" name="dob" value="${formattedDate}" class="form-control" id="dob" placeholder="Date Of Birth">
+                    <input type="date" name="dob" value="${user.dateOfBirth}" class="form-control" id="dob" placeholder="Date Of Birth">
                 </div>
 
                 <div class="form-group">
@@ -61,21 +60,23 @@
                     <input type="text" name="phone" value="${user.phoneNumber}" class="form-control" id="phone" placeholder="Phone Number">
                 </div>
 
+
+
                 <div class="form-group">
                     <label for="email">Email</label>
-                    <input type="email" name="email" value="${user.email}" class="form-control" id="email" placeholder="Email">
+                    <input type="email" name="email" value="${user.email}" class="form-control" id="email" placeholder="Email" readonly>
                 </div>
                 <button type="submit" class="btn btn-success">
                     <span style="color: white;">Update Profile &#10004;</span>
                 </button>
-                <button class="btn btn-primary"><a style="color: white"href="change_password?id=${user.id}">Change Password</a></button>
-                <a class="btn btn-primary ml-4" href="welcome?id=${user.id}">Back</a>
+
+                <a class="btn btn-primary" style="color: white"href="change_password?id=${userLogin.id}">Change Password</a>
+                <a class="btn btn-primary ml-4" href="welcome?id=${userLogin.id}">Back</a>
             </form>
         </div>
 
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.6/dist/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.2.1/dist/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
-
     </body>
 </html>

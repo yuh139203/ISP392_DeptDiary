@@ -47,8 +47,7 @@
 
                 <div class="form-group">
                     <label for="dob">Date Of Birth</label>
-                    <fmt:formatDate value="${user.dateOfBirth}" pattern="yyyy-MM-dd" var="formattedDate" />
-                    <input type="date" name="dob" value="${formattedDate}" class="form-control" id="dob" placeholder="Date Of Birth">
+                    <input type="date" name="dob" value="${user.address}" class="form-control" id="dob" placeholder="Date Of Birth">
                 </div>
 
                 <div class="form-group">
@@ -63,12 +62,12 @@
 
                 <div class="form-group">
                     <label for="email">Email</label>
-                    <input type="email" name="email" value="${user.email}" class="form-control" id="email" placeholder="Email">
+                    <input type="email" name="email" value="${user.email}" class="form-control" id="email" placeholder="Email" readonly>
                 </div>
                 <button type="submit" class="btn btn-success">
                     <span style="color: white;">Update Profile &#10004;</span>
                 </button>
-                <button class="btn btn-primary"><a style="color: white"href="change_password_admin?id=${user.id}">Change Password</a></button>
+                <a class="btn btn-primary" style="color: white"href="change_password_admin?id=${user.id}">Change Password</a>
                 <a class="btn btn-primary ml-4" href="admin?id=${user.id}">Back</a>
             </form>
         </div>
