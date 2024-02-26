@@ -19,5 +19,13 @@
             <file>file:/D:/FPT%20University/Spring_2024/ISP392/Project/ISP392_DeptDiary/src/java/controller/OTPController.java</file>
             <file>file:/D:/FPT%20University/Spring_2024/ISP392/Project/ISP392_DeptDiary/web/token.jsp</file>
         </group>
+        <group name="Group 20231109-07:34:50">
+            <file>file:/D:/GitHub3/ISP392_DeptDiary/src/java/dao/DAOUser.java</file>
+            <file>file:/D:/GitHub3/ISP392_DeptDiary/src/java/utils/SendMail.java</file>
+            <file>file:/D:/GitHub3/ISP392_DeptDiary/src/java/dao/DAODebtBill.java</file>
+            <file>file:/D:/GitHub3/ISP392_DeptDiary/src/java/dao/DAODebtor.java</file>
+            <file>file:/D:/GitHub3/ISP392_DeptDiary/web/vendor/bootstrap/css/bootstrap.min.css</file>
+            <file>file:/D:/GitHub3/ISP392_DeptDiary/src/java/dao/DAORole.java</file>
+        </group>
     </open-files>
 </project-private>
