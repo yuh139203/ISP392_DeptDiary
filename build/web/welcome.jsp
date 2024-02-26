@@ -6,7 +6,7 @@
     <head>
         <meta charset="utf-8">
         <meta content="width=device-width, initial-scale=1.0" name="viewport">
-        <title>DeptDiary</title>
+        <title>DebtDiary</title>
         <meta content="" name="description">
         <meta content="" name="keywords">
         <!-- Favicons -->
@@ -32,17 +32,18 @@
         <header id="header" class="header fixed-top">
             <div class="container-fluid container-xl d-flex align-items-center justify-content-between">
 
-                <a href="index.html" class="logo d-flex align-items-center">
+                <a href="welcome?id=${sessionScope.userLogin.id}" class="logo d-flex align-items-center">
                     <img src="assets/img/logo.png" alt="">
                     <span>DeptDiary</span>
                 </a>              
                 <nav id="navbar" class="navbar">
                     <ul>
                         <li><a class="nav-link scrollto active" href="#hero">Home</a></li>
+                        <li><a class="nav-link scrollto " href="diary?id=${sessionScope.userLogin.id}">DebtDiary</a></li>
                         <li><a class="nav-link scrollto" href="#about">About</a></li>
                         <li><a class="nav-link scrollto" href="#team">Team</a></li>
                         <li><a class="nav-link scrollto" href="#contact">Contact</a></li>
-                        <li class="dropdown  "><a href="#"><span>Hello: ${sessionScope.userLogin.userName} </span> <i class="bi bi-chevron-down"></i></a>
+                        <li class="dropdown  "><a href="#"><span>${sessionScope.userLogin.userName} </span> <i class="bi bi-chevron-down"></i></a>
                             <ul>
                                 <li><a href="profile?id=${sessionScope.userLogin.id}">Your information</a></li>
                                 <li><a href="logout">Log Out</a></li>
@@ -121,7 +122,7 @@
 
                     <div class="row gy-4">
 
-                        <div class="col-lg-3 col-md-6 d-flex align-items-stretch" data-aos="fade-up" data-aos-delay="100">
+                        <div class="col-lg-3 col-md-6 d-flex align-items-stretch smaller-card" data-aos="fade-up" data-aos-delay="100">
                             <div class="member">
                                 <div class="member-img">
                                     <img src="assets/img/team/team-1.jpg" class="img-fluid" alt="">
@@ -134,7 +135,7 @@
                             </div>
                         </div>
 
-                        <div class="col-lg-3 col-md-6 d-flex align-items-stretch" data-aos="fade-up" data-aos-delay="200">
+                        <div class="col-lg-3 col-md-6 d-flex align-items-stretch smaller-card" data-aos="fade-up" data-aos-delay="200">
                             <div class="member">
                                 <div class="member-img">
                                     <img src="assets/img/team/team-2.jpg" class="img-fluid" alt="">
@@ -147,7 +148,7 @@
                             </div>
                         </div>
 
-                        <div class="col-lg-3 col-md-6 d-flex align-items-stretch" data-aos="fade-up" data-aos-delay="300">
+                        <div class="col-lg-3 col-md-6 d-flex align-items-stretch smaller-card" data-aos="fade-up" data-aos-delay="300">
                             <div class="member">
                                 <div class="member-img">
                                     <img src="assets/img/team/team-3.jpg" class="img-fluid" alt="">
@@ -160,7 +161,7 @@
                             </div>
                         </div>
 
-                        <div class="col-lg-3 col-md-6 d-flex align-items-stretch" data-aos="fade-up" data-aos-delay="400">
+                        <div class="col-lg-3 col-md-6 d-flex align-items-stretch smaller-card" data-aos="fade-up" data-aos-delay="400">
                             <div class="member">
                                 <div class="member-img">
                                     <img src="assets/img/team/team-4.jpg" class="img-fluid" alt="">
@@ -173,25 +174,21 @@
                             </div>
                         </div>
 
-                        <div class="col-lg-3 col-md-6 d-flex align-items-stretch" data-aos="fade-up" data-aos-delay="500">
+                        <div class="col-lg-3 col-md-6 d-flex align-items-stretch smaller-card" data-aos="fade-up" data-aos-delay="500">
                             <div class="member">
                                 <div class="member-img">
                                     <img src="assets/img/team/team-4.jpg" class="img-fluid" alt="">
                                 </div>
                                 <div class="member-info">
-                                    <h4>Nguy?n Ti?n ??t</h4>
+                                    <h4>Nguyen Hai Nam</h4>
                                     <span>Accountant</span>
                                     <p>Rerum voluptate non adipisci animi distinctio et deserunt amet voluptas. Quia aut aliquid doloremque ut possimus ipsum officia.</p>
                                 </div>
                             </div>
                         </div>
 
-
-
                     </div>
-
                 </div>
-
             </section><!-- End Team Section -->
 
 
