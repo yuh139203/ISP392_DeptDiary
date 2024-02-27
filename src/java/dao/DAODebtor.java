@@ -4,6 +4,7 @@
  */
 package dao;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -66,5 +67,24 @@ public class DAODebtor extends DBContextSQLserver{
             arr.add(list.get(i));
         }
         return arr;
+    }
+    public boolean addProfileOfDebtor(String avatar, String name, String phoneNumber, String email, String address, int createdBy) {
+        String sql = "INSERT INTO Debtor (Avatar, FullName, PhoneNumber, Email, [Address], isDelete, CreatedAt,CreatedBy)\n"
+                + "VALUES\n"
+                + "(?, ?, ?, ?, ?, 0, GETDATE(),?)";
+        try {
+            PreparedStatement ptm = conn.prepareStatement(sql);
+            ptm.setString(1, avatar);
+            ptm.setString(2, name);
+            ptm.setString(3, phoneNumber);
+            ptm.setString(4, email);
+            ptm.setString(5, address);
+            ptm.setInt(6, createdBy);
+            int result = ptm.executeUpdate();
+            return result > 0;
+        } catch (SQLException ex) {
+            Logger.getLogger(DAODebtor.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
     }
 }
