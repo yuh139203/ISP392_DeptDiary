@@ -35,7 +35,7 @@ public class UpdateProfileController extends HttpServlet {
         DAOUser userDAO = new DAOUser();
         User user = userDAO.findByID(id);
         request.setAttribute("user", user);
-        request.getRequestDispatcher("profile.jsp").forward(request, response);
+        request.getRequestDispatcher("profileUser.jsp").forward(request, response);
     }
 
     @Override
