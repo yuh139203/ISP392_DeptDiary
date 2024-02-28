@@ -232,6 +232,16 @@ a.sidebar-link:hover {
     color: #0066ff;
 }
 
+.delete-debtor {
+    font-size: 12px;
+}
+
+.delete-debtor:hover {
+    font-size: 12px;
+    margin-bottom: 2px;
+    color: #f9023e;
+}
+
 
 
 /* ============================ */

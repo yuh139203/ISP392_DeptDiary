@@ -53,7 +53,7 @@ public class UpdateDebtorController extends HttpServlet {
         DAODebtor dao = new DAODebtor();
         Debtor d = dao.findByID(idDebtor);
         request.setAttribute("debtor", d);
-        request.getRequestDispatcher("updateDebtorInfor.jsp").forward(request, response);
+        request.getRequestDispatcher("updateDebtor.jsp").forward(request, response);
     }
 
     @Override
@@ -69,7 +69,7 @@ public class UpdateDebtorController extends HttpServlet {
         String fileName = GetFileName.extractFileName(avatarPart);
 
         if (!fileName.isEmpty()) {
-            String uploadPath = "D:/FPT University/Spring_2024/ISP392/Project/ISP392_DeptDiary/web/uploads";
+            String uploadPath = "C:/Users/yuh/Documents/GitHub/ISP392_DeptDiary/web/uploads";
             File uploadDir = new File(uploadPath);
             if (!uploadDir.exists()) {
                 uploadDir.mkdirs();
@@ -85,20 +85,20 @@ public class UpdateDebtorController extends HttpServlet {
             boolean added = daoDebtor.updateProfile(impPath, fullName, phoneNumber, address, idDebtor);
             if (added) {
                 request.setAttribute("noti", "Success!!");
-                request.getRequestDispatcher("updateDebtorInfor.jsp").forward(request, response);
+                request.getRequestDispatcher("updateDebtor.jsp").forward(request, response);
             } else {
                 request.setAttribute("noti", "Failed!!");
-                request.getRequestDispatcher("updateDebtorInfor.jsp").forward(request, response);
+                request.getRequestDispatcher("updateDebtor.jsp").forward(request, response);
             }
         } else {
             if (avatar != null && !avatar.isEmpty()) {
                 boolean added = daoDebtor.updateProfile(avatar, fullName, phoneNumber, address, idDebtor);
                 if (added) {
                     request.setAttribute("noti", "Success!!");
-                    request.getRequestDispatcher("addDebtor.jsp").forward(request, response);
+                    request.getRequestDispatcher("updateDebtor.jsp").forward(request, response);
                 } else {
                     request.setAttribute("noti", "Failed!!");
-                    request.getRequestDispatcher("addDebtor.jsp").forward(request, response);
+                    request.getRequestDispatcher("updateDebtor.jsp").forward(request, response);
                 }
             }
         }

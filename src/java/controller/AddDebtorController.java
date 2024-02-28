@@ -93,7 +93,7 @@ public class AddDebtorController extends HttpServlet {
         String fileName = GetFileName.extractFileName(avatarPart);
         if (!fileName.isEmpty()) { // Kiểm tra xem người dùng đã chọn ảnh hay không
             // Đường dẫn đến thư mục uploads
-            String uploadPath = "C:/Users/admin/Documents/GitHub/ISP392_DeptDiary/web/uploads";
+            String uploadPath = "C:/Users/yuh/Documents/GitHub/ISP392_DeptDiary/web/uploads";
             File uploadDir = new File(uploadPath);
             if (!uploadDir.exists()) {
                 uploadDir.mkdirs(); // Tạo thư mục nếu chưa tồn tại
