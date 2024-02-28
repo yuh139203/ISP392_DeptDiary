@@ -118,15 +118,16 @@
                                             <div class="dropdown">
                                                 <img class="more-img" src="assets/img/more.png" alt="Dropdown">
                                                 <div class="dropdown-content">
-                                                    <a href="debtBillController?id=${debtor.id}"">Add bill</a>
-                                                    <a href="updateDebtorInforController?id=${debtor.id}">Information</a>
+                                                    <a href="debtBillController?id=${debtor.id}">Add bill</a>
+                                                    <a href="updateDebtor?id=${debtor.id}">Information</a>
                                                 </div>
                                             </div>
                                             <img src="${debtor.avatar}" alt="Avatar" class="profile-image">
                                             <div class="profile-name">${debtor.fullName}</div>
                                             <div class="total-debt">Total debt</div>
                                             <div class="money">$${debtor.amount}</div>
-                                            <a href="debtDetailController?id=${debtor.id}" class="view-detail">View detail</a>
+                                            <a href="debtDetailController?id=${debtor.id}" class="view-detail">View detail</a>  ||
+                                            <a href="deleteDebtor?id=${debtor.id}" class="delete-debtor">Delete</a>
                                         </div>
                                     </td>
                                     <c:if test="${loop.index % 4 == 3}">
