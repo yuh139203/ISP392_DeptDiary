@@ -87,6 +87,9 @@ public class DebtBillController extends HttpServlet {
             throws ServletException, IOException {
         //get về các giá trị trên jsp
         String debtType = request.getParameter("debtType");
+        //debit credit 
+        //  ng ta tra tien mk(tra no), mk vay cua ng ta (cho vay) -> loại nợ debit 
+        // mk dua tien cho ngta ( tra tien cho ng ta )(cho vay), mk cho ngta vay tien (tra no)  --> loại nợ credit 
         String amount = request.getParameter("amount");
         String cdate = request.getParameter("date");
         String note = request.getParameter("note");
