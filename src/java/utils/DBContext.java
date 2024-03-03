@@ -1,9 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package model;
+package utils;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -13,10 +8,6 @@ import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-/**
- *
- * DBContext: quan ly ket noi
- */
 public class DBContext {
 
     private Connection conn = null;
@@ -61,22 +52,16 @@ public class DBContext {
 
         } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(DBContext.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            if (conn != null) {
-                try {
-                    conn.close();
-                } catch (SQLException ex) {
-                    Logger.getLogger(DBContext.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-        }
+        } 
     }
-    
+
     public Connection getConnection() {
         return conn;
     }
 
     public static void main(String[] args) {
         DBContext.getInstance().getConnection();
+
     }
 }
+//mysql://IS1704_ISP391_G3_1:gS8Pi57chK9AcHFPe74c7ibwqgeBn68M@ongbantat.store:3306/IS1704_ISP391_G3_1

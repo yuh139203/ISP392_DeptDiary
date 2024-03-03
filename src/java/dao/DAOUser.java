@@ -14,15 +14,14 @@ import java.util.List;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import model.DBContext;
-import model.DBContextSQLserver;
 import model.User;
+import utils.DBContext;
 
 /**
  *
  * @author yuh
  */
-public class DAOUser extends DBContextSQLserver {
+public class DAOUser {
 
     private DBContext db;
 
@@ -33,7 +32,7 @@ public class DAOUser extends DBContextSQLserver {
     public Vector<User> getAll(String sql) {
         Vector<User> vector = new Vector<User>();
         try {
-            Statement state = conn.createStatement(
+            Statement state = db.getConnection().createStatement(
                     ResultSet.TYPE_SCROLL_SENSITIVE,
                     ResultSet.CONCUR_UPDATABLE);
             ResultSet rs = state.executeQuery(sql);
@@ -68,7 +67,7 @@ public class DAOUser extends DBContextSQLserver {
     public User checkExistentUser(String userName, String passWord) {
         String query = "select * from UserInfor where UserName = ? and Password = ? ";
         try {
-            PreparedStatement st = conn.prepareStatement(query);
+            PreparedStatement st = db.getConnection().prepareStatement(query);
             st.setString(1, userName);
             st.setString(2, passWord);
             ResultSet rs = st.executeQuery();
@@ -107,7 +106,7 @@ public class DAOUser extends DBContextSQLserver {
     public User findByID(int id) {
         String sql = "SELECT * FROM UserInfor where ID = ?";
         try {
-            PreparedStatement ptm = conn.prepareStatement(sql);
+            PreparedStatement ptm = db.getConnection().prepareStatement(sql);
             ptm.setInt(1, id);
             ResultSet rs = ptm.executeQuery();
             if (rs.next()) {
@@ -143,7 +142,7 @@ public class DAOUser extends DBContextSQLserver {
                 + "WHERE ID = ?";
 
         try {
-            PreparedStatement ptm = conn.prepareStatement(sql);
+            PreparedStatement ptm = db.getConnection().prepareStatement(sql);
             ptm.setString(1, user.getFirstName());
             ptm.setString(2, user.getLastName());
             ptm.setString(3, user.getDateOfBirth());
@@ -170,7 +169,7 @@ public class DAOUser extends DBContextSQLserver {
                 + "WHERE ID = ?";
 
         try {
-            PreparedStatement ptm = conn.prepareStatement(sql);
+            PreparedStatement ptm = db.getConnection().prepareStatement(sql);
             ptm.setString(1, user.getFirstName());
             ptm.setString(2, user.getLastName());
             ptm.setString(3, user.getDateOfBirth());
@@ -190,7 +189,7 @@ public class DAOUser extends DBContextSQLserver {
                 + "WHERE ID = ?";
 
         try {
-            PreparedStatement ptm = conn.prepareStatement(sql);
+            PreparedStatement ptm = db.getConnection().prepareStatement(sql);
             ptm.setString(1, user.getPassWord());
             ptm.setInt(2, user.getId());
             return ptm.executeUpdate();
@@ -203,7 +202,7 @@ public class DAOUser extends DBContextSQLserver {
     public User findByUserName(String userName) {
         String query = "select * from UserInfor where UserName = ? ";
         try {
-            PreparedStatement st = conn.prepareStatement(query);
+            PreparedStatement st = db.getConnection().prepareStatement(query);
             st.setString(1, userName);
             ResultSet rs = st.executeQuery();
             if (rs.next()) {
@@ -239,7 +238,7 @@ public class DAOUser extends DBContextSQLserver {
 
         String sql = "INSERT INTO UserInfor (UserName, Password, Email, IDRole, isDelete, CreatedAt, CreatedBy) "
                 + "VALUES (?, ?, ?, ?, ?, GETDATE(), ?)";
-        try ( PreparedStatement ps = conn.prepareStatement(sql)) {
+        try ( PreparedStatement ps = db.getConnection().prepareStatement(sql)) {
             ps.setString(1, username);
             ps.setString(2, password); // Nên mã hóa mật khẩu trước khi lưu
             ps.setString(3, email);
@@ -265,7 +264,7 @@ public class DAOUser extends DBContextSQLserver {
 
     public boolean isEmailExists(String email) {
         String sql = "SELECT COUNT(*) FROM UserInfor WHERE Email = ?";
-        try ( PreparedStatement ps = conn.prepareStatement(sql)) {
+        try ( PreparedStatement ps = db.getConnection().prepareStatement(sql)) {
             ps.setString(1, email);
             try ( ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
@@ -280,7 +279,7 @@ public class DAOUser extends DBContextSQLserver {
 
     public boolean isUserNameExists(String userName) {
         String sql = "SELECT COUNT(*) FROM UserInfor WHERE UserName = ?";
-        try ( PreparedStatement ps = conn.prepareStatement(sql)) {
+        try ( PreparedStatement ps = db.getConnection().prepareStatement(sql)) {
             ps.setString(1, userName);
             try ( ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
@@ -298,7 +297,7 @@ public class DAOUser extends DBContextSQLserver {
                 + "SET isDelete = ?\n"
                 + "WHERE ID = ?";
         try {
-            PreparedStatement ptm = conn.prepareStatement(sql);
+            PreparedStatement ptm = db.getConnection().prepareStatement(sql);
             ptm.setInt(1, 1);
             ptm.setInt(2, user.getId());
             return ptm.executeUpdate();

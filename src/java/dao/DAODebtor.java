@@ -13,19 +13,25 @@ import java.util.List;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import model.DBContextSQLserver;
 import model.Debtor;
+import utils.DBContext;
 
 /**
  *
  * @author yuh
  */
-public class DAODebtor extends DBContextSQLserver {
+public class DAODebtor {
+    
+    DBContext db;
+
+    public DAODebtor() {
+        db = DBContext.getInstance();
+    }
 
     public Vector<Debtor> getAll(String sql) {
         Vector<Debtor> vector = new Vector<Debtor>();
         try {
-            Statement state = conn.createStatement(
+            Statement state = db.getConnection().createStatement(
                     ResultSet.TYPE_SCROLL_SENSITIVE,
                     ResultSet.CONCUR_UPDATABLE);
             ResultSet rs = state.executeQuery(sql);
@@ -73,7 +79,7 @@ public class DAODebtor extends DBContextSQLserver {
                 + "VALUES\n"
                 + "(?, ?, ?, ?, ?, 0, GETDATE(),?)";
         try {
-            PreparedStatement ptm = conn.prepareStatement(sql);
+            PreparedStatement ptm = db.getConnection().prepareStatement(sql);
             ptm.setString(1, avatar);
             ptm.setString(2, name);
             ptm.setString(3, phoneNumber);
@@ -91,7 +97,7 @@ public class DAODebtor extends DBContextSQLserver {
     public Debtor findByID(int id) {
         String sql = "SELECT * FROM Debtor where ID = ?";
         try {
-            PreparedStatement ptm = conn.prepareStatement(sql);
+            PreparedStatement ptm = db.getConnection().prepareStatement(sql);
             ptm.setInt(1, id);
             ResultSet rs = ptm.executeQuery();
             if (rs.next()) {
@@ -120,7 +126,7 @@ public class DAODebtor extends DBContextSQLserver {
                 + "  , UpdatedAt   = getdate()\n"
                 + "WHERE ID = ?";
         try {
-            PreparedStatement ptm = conn.prepareStatement(sql);
+            PreparedStatement ptm = db.getConnection().prepareStatement(sql);
             ptm.setString(1, name);
             ptm.setString(2, avatar);
             ptm.setString(3, phoneNumber);
@@ -132,6 +138,15 @@ public class DAODebtor extends DBContextSQLserver {
             Logger.getLogger(DAODebtor.class.getName()).log(Level.SEVERE, null, ex);
         }
         return false;
+    }
+    
+        public static void main(String[] args) {
+        DAODebtor dao = new DAODebtor();
+        List<Debtor> list = new ArrayList();
+        list=dao.getAllDebtor(4);
+        for (Debtor debtor : list) {
+            System.out.println(debtor);
+        }
     }
 
 }

@@ -4,24 +4,21 @@
  */
 package dao;
 
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import model.DBContext;
-import model.DBContextSQLserver;
 import model.Role;
+import utils.DBContext;
 
 /**
  *
  * @author yuh
  */
-public class DAORole extends DBContextSQLserver{
+public class DAORole {
     
     private DBContext db;
     
@@ -35,7 +32,7 @@ public class DAORole extends DBContextSQLserver{
                 + "  FROM Role";
         try {
             List<Role> list = new ArrayList<>();
-            PreparedStatement ptm = conn.prepareStatement(sql);
+            PreparedStatement ptm = db.getConnection().prepareStatement(sql);
             ResultSet rs = ptm.executeQuery();
             while (rs.next()) {
                 Role role = new Role();
