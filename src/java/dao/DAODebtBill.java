@@ -84,6 +84,7 @@ public class DAODebtBill  {
             try ( ResultSet rs = st.executeQuery()) {
                 while (rs.next()) {
                     DebtBill debtBill = new DebtBill(
+                            rs.getString("FullName"),
                             rs.getInt("ID"),
                             rs.getInt("IDDebtor"),
                             rs.getInt("IDTypeDebt"),
@@ -100,7 +101,8 @@ public class DAODebtBill  {
                             rs.getString("CreatedBy"),
                             rs.getString("UpdatedAt"),
                             rs.getString("DeletedAt"),
-                            rs.getString("DeletedBy")
+                            rs.getString("DeletedBy"),
+                            rs.getString("Type")
                     );
                     list.add(debtBill);
                 }
@@ -110,6 +112,13 @@ public class DAODebtBill  {
             e.printStackTrace();
         }
         return list;
+    }
+    public List<DebtBill> getListByPage(List<DebtBill> list, int start, int end) {
+        ArrayList<DebtBill> arr = new ArrayList<>();
+        for (int i = start; i < end; i++) {
+            arr.add(list.get(i));
+        }
+        return arr;
     }
 
     public static void main(String[] args) {

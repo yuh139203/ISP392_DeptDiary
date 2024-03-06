@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package model;
 
 
@@ -10,7 +6,7 @@ package model;
  * @author yuh
  */
 public class DebtBill {
-    
+    private String fullName;
     private int id;
     private int idDebtor;
     private int idTypeDebt;
@@ -28,11 +24,12 @@ public class DebtBill {
     private String updatedAt;
     private String deletedAt;
     private String deletedBy;
-
+    private String type;
     public DebtBill() {
     }
 
-    public DebtBill(int id, int idDebtor, int idTypeDebt, String amount, String description, String debtTerm, String evidenceImg1, String evidenceImg2, String evidenceImg3, String evidenceImg4, String evidenceImg5, boolean isDelete, String createdAt, String createdBy, String updatedAt, String deletedAt, String deletedBy) {
+    public DebtBill(String fullName, int id, int idDebtor, int idTypeDebt, String amount, String description, String debtTerm, String evidenceImg1, String evidenceImg2, String evidenceImg3, String evidenceImg4, String evidenceImg5, boolean isDelete, String createdAt, String createdBy, String updatedAt, String deletedAt, String deletedBy, String type) {
+        this.fullName = fullName;
         this.id = id;
         this.idDebtor = idDebtor;
         this.idTypeDebt = idTypeDebt;
@@ -50,6 +47,15 @@ public class DebtBill {
         this.updatedAt = updatedAt;
         this.deletedAt = deletedAt;
         this.deletedBy = deletedBy;
+        this.type = type;
+    }
+
+    public String getFullName() {
+        return fullName;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
     }
 
     public int getId() {
@@ -111,7 +117,6 @@ public class DebtBill {
     public String getEvidenceImg2() {
         return evidenceImg2;
     }
-
     public void setEvidenceImg2(String evidenceImg2) {
         this.evidenceImg2 = evidenceImg2;
     }
@@ -188,12 +193,18 @@ public class DebtBill {
         this.deletedBy = deletedBy;
     }
 
-    @Override
-    public String toString() {
-        return "DebtBill{" + "id=" + id + ", idDebtor=" + idDebtor + ", idTypeDebt=" + idTypeDebt + ", amount=" + amount + ", description=" + description + ", debtTerm=" + debtTerm + ", evidenceImg1=" + evidenceImg1 + ", evidenceImg2=" + evidenceImg2 + ", evidenceImg3=" + evidenceImg3 + ", evidenceImg4=" + evidenceImg4 + ", evidenceImg5=" + evidenceImg5 + ", isDelete=" + isDelete + ", createdAt=" + createdAt + ", createdBy=" + createdBy + ", updatedAt=" + updatedAt + ", deletedAt=" + deletedAt + ", deletedBy=" + deletedBy + '}';
+    public String getType() {
+        return type;
     }
 
-    
-    
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    @Override
+    public String toString() {
+        return "DebtBill{" + "fullName=" + fullName + ", id=" + id + ", idDebtor=" + idDebtor + ", idTypeDebt=" + idTypeDebt + ", amount=" + amount + ", description=" + description + ", debtTerm=" + debtTerm + ", evidenceImg1=" + evidenceImg1 + ", evidenceImg2=" + evidenceImg2 + ", evidenceImg3=" + evidenceImg3 + ", evidenceImg4=" + evidenceImg4 + ", evidenceImg5=" + evidenceImg5 + ", isDelete=" + isDelete + ", createdAt=" + createdAt + ", createdBy=" + createdBy + ", updatedAt=" + updatedAt + ", deletedAt=" + deletedAt + ", deletedBy=" + deletedBy + ", type=" + type + '}';
+    }
+
     
 }
