@@ -237,7 +237,7 @@ public class DAOUser {
         String createdBy = "System"; // Mặc định người tạo là 'System'
 
         String sql = "INSERT INTO UserInfor (UserName, Password, Email, IDRole, isDelete, CreatedAt, CreatedBy) "
-                + "VALUES (?, ?, ?, ?, ?, GETDATE(), ?)";
+                + "VALUES (?, ?, ?, ?, ?, CURRENT_TIMESTAMP, ?)";
         try ( PreparedStatement ps = db.getConnection().prepareStatement(sql)) {
             ps.setString(1, username);
             ps.setString(2, password); // Nên mã hóa mật khẩu trước khi lưu
