@@ -118,7 +118,7 @@
                                             <div class="dropdown">
                                                 <img class="more-img" src="assets/img/more.png" alt="Dropdown">
                                                 <div class="dropdown-content">
-                                                    <a href="debtBillController?id=${debtor.id}">Add bill</a>
+                                                    <a href="bill?id=${debtor.id}">Add bill</a>
                                                     <a href="updateDebtor?id=${debtor.id}">Information</a>
                                                 </div>
                                             </div>

@@ -10,14 +10,14 @@ import java.sql.SQLException;
 import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
-import model.DBContext;
 import model.DebtBill;
+import utils.DBContext;
 
 /**
  *
  * @author yuh
  */
-public class DAODebtBill extends DBContext {
+public class DAODebtBill  {
 
     DBContext db;
 
@@ -47,7 +47,7 @@ public class DAODebtBill extends DBContext {
 
         // Xây dựng câu lệnh SQL với các cột hình ảnh động
         String sql = "INSERT INTO DebtBill (IDDebtor, IDTypeDebt, Amount, Description, EvidenceImg1, EvidenceImg2, EvidenceImg3, EvidenceImg4, EvidenceImg5, DebtTerm, CreatedAt, CreatedBy, isDelete) "
-                + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, GETDATE(), ?, ?)";
+                + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP, ?, ?)";
 
         try ( PreparedStatement ps = db.getConnection().prepareStatement(sql)) {
             ps.setInt(1, IDDebtor);
