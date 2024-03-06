@@ -77,7 +77,7 @@ public class DAODebtor {
     public boolean addProfileOfDebtor(String avatar, String name, String phoneNumber, String email, String address, int createdBy) {
         String sql = "INSERT INTO Debtor (Avatar, FullName, PhoneNumber, Email, [Address], isDelete, CreatedAt,CreatedBy)\n"
                 + "VALUES\n"
-                + "(?, ?, ?, ?, ?, 0, GETDATE(),?)";
+                + "(?, ?, ?, ?, ?, 0, CURRENT_TIMESTAMP,?)";
         try {
             PreparedStatement ptm = db.getConnection().prepareStatement(sql);
             ptm.setString(1, avatar);
@@ -123,7 +123,7 @@ public class DAODebtor {
                 + "  , Avatar = ?\n"
                 + "  , PhoneNumber = ?\n"
                 + "  , Address     = ?\n"
-                + "  , UpdatedAt   = getdate()\n"
+                + "  , UpdatedAt   = CURRENT_TIMESTAMP\n"
                 + "WHERE ID = ?";
         try {
             PreparedStatement ptm = db.getConnection().prepareStatement(sql);

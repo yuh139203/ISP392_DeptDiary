@@ -138,7 +138,7 @@ public class DAOUser {
                 + "  , Email       = ?\n"
                 + "  , Address     = ?\n"
                 + "  , IDRole     = ?\n"
-                + "  , UpdatedAt   = getdate()\n"
+                + "  , UpdatedAt   = CURRENT_TIMESTAMP\n"
                 + "WHERE ID = ?";
 
         try {
@@ -165,7 +165,7 @@ public class DAOUser {
                 + "  , DateOfBirth = ?\n"
                 + "  , PhoneNumber = ?\n"
                 + "  , Address     = ?\n"
-                + "  , UpdatedAt   = getdate()\n"
+                + "  , UpdatedAt   = CURRENT_TIMESTAMP\n"
                 + "WHERE ID = ?";
 
         try {
