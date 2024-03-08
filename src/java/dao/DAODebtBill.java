@@ -27,7 +27,7 @@ public class DAODebtBill  {
 
     //Tìm TypeDebtID
     public int findTypeDebtId(String debtType) throws SQLException {
-        String sql = "SELECT ID FROM TypeDebt WHERE [Type] = ?";
+        String sql = "SELECT ID FROM TypeDebt WHERE Type = ?";
         try ( PreparedStatement pstmt = this.db.getConnection().prepareStatement(sql)) { // Sử dụng conn từ DBContextSQLserver
             pstmt.setString(1, debtType);
             try ( ResultSet rs = pstmt.executeQuery()) {
@@ -84,7 +84,6 @@ public class DAODebtBill  {
             try ( ResultSet rs = st.executeQuery()) {
                 while (rs.next()) {
                     DebtBill debtBill = new DebtBill(
-                            rs.getString("FullName"),
                             rs.getInt("ID"),
                             rs.getInt("IDDebtor"),
                             rs.getInt("IDTypeDebt"),
@@ -101,8 +100,7 @@ public class DAODebtBill  {
                             rs.getString("CreatedBy"),
                             rs.getString("UpdatedAt"),
                             rs.getString("DeletedAt"),
-                            rs.getString("DeletedBy"),
-                            rs.getString("Type")
+                            rs.getString("DeletedBy")
                     );
                     list.add(debtBill);
                 }

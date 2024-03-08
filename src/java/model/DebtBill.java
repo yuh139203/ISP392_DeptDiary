@@ -28,6 +28,28 @@ public class DebtBill {
     public DebtBill() {
     }
 
+    public DebtBill(int id, int idDebtor, int idTypeDebt, String amount, String description, String debtTerm, String evidenceImg1, String evidenceImg2, String evidenceImg3, String evidenceImg4, String evidenceImg5, boolean isDelete, String createdAt, String createdBy, String updatedAt, String deletedAt, String deletedBy) {
+        this.id = id;
+        this.idDebtor = idDebtor;
+        this.idTypeDebt = idTypeDebt;
+        this.amount = amount;
+        this.description = description;
+        this.debtTerm = debtTerm;
+        this.evidenceImg1 = evidenceImg1;
+        this.evidenceImg2 = evidenceImg2;
+        this.evidenceImg3 = evidenceImg3;
+        this.evidenceImg4 = evidenceImg4;
+        this.evidenceImg5 = evidenceImg5;
+        this.isDelete = isDelete;
+        this.createdAt = createdAt;
+        this.createdBy = createdBy;
+        this.updatedAt = updatedAt;
+        this.deletedAt = deletedAt;
+        this.deletedBy = deletedBy;
+    }
+
+    
+    
     public DebtBill(String fullName, int id, int idDebtor, int idTypeDebt, String amount, String description, String debtTerm, String evidenceImg1, String evidenceImg2, String evidenceImg3, String evidenceImg4, String evidenceImg5, boolean isDelete, String createdAt, String createdBy, String updatedAt, String deletedAt, String deletedBy, String type) {
         this.fullName = fullName;
         this.id = id;
