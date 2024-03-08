@@ -33,11 +33,11 @@
                     </div>
                     <div class="col-md-12">
                         <label class="labels">Phone Number</label>
-                        <input type="text" class="form-control" name="phoneNumber" placeholder="Enter phone number" value="" required>
+                        <input type="text" class="form-control" name="phoneNumber" placeholder="Enter phone number" value="">
                     </div>
                     <div class="col-md-12">
                         <label class="labels">Address</label>
-                        <input type="address" class="form-control" name="address" placeholder="Enter address" value="" required>
+                        <input type="address" class="form-control" name="address" placeholder="Enter address" value="">
                     </div>
                     <div class="col-md-12 total-debt">
                         <label class="labels ">Total Debt</label>

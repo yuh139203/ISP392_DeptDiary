@@ -75,9 +75,9 @@ public class DAODebtor {
     }
 
     public boolean addProfileOfDebtor(String avatar, String name, String phoneNumber, String email, String address, int createdBy) {
-        String sql = "INSERT INTO Debtor (Avatar, FullName, PhoneNumber, Email, [Address], isDelete, CreatedAt,CreatedBy)\n"
+        String sql = "INSERT INTO Debtor (Avatar, FullName, PhoneNumber, Email, Address,amount, isDelete, CreatedAt,CreatedBy)\n"
                 + "VALUES\n"
-                + "(?, ?, ?, ?, ?, 0, CURRENT_TIMESTAMP,?)";
+                + "(?, ?, ?, ?, ?,'0', 0, CURRENT_TIMESTAMP,?)";
         try {
             PreparedStatement ptm = db.getConnection().prepareStatement(sql);
             ptm.setString(1, avatar);
@@ -142,11 +142,11 @@ public class DAODebtor {
     
         public static void main(String[] args) {
         DAODebtor dao = new DAODebtor();
-        List<Debtor> list = new ArrayList();
-        list=dao.getAllDebtor(4);
-        for (Debtor debtor : list) {
-            System.out.println(debtor);
+        boolean add=dao.addProfileOfDebtor("as", "sw", "sca", "ssda", "sass", 1);
+        if(add){
+            System.out.println("sucess");
+        }else{
+            System.out.println("fail");
         }
-    }
-
+        }
 }
