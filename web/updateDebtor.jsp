@@ -74,6 +74,7 @@
                 top: 10px;
                 right: 10px;
                 cursor: pointer;
+                 max-width: 30px;
             }
 
         </style>

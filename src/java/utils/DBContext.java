@@ -12,11 +12,11 @@ public class DBContext {
 
     private Connection conn = null;
     private static DBContext instance;
-    private final String DB_ACC = "IS1704_ISP391_G3_1";
-    private final String DB_PASS = "gS8Pi57chK9AcHFPe74c7ibwqgeBn68M";
-    private final String DB_HOST = "ongbantat.store";
+    private final String DB_ACC = "root";
+    private final String DB_PASS = "123456";
+    private final String DB_HOST = "localhost";
     private final String DB_PORT = "3306";
-    private final String DB_NAME = "IS1704_ISP391_G3_1";
+    private final String DB_NAME = "ISP392_Gr3_Project";
 
     public static DBContext getInstance() {
         if (instance == null) {
