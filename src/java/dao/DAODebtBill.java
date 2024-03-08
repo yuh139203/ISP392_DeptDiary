@@ -17,7 +17,7 @@ import utils.DBContext;
  *
  * @author yuh
  */
-public class DAODebtBill  {
+public class DAODebtBill {
 
     DBContext db;
 
@@ -111,6 +111,7 @@ public class DAODebtBill  {
         }
         return list;
     }
+
     public List<DebtBill> getListByPage(List<DebtBill> list, int start, int end) {
         ArrayList<DebtBill> arr = new ArrayList<>();
         for (int i = start; i < end; i++) {
@@ -119,12 +120,53 @@ public class DAODebtBill  {
         return arr;
     }
 
+    public List<DebtBill> getAllDebtBillByIDDebtor(int debtorID) {
+        List<DebtBill> list = new ArrayList<>();
+        String sql = "SELECT DebtBill.*, TypeDebt.Type "
+                + "FROM DebtBill "
+                + "INNER JOIN TypeDebt ON DebtBill.IDTypeDebt = TypeDebt.ID "
+                + "WHERE DebtBill.IDDebtor = ?";
+        try ( PreparedStatement st = db.getConnection().prepareStatement(sql)) {
+            st.setInt(1, debtorID);
+            try ( ResultSet rs = st.executeQuery()) {
+                while (rs.next()) {
+                    DebtBill debtBill = new DebtBill(
+                            rs.getInt("ID"),
+                            rs.getInt("IDDebtor"),
+                            rs.getInt("IDTypeDebt"),
+                            rs.getString("Amount"),
+                            rs.getString("Description"),
+                            rs.getString("DebtTerm"),
+                            rs.getString("EvidenceImg1"),
+                            rs.getString("EvidenceImg2"),
+                            rs.getString("EvidenceImg3"),
+                            rs.getString("EvidenceImg4"),
+                            rs.getString("EvidenceImg5"),
+                            rs.getBoolean("isDelete"),
+                            rs.getString("CreatedAt"),
+                            rs.getString("CreatedBy"),
+                            rs.getString("UpdatedAt"),
+                            rs.getString("DeletedAt"),
+                            rs.getString("DeletedBy"),
+                            rs.getString("Type")
+                    );
+                    list.add(debtBill);
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println("SQL Exception: " + e.getMessage());
+            e.printStackTrace();
+        }
+        return list;
+    }
+
     public static void main(String[] args) {
         DAODebtBill dao = new DAODebtBill();
         List<DebtBill> list = new ArrayList<>();
-        list = dao.getDebtbillByDebtorID(1);
+        list = dao.getAllDebtBillByIDDebtor(1);
         for (DebtBill debtBill : list) {
             System.out.println(list);
         }
     }
+
 }

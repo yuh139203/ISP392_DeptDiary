@@ -1,12 +1,11 @@
 package model;
 
-
 /**
  *
  * @author yuh
  */
 public class DebtBill {
-    private String fullName;
+
     private int id;
     private int idDebtor;
     private int idTypeDebt;
@@ -25,6 +24,7 @@ public class DebtBill {
     private String deletedAt;
     private String deletedBy;
     private String type;
+
     public DebtBill() {
     }
 
@@ -47,11 +47,10 @@ public class DebtBill {
         this.deletedAt = deletedAt;
         this.deletedBy = deletedBy;
     }
+    
+    
 
-    
-    
-    public DebtBill(String fullName, int id, int idDebtor, int idTypeDebt, String amount, String description, String debtTerm, String evidenceImg1, String evidenceImg2, String evidenceImg3, String evidenceImg4, String evidenceImg5, boolean isDelete, String createdAt, String createdBy, String updatedAt, String deletedAt, String deletedBy, String type) {
-        this.fullName = fullName;
+    public DebtBill(int id, int idDebtor, int idTypeDebt, String amount, String description, String debtTerm, String evidenceImg1, String evidenceImg2, String evidenceImg3, String evidenceImg4, String evidenceImg5, boolean isDelete, String createdAt, String createdBy, String updatedAt, String deletedAt, String deletedBy, String type) {
         this.id = id;
         this.idDebtor = idDebtor;
         this.idTypeDebt = idTypeDebt;
@@ -70,14 +69,6 @@ public class DebtBill {
         this.deletedAt = deletedAt;
         this.deletedBy = deletedBy;
         this.type = type;
-    }
-
-    public String getFullName() {
-        return fullName;
-    }
-
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
     }
 
     public int getId() {
@@ -139,6 +130,7 @@ public class DebtBill {
     public String getEvidenceImg2() {
         return evidenceImg2;
     }
+
     public void setEvidenceImg2(String evidenceImg2) {
         this.evidenceImg2 = evidenceImg2;
     }
@@ -225,8 +217,7 @@ public class DebtBill {
 
     @Override
     public String toString() {
-        return "DebtBill{" + "fullName=" + fullName + ", id=" + id + ", idDebtor=" + idDebtor + ", idTypeDebt=" + idTypeDebt + ", amount=" + amount + ", description=" + description + ", debtTerm=" + debtTerm + ", evidenceImg1=" + evidenceImg1 + ", evidenceImg2=" + evidenceImg2 + ", evidenceImg3=" + evidenceImg3 + ", evidenceImg4=" + evidenceImg4 + ", evidenceImg5=" + evidenceImg5 + ", isDelete=" + isDelete + ", createdAt=" + createdAt + ", createdBy=" + createdBy + ", updatedAt=" + updatedAt + ", deletedAt=" + deletedAt + ", deletedBy=" + deletedBy + ", type=" + type + '}';
+        return "DebtBill{" + "id=" + id + ", idDebtor=" + idDebtor + ", idTypeDebt=" + idTypeDebt + ", amount=" + amount + ", description=" + description + ", debtTerm=" + debtTerm + ", evidenceImg1=" + evidenceImg1 + ", evidenceImg2=" + evidenceImg2 + ", evidenceImg3=" + evidenceImg3 + ", evidenceImg4=" + evidenceImg4 + ", evidenceImg5=" + evidenceImg5 + ", isDelete=" + isDelete + ", createdAt=" + createdAt + ", createdBy=" + createdBy + ", updatedAt=" + updatedAt + ", deletedAt=" + deletedAt + ", deletedBy=" + deletedBy + ", type=" + type + '}';
     }
 
-    
 }

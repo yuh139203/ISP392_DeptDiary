@@ -47,11 +47,11 @@
                             <th class="searchById">
                                 <input  type="text" placeholder="Enter ID" name="id" style="width: 100%; padding: 5px;">
                             </th>
-                            
+
                             <th class="searchByDescription">
                                 <input  type="text" placeholder="Enter Description" name="description" style="width: 100%; padding: 5px;">
                             </th>
-                            
+
                             <th class="searchByType">
                                 <select name="type" style="width: 100%; padding: 5px;">
                                     <option value="1">All</option>
@@ -60,14 +60,14 @@
                                     <option value="3">${debtor.fullName} borrow money you</option>
                                 </select>
                             </th>
-                            
+
                             <th class="searchByAmount" style="white-space: nowrap;">
                                 <div style="display: inline-block;">
                                     <input type="text" placeholder="from" name="fromAmount"  style="width: 75px; padding: 5px;">
                                     <input type="text" placeholder="to" name="toAmount"  style="width: 75px; padding: 5px;">
                                 </div>
                             </th>
-                            
+
                             <th class="searchByTime" style="white-space: nowrap;">
                                 <div style="display: inline-block;">
                                     <input type="text" placeholder="from" name="fromTime" style="width: 75px; padding: 5px;">
@@ -89,8 +89,23 @@
                             <tr class="data-row">
                                 <td> ${debtBill.id} </td>
                                 <td> ${debtBill.description}</td>
-                                <td> ${debtBill.type}  </td>
-                                <td> <strong> ${debtBill.amount} </strong></td>
+                                <td>
+                                    <c:choose>
+                                        <c:when test="${debtBill.idTypeDebt == 1}">
+                                            You borrow ${debtor.fullName}
+                                        </c:when>
+                                        <c:when test="${debtBill.idTypeDebt == 2}">
+                                            You lend ${debtor.fullName}
+                                        </c:when>
+                                        <c:when test="${debtBill.idTypeDebt == 3}">
+                                            ${debtor.fullName} borrow You
+                                        </c:when>
+                                        <c:when test="${debtBill.idTypeDebt == 4}">
+                                            ${debtor.fullName} lend You
+                                        </c:when>
+                                    </c:choose>
+                                </td>
+                                <td> <strong> ${debtBill.amount}VND</strong></td>
                                 <td>${debtBill.createdAt}</td>
                                 <td> <a href="#" class="status delivered">Detail</a></td>
                             </tr>

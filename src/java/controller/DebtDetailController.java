@@ -65,7 +65,7 @@ public class DebtDetailController extends HttpServlet {
 //        } else {
 //            numPerPage = Integer.parseInt(resultLimitParameter);
 //        }
-        int idDebtor = 3;
+        int idDebtor = Integer.parseInt(request.getParameter("id"));
         DAODebtor daoDebtor = new DAODebtor();
         Debtor d = daoDebtor.findByID(idDebtor);
         DAODebtBill dao = new DAODebtBill();
