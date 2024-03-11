@@ -5,6 +5,7 @@
 package controller;
 
 import dao.DAODebtBill;
+import dao.DAODebtor;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -14,10 +15,13 @@ import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.annotation.MultipartConfig;
+import jakarta.servlet.http.HttpSession;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import model.Debtor;
+import model.User;
 
 /**
  *
@@ -30,8 +34,6 @@ import java.util.List;
         maxRequestSize = 1024 * 1024 * 15 // 15 MB
 )
 public class DebtBillController extends HttpServlet {
-
-    private DAODebtBill DAOdebtBill = new DAODebtBill();
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -71,6 +73,10 @@ public class DebtBillController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        int idDebtor = Integer.parseInt(request.getParameter("id"));
+        DAODebtor dao = new DAODebtor();
+        Debtor d = dao.findByID(idDebtor);
+        request.setAttribute("debtor", d);
         request.getRequestDispatcher("debtbill.jsp").forward(request, response);
     }
 
@@ -88,63 +94,54 @@ public class DebtBillController extends HttpServlet {
         // Lấy các giá trị cơ bản từ form
         String debtType = request.getParameter("debtType");
         String amount = request.getParameter("amount");
-        String cdate = request.getParameter("date");
         String note = request.getParameter("note");
         String debtTerm = request.getParameter("debtTerm"); // Thêm dòng này để lấy giá trị Hạn nợ
-
+        HttpSession session = request.getSession();
+        User u = (User) session.getAttribute("userLogin");
+        //id debtor
+        int idDebtor = Integer.parseInt(request.getParameter("idDebtor"));
+        DAODebtBill DAOdebtBill = new DAODebtBill();
         // Xử lý giá trị tuỳ chọn cho debit và credit
-        String debitOrCreditOptionValue = null;
+        String IDTypeDebt = null;
         if ("debit".equals(debtType)) {
-            debitOrCreditOptionValue = request.getParameter("debitOptions");
+            IDTypeDebt = request.getParameter("debitOption"); // Đổi "debitOptions" thành "debitOption"
         } else if ("credit".equals(debtType)) {
-            debitOrCreditOptionValue = request.getParameter("creditOptions");
+            IDTypeDebt = request.getParameter("creditOption"); // Đổi "creditOptions" thành "creditOption"
         }
 
-        // Xử lý file upload
-        List<String> imgPathsForDB = new ArrayList<>();
+        // Lấy tất cả các parts từ request
         Collection<Part> parts = request.getParts();
-        String appPath = request.getServletContext().getRealPath("");
-        String savePath = appPath + "uploadedImages"; // Đường dẫn lưu ảnh
+
+        // Đường dẫn lưu ảnh trong project
+        String projectPath = "C:/Users/ussat/Documents/New Folder/ISP392_DeptDiary/web";
+        String savePath = projectPath + File.separator + "uploads"; // Đường dẫn lưu ảnh
 
         File fileSaveDir = new File(savePath);
         if (!fileSaveDir.exists()) {
-            fileSaveDir.mkdirs();
+            fileSaveDir.mkdirs(); // Tạo thư mục nếu chưa tồn tại
         }
 
+        List<String> imgPathsForDB = new ArrayList<>();
+
         for (Part part : parts) {
-            // Sửa đổi tên trường phù hợp với form
-            if (part.getName().equals("image")) { // Giả sử tên trường cho file upload là 'image'
+            // Kiểm tra nếu phần này là một phần của trường 'images[]'
+            if (part.getName().equals("images[]")) {
                 String fileName = Paths.get(part.getSubmittedFileName()).getFileName().toString();
                 if (fileName != null && !fileName.isEmpty()) {
                     String filePath = savePath + File.separator + fileName;
                     part.write(filePath); // Lưu file
-                    imgPathsForDB.add("uploadedImages/" + fileName); // Đường dẫn cho DB
+                    imgPathsForDB.add("uploads/" + fileName); // Đường dẫn cho DB
                 }
             }
         }
 
-        try {
-            // Giả định DAOdebtBill là lớp xử lý logic với database
-            int idTypeDebt = DAOdebtBill.findTypeDebtId(debtType); // Tìm kiếm ID của loại nợ
+        //Insert thông tin vào database
+        boolean insertResult = DAOdebtBill.insertDebtBill(IDTypeDebt, idDebtor, amount, note, debtTerm, imgPathsForDB, u.getId());
 
-            if (idTypeDebt == -1) {
-                request.setAttribute("errorMessage", "Loại nợ không hợp lệ.");
-                request.getRequestDispatcher("/errorPage.jsp").forward(request, response);
-                return;
-            }
-
-//            // Insert thông tin vào database
-//          //  boolean insertResult = DAOdebtBill.insertDebtBill(idTypeDebt, amount, cdate, note, debtTerm, debitOrCreditOptionValue, imgPathsForDB);
-//
-//            if (insertResult) {
-//                response.sendRedirect("debtList.jsp"); // Redirect sau khi insert thành công
-//            } else {
-//                request.setAttribute("errorMessage", "Không thể chèn dữ liệu vào cơ sở dữ liệu.");
-//                request.getRequestDispatcher("/errorPage.jsp").forward(request, response);
-//            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            request.setAttribute("errorMessage", "Có lỗi xảy ra: " + e.getMessage());
+        if (insertResult) {
+            response.sendRedirect("diary"); // Redirect sau khi insert thành công
+        } else {
+            request.setAttribute("errorMessage", "Không thể chèn dữ liệu vào cơ sở dữ liệu.");
             request.getRequestDispatcher("/errorPage.jsp").forward(request, response);
         }
     }

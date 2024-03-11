@@ -25,48 +25,27 @@ public class DAODebtBill {
         db = DBContext.getInstance();
     }
 
-    //Tìm TypeDebtID
-    public int findTypeDebtId(String debtType) throws SQLException {
-        String sql = "SELECT ID FROM TypeDebt WHERE Type = ?";
-        try ( PreparedStatement pstmt = this.db.getConnection().prepareStatement(sql)) { // Sử dụng conn từ DBContextSQLserver
-            pstmt.setString(1, debtType);
-            try ( ResultSet rs = pstmt.executeQuery()) {
-                if (rs.next()) {
-                    return rs.getInt("ID");
-                } else {
-                    return -1; // Loại nợ không tìm thấy
-                }
-            }
-        }
-    }
-    // Insert vào trong DebtBill
-
-    public boolean insertDebtBill(int idTypeDebt, String amount, String note, List<String> imgPathsForDB, String cdate) {
-        int IDDebtor = 1; // Ví dụ: Lấy từ form hoặc session
-        String createdBy = "?"; // Mặc định người tạo
-
-        // Xây dựng câu lệnh SQL với các cột hình ảnh động
+    public boolean insertDebtBill(String IDTypeDebt, int idDebtor, String amount, String note, String debtTerm, List<String> imgPathsForDB, int createdBy) {
+        // Assume db is a properly initialized database connection object
         String sql = "INSERT INTO DebtBill (IDDebtor, IDTypeDebt, Amount, Description, EvidenceImg1, EvidenceImg2, EvidenceImg3, EvidenceImg4, EvidenceImg5, DebtTerm, CreatedAt, CreatedBy, isDelete) "
-                + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP, ?, ?)";
-
+                + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP, ?, 0)";
         try ( PreparedStatement ps = db.getConnection().prepareStatement(sql)) {
-            ps.setInt(1, IDDebtor);
-            ps.setInt(2, idTypeDebt);
+            ps.setInt(1, idDebtor);
+            ps.setString(2, IDTypeDebt);
             ps.setString(3, amount);
             ps.setString(4, note);
 
-            // Điền đường dẫn ảnh hoặc NULL nếu không có ảnh
+            // Fill image paths or NULL
             for (int i = 0; i < 5; i++) {
                 if (i < imgPathsForDB.size()) {
                     ps.setString(5 + i, imgPathsForDB.get(i));
                 } else {
-                    ps.setNull(5 + i, Types.VARCHAR);
+                    ps.setNull(5 + i, java.sql.Types.VARCHAR);
                 }
             }
 
-            ps.setString(10, cdate);
-            ps.setString(11, createdBy);
-            ps.setBoolean(12, false); // Giả định rằng isDelete mặc định là false
+            ps.setString(10, debtTerm); // Assuming debtTerm is a String representing a date
+            ps.setInt(11, createdBy); // Use IDUser for the CreatedBy field
 
             int result = ps.executeUpdate();
             return result > 0;

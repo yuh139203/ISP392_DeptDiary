@@ -32,10 +32,14 @@
             <div class="row justify-content-center">
                 <div class="col-md-6">
                     <form id="debtBill" method="post" action="bill" enctype="multipart/form-data">
-                        <h2>Debt Bill:</h2>
+                        <div>
+                            <a href="bill?id=${sessionScope.userLogin.id}"><img class="exit-button" type="button" src="assets/img/reject.png" class="refresh-icon" ></a> 
+                        </div>
+                        <h2>Debt Bill: ${debtor.fullName}</h2>
+                        <input type="hidden" name="idDebtor" value="${debtor.id}">
                         <!-- Loại nợ: -->
                         <div class="form-group">
-                            <label>Debt Type: ${debtor.fullName}</label>
+                            <label>Debt Type:</label>
                             <div class="toggle-buttons">
                                 <input type="radio" id="debit" name="debtType" value="debit">
                                 <label for="debit" class="btn btn-outline-secondary">Debit</label>
@@ -46,22 +50,23 @@
                         </div>
 
                         <div id="debitAttributes" style="display: none;">
-                            <select class="form-control" id="debitOptions">
+                            <select class="form-control" id="debitOptions" name="debitOption">
                                 <option value="">Select an option</option>
-                                <option value="1">You lend ${debtor.fullName} money</option> <!-- 2 -->
-                                <option value="2">${debtor.fullName} borrows money from you</option><!-- 3 -->
+                                <option value="2">You lend ${debtor.fullName} money</option> <!-- ID 2 từ bảng dữ liệu -->
+                                <option value="3">${debtor.fullName} borrows money from you</option><!-- ID 3 từ bảng dữ liệu -->
                             </select>
                             <div id="debitOptions-error" class="text-danger"></div>
                         </div>
 
                         <div id="creditAttributes" style="display: none;">
-                            <select class="form-control" id="creditOptions">
+                            <select class="form-control" id="creditOptions" name="creditOption">
                                 <option value="">Select an option</option>
-                                <option value="1">You borrow money from ${debtor.fullName}</option><!-- 1 -->
-                                <option value="2">${debtor.fullName} lends you money</option><!-- 4 -->
+                                <option value="1">You borrow money from ${debtor.fullName}</option><!-- ID 1 từ bảng dữ liệu -->
+                                <option value="4">${debtor.fullName} lends you money</option><!-- ID 4 từ bảng dữ liệu -->
                             </select>
                             <div id="creditOptions-error" class="text-danger"></div>
                         </div>
+
 
                         <!-- Số tiền -->
                         <div class="form-group">
@@ -76,12 +81,12 @@
                             <div id="date-error" class="text-danger"></div>
                         </div>                
                         <!-- Hạn nợ -->
-                         <div class="form-group">
-                             <label for="debtTerm">Debt Term:</label>
-                             <input type="date" id="debtTerm" name="debtTerm" class="form-control" required>
-                             <div id="debtTerm-error" class="text-danger"></div>
-                         </div>
-                 
+                        <div class="form-group">
+                            <label for="debtTerm">Debt Term:</label>
+                            <input type="date" id="debtTerm" name="debtTerm" class="form-control" required>
+                            <div id="debtTerm-error" class="text-danger"></div>
+                        </div>
+
                         <!-- Ghi chú -->
                         <div class="form-group">
                             <label for="note">Description</label>
@@ -98,60 +103,59 @@
                         <!-- Actions 
                         <div class="form-actions">-->
                         <button type="button" class="btn btn-primary" id="agreeButton">+Add</button>
+
+                    </form>
                 </div>
-                </form>
+            </div>
+        </section>
+        <!-- Modal Confirmation -->
+        <div class="modal fade" id="confirmationModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modalLabel">Confirm</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        Do you want to create this debt bill ? 
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" id="confirmSubmit">Confirm</button>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
-</section>
-<!-- Modal Confirmation -->
-<div class="modal fade" id="confirmationModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="modalLabel">Confirm</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                Do you want to create this debt bill ? 
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" id="confirmSubmit">Confirm</button>
+        <!-- Success Modal -->
+        <div class="modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="successModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="successModalLabel">Success</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        Debt Bill add successfully!!!
+                    </div>
+                    <div class="modal-footer">
+                        <!-- Trong modal thành công của bạn -->
+                        <button type="button" id="closeSuccessModalButton" class="btn btn-default">Close</button>
+
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
-</div>
-<!-- Success Modal -->
-<div class="modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="successModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="successModalLabel">Success</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                Debt Bill add successfully!!!
-            </div>
-            <div class="modal-footer">
-                <!-- Trong modal thành công của bạn -->
-                <button type="button" id="closeSuccessModalButton" class="btn btn-default">Close</button>
-
-            </div>
-        </div>
-    </div>
-</div>
 
 
-<!-- Bootstrap và jQuery -->
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-<script src="js/debtbill.js"></script>      
+        <!-- Bootstrap và jQuery -->
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        <script src="js/debtbill.js"></script>      
 
-</body>
+    </body>
 </html>
