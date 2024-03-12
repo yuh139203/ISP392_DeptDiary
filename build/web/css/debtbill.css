@@ -87,6 +87,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
 body {
     font-family: Arial, sans-serif;
     line-height: 1.5;
+    background-color: #83b3e3 !important;
 }
 #debtBill {
     background-color: #ffffff;
@@ -238,7 +239,7 @@ body {
 #agreeButton {
     display: block; /* Block level để có thể áp dụng margin tự động */
     width: auto; /* Width tự động để nút nhỏ lại */
-    margin: 20px auto; /* Top và bottom margin 20px, auto để căn giữa */
+    margin: 0px auto; /* Top và bottom margin 20px, auto để căn giữa */
     padding: 10px 20px; /* Padding để nút không quá nhỏ */
     background-color: #007bff; /* Màu nền của nút */
     color: white; /* Màu chữ */
@@ -303,4 +304,10 @@ body {
     border-color: #004085; /* Màu viền khi hover cho nút */
 }
 
-
+.exit-button {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    cursor: pointer;
+    max-width: 30px;
+}

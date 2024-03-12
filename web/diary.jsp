@@ -126,8 +126,7 @@
                                             <div class="profile-name">${debtor.fullName}</div>
                                             <div class="total-debt">Total debt</div>
                                             <div class="money">$${debtor.amount}</div>
-                                            <a href="debtDetailController?id=${debtor.id}" class="view-detail">View detail</a>  ||
-                                            <a href="deleteDebtor?id=${debtor.id}" class="delete-debtor">Delete</a>
+                                            <a href="debtDetailController?id=${debtor.id}" class="view-detail">View detail</a>  
                                         </div>
                                     </td>
                                     <c:if test="${loop.index % 4 == 3}">
@@ -144,7 +143,7 @@
 
                 <!--  PAGINATINON -->
                 <div class="paggi">
-                    <div class="flex items-center justify-between  bg-white px-2 py-1 sm:px-3 sm:py-2">
+                    <div class="flex items-center justify-between  bg-white px-2 py-1 sm:px-3 sm:py-2" style="border-radius: 5px;">
                         <div class="hidden sm:flex sm:flex-1 sm:items-center sm:justify-between">
                             <div>
                                 <p class="text-sm text-gray-700">
@@ -176,129 +175,7 @@
 
             </div>
         </div>
-    </div>
-
-    <div id="overlay"></div>
-
-
-    <!--    POPUP ADD DEBTOR-->
-    <div class="addDebt-popup" id="AddDebtPopup">
-        <div id="debt-info">
-            <div>
-                <img class="exit-button" type="button" src="assets/img/reject.png" class="refresh-icon" onclick="closeAddDebtPopupForm()">
-            </div>
-
-
-            <div class="form-title">
-                ADD Debtor 
-            </div>
-
-            <div class="row mt-3">
-                <div class="col-md-6">
-                    <label class="labels">First name</label>
-                    <input type="text" class="form-control" placeholder="Enter first name" value="">
-                </div>
-                <div class="col-md-6">
-                    <label class="labels">Last name</label>
-                    <input type="text" class="form-control" value="" placeholder="Enter last name">
-                </div>
-            </div>
-
-            <div class="row mt-2">
-                <div class="col-md-12">
-                    <label class="labels">Date od Birth</label>
-                    <input type="date" class="form-control" placeholder="Enter email" value="">
-                </div>
-                <div class="col-md-12">
-                    <label class="labels">Avatar</label>
-                    <input type="file" class="form-control" value="">
-                </div>
-                <div class="col-md-12">
-                    <label class="labels">Phone Number</label>
-                    <input type="text" class="form-control" placeholder="Enter phone number" value="">
-                </div>
-                <div class="col-md-12">
-                    <label class="labels">Address</label>
-                    <input type="address" class="form-control" placeholder="Enter address" value="">
-                </div>
-                <div class="col-md-12">
-                    <label class="labels">Email</label>
-                    <input type="text" class="form-control" placeholder="Enter email" value="">
-                </div>
-                <div class="col-md-12 total-debt">
-                    <label class="labels ">Total Debt</label>
-                    <input type="text" class="form-control" value="0" readonly>
-                </div>
-            </div>
-            <div class="mt-3 text-center">
-                <button class="btn btn-primary profile-button add-button" type="button" style="width: 200px;"> <i class="fas fa-plus"></i> ADD NEW</button>
-            </div>
-        </div>
-    </div>
-    <!--    END POPUP ADD DEBTOR-->
-
-
-
-    <!--    POPUP UPDATE DEBTOR-->
-    <div class="updateDebt-popup" id="UpdateDebtPopup">
-        <div id="debt-info">
-            <div>
-                <img class="exit-button" type="button" src="assets/img/reject.png" class="refresh-icon" onclick="closeUpdateDebtPopupForm()">
-            </div>
-
-            <div class="form-title">
-                Debtor Information
-            </div>
-
-            <div class="row mt-3">
-                <div class="col-md-6">
-                    <label class="labels">First Name</label>
-                    <input id="firstName" type="text" class="form-control">
-                </div>
-                <div class="col-md-6">
-                    <label class="labels">Last Name</label>
-                    <input id="lastName" type="text" class="form-control">
-                </div>
-            </div>
-
-            <div class="row mt-2">
-                <div class="col-md-12">
-                    <label class="labels">Date Of Birth</label>
-                    <input id="dateOfBirth" type="date" class="form-control">
-                </div>
-                <div class="col-md-12">
-                    <label class="labels">Avatar</label>
-                    <input id="avatar" type="file" class="form-control">
-                </div>
-                <div class="col-md-12">
-                    <label class="labels">Phone Number</label>
-                    <input id="phoneNumber" type="text" class="form-control">
-                </div>
-                <div class="col-md-12">
-                    <label class="labels">Address</label>
-                    <input id="address" type="address" class="form-control">
-                </div>
-                <div class="col-md-12">
-                    <label class="labels">Email</label>
-                    <input id="email" type="text" class="form-control">
-                </div>
-                <div class="col-md-12 total-debt">
-                    <label class="labels">Total Debt</label>
-                    <input id="amount" type="text" class="form-control" readonly>
-                </div>
-            </div>
-            <div class="mt-3 text-center">
-                <button class="btn btn-primary profile-button add-button" onclick="updateDebtor()" style="width: 200px;">
-                    <i class="fas fa-sync-alt"></i> UPDATE
-                </button>
-            </div>
-        </div>
-    </div>
-    <!--    END POPUP UPDATE DEBTOR-->
-
-
-
-
+    
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"

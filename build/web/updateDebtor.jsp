@@ -18,7 +18,7 @@
                 align-items: center;
                 justify-content: center;
                 min-height: 100vh;
-                background-color: #fefefe;
+                background-color: #83b3e3;
             }
 
             #debt-info {

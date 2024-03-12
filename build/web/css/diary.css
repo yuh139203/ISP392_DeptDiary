@@ -33,8 +33,7 @@ body {
     width: 100%;
     overflow: hidden;
     transition: all 0.35s ease-in-out;
-    background: url(assets/img/hero-bg.png);
-    /* background-color: #fafbfe; */
+    background-color: #83b3e3;
 
 }
 
@@ -168,7 +167,8 @@ a.sidebar-link:hover {
     padding-top: 0px;
     text-align: center;
     border: 2px solid #0e2238;
-    background-color: rgba(147, 193, 208, 0.8);
+    /*    background-color: rgba(147, 193, 208, 0.8);*/
+    background-color: #FFF;
 }
 
 .profile-image {
@@ -297,7 +297,7 @@ a.sidebar-link:hover {
 
 .paggi {
     margin-top: 60px;
-     position: relative;
+    position: relative;
 }
 
 .add-debtor {
@@ -405,9 +405,9 @@ a.sidebar-link:hover {
 }
 
 .pagination {
-/*    position: fixed;
-    bottom: 50px;*/
-/*    float: right;*/
+    /*    position: fixed;
+        bottom: 50px;*/
+    /*    float: right;*/
 }
 
 .pagination a {

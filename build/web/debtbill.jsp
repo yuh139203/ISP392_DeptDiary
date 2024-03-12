@@ -33,7 +33,7 @@
                 <div class="col-md-6">
                     <form id="debtBill" method="post" action="bill" enctype="multipart/form-data">
                         <div>
-                            <a href="bill?id=${sessionScope.userLogin.id}"><img class="exit-button" type="button" src="assets/img/reject.png" class="refresh-icon" ></a> 
+                            <a href="diary?id=${sessionScope.userLogin.id}"><img class="exit-button" type="button" src="assets/img/reject.png" class="refresh-icon" ></a> 
                         </div>
                         <h2>Debt Bill: ${debtor.fullName}</h2>
                         <input type="hidden" name="idDebtor" value="${debtor.id}">
