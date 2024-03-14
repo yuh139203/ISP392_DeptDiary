@@ -93,20 +93,20 @@ public class DebtBillController extends HttpServlet {
             throws ServletException, IOException {
         // Lấy các giá trị cơ bản từ form
         String debtType = request.getParameter("debtType");
-        String amount = request.getParameter("amount");
+        float amount = Float.parseFloat(request.getParameter("amount").replace(",", ""));
         String note = request.getParameter("note");
-        String debtTerm = request.getParameter("debtTerm"); // Thêm dòng này để lấy giá trị Hạn nợ
+        String debtTerm = request.getParameter("debtTerm"); 
         HttpSession session = request.getSession();
         User u = (User) session.getAttribute("userLogin");
         //id debtor
         int idDebtor = Integer.parseInt(request.getParameter("idDebtor"));
         DAODebtBill DAOdebtBill = new DAODebtBill();
         // Xử lý giá trị tuỳ chọn cho debit và credit
-        String IDTypeDebt = null;
+        int IDTypeDebt=0;
         if ("debit".equals(debtType)) {
-            IDTypeDebt = request.getParameter("debitOption"); // Đổi "debitOptions" thành "debitOption"
+            IDTypeDebt = Integer.parseInt(request.getParameter("debitOption")); 
         } else if ("credit".equals(debtType)) {
-            IDTypeDebt = request.getParameter("creditOption"); // Đổi "creditOptions" thành "creditOption"
+            IDTypeDebt = Integer.parseInt(request.getParameter("creditOption")); 
         }
 
         // Lấy tất cả các parts từ request
@@ -130,7 +130,7 @@ public class DebtBillController extends HttpServlet {
                 if (fileName != null && !fileName.isEmpty()) {
                     String filePath = savePath + File.separator + fileName;
                     part.write(filePath); // Lưu file
-                    imgPathsForDB.add("uploads/" + fileName); // Đường dẫn cho DB
+                    imgPathsForDB.add("uploads/" + fileName);
                 }
             }
         }
@@ -140,6 +140,7 @@ public class DebtBillController extends HttpServlet {
 
         if (insertResult) {
             response.sendRedirect("diary"); // Redirect sau khi insert thành công
+            
         } else {
             request.setAttribute("errorMessage", "Không thể chèn dữ liệu vào cơ sở dữ liệu.");
             request.getRequestDispatcher("/errorPage.jsp").forward(request, response);

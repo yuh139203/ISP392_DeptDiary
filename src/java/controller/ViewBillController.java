@@ -5,23 +5,19 @@
 package controller;
 
 import dao.DAODebtBill;
-import dao.DAODebtor;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
-import java.util.List;
 import model.DebtBill;
-import model.Debtor;
 
 /**
  *
- * @author namte
+ * @author yuh
  */
-public class DebtDetailController extends HttpServlet {
+public class ViewBillController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -40,10 +36,10 @@ public class DebtDetailController extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet DebtDetailController</title>");
+            out.println("<title>Servlet ViewBillController</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet DebtDetailController at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet ViewBillController at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -61,45 +57,11 @@ public class DebtDetailController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        //        String resultLimitParameter = request.getParameter("resultlimit");
-        int numPerPage;
-//        if (resultLimitParameter == null || resultLimitParameter.isEmpty()) {
-        numPerPage = 10; // giá trị mặc định
-//        } else {
-//            numPerPage = Integer.parseInt(resultLimitParameter);
-//        }
-        HttpSession session = request.getSession();
-        
-        int idDebtor = Integer.parseInt(request.getParameter("id"));
-        DAODebtor daoDebtor = new DAODebtor();
-        Debtor d = daoDebtor.findByID(idDebtor);
-        session.setAttribute("Debtor", d);
+        int idDebtBill= Integer.parseInt(request.getParameter("id"));
         DAODebtBill dao = new DAODebtBill();
-        List<DebtBill> list = dao.getDebtbillByDebtorID(idDebtor);
-        int listSize = list.size();
-        int page;
-        int num = (listSize % numPerPage == 0 ? (listSize / numPerPage) : ((listSize / numPerPage)) + 1);
-        String xpage = request.getParameter("page");
-        if (xpage == null) {
-            page = 1;
-        } else {
-            page = Integer.parseInt(xpage);
-        }
-        int start, end;
-        start = (page - 1) * numPerPage;
-        end = Math.min(page * numPerPage, listSize);
-        List<DebtBill> data = dao.getListByPage(list, start, end);
-        int startPage = start + 1;
-
-        request.setAttribute("data", data);
-        request.setAttribute("startPage", startPage);
-        request.setAttribute("endPage", end);
-        request.setAttribute("num", num);
-        request.setAttribute("listSize", listSize);
-        request.setAttribute("listSizePerPage", data.size());
-        request.setAttribute("numperpage", numPerPage);
-        request.setAttribute("debtor", d);
-        request.getRequestDispatcher("debtBillDetail.jsp").forward(request, response);
+        DebtBill db = dao.findByID(idDebtBill);
+        request.setAttribute("DebtBill", db);
+        request.getRequestDispatcher("viewBill.jsp").forward(request, response);
     }
 
     /**

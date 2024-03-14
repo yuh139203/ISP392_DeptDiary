@@ -31,9 +31,9 @@
         <section class="container mt-5" id="debtform">
             <div class="row justify-content-center">
                 <div class="col-md-6">
-                    <form id="debtBill" method="post" action="bill" enctype="multipart/form-data">
+                    <form id="debtBill" method="get" action="viewBill" enctype="multipart/form-data">
                         <div>
-                            <a href="diary?id=${sessionScope.userLogin.id}"><img class="exit-button" type="button" src="assets/img/reject.png" class="refresh-icon" ></a> 
+                            <a href="debtDetailController?id=${sessionScope.Debtor.id}"><img class="exit-button" type="button" src="assets/img/reject.png" class="refresh-icon" ></a> 
                         </div>
                         <h2>Debt Bill: ${debtor.fullName}</h2>
                         <input type="hidden" name="idDebtor" value="${debtor.id}">
@@ -70,39 +70,40 @@
 
                         <!-- Số tiền -->
                         <div class="form-group">
-                            <label for="amount">Amount(*)</label>
-                            <input type="text" class="form-control" id="amount" name="amount" placeholder="0" required>
+                            <label for="amount">Amount</label>
+                            <input type="text" class="form-control" id="amount" name="amount" value="${DebtBill.amount}" disabled>
                             <div id="amount-error" class="text-danger"></div>
                         </div>
                         <!-- Ngày lập phiếu -->                   
-                        <div class="form-group">
+<!--                        <div class="form-group">
                             <label for="date">Create Date</label>
                             <input type="datetime-local" id="date" name="date" required>
                             <div id="date-error" class="text-danger"></div>
-                        </div>                
+                        </div>-->
+
+                        <div class="form-group">
+                            <label for="date">Create Date:</label>
+                            <input type="date" id="date" name="date" value="${DebtBill.debtTerm}" class="form-control" disabled>
+                            <div id="debtTerm-error" class="text-danger"></div>
+                        </div>
                         <!-- Hạn nợ -->
                         <div class="form-group">
                             <label for="debtTerm">Debt Term:</label>
-                            <input type="date" id="debtTerm" name="debtTerm" class="form-control" required>
+                            <input type="date" id="debtTerm" name="debtTerm" value="${DebtBill.debtTerm}" class="form-control" disabled>
                             <div id="debtTerm-error" class="text-danger"></div>
                         </div>
 
-                        <!-- Ghi chú -->
                         <div class="form-group">
                             <label for="note">Description</label>
-                            <textarea id="note" name="note" rows="4" class="form-control"></textarea>
+                            <textarea id="note" name="note" rows="4" class="form-control" disabled>${DebtBill.description}</textarea>
                             <div id="note-error" class="text-danger"></div>
                         </div>
-                        <!-- Hình ảnh -->
                         <div class="form-group">
                             <label>Evidence Image:</label>
                             <button type="button" class="btn btn-primary" id="addImageButton"><i class="fa fa-plus-circle"></i> Add Photos</button>
                             <div id="imageInputsContainer" style="margin-top: 10px;"></div>
                         </div>
 
-                        <!-- Actions 
-                        <div class="form-actions">-->
-                        <button type="button" class="btn btn-primary" id="agreeButton">+Add</button>
 
                     </form>
                 </div>
@@ -155,7 +156,7 @@
         <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-        <script src="js/debtbill.js"></script>      
+<!--        <script src="js/debtbill.js"></script>      -->
 
     </body>
 </html>

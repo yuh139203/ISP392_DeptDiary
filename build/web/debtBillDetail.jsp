@@ -107,7 +107,7 @@
                                 </td>
                                 <td> <strong> ${debtBill.amount}VND</strong></td>
                                 <td>${debtBill.createdAt}</td>
-                                <td> <a href="#" class="status delivered">Detail</a></td>
+                                <td> <a href="viewBill?id=${debtBill.id}" class="status delivered">Detail</a></td>
                             </tr>
                         </c:forEach>
 

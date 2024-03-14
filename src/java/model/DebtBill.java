@@ -9,7 +9,7 @@ public class DebtBill {
     private int id;
     private int idDebtor;
     private int idTypeDebt;
-    private String amount;
+    private float amount;
     private String description;
     private String debtTerm;
     private String evidenceImg1;
@@ -28,7 +28,7 @@ public class DebtBill {
     public DebtBill() {
     }
 
-    public DebtBill(int id, int idDebtor, int idTypeDebt, String amount, String description, String debtTerm, String evidenceImg1, String evidenceImg2, String evidenceImg3, String evidenceImg4, String evidenceImg5, boolean isDelete, String createdAt, String createdBy, String updatedAt, String deletedAt, String deletedBy) {
+    public DebtBill(int id, int idDebtor, int idTypeDebt, float amount, String description, String debtTerm, String evidenceImg1, String evidenceImg2, String evidenceImg3, String evidenceImg4, String evidenceImg5, boolean isDelete, String createdAt, String createdBy, String updatedAt, String deletedAt, String deletedBy) {
         this.id = id;
         this.idDebtor = idDebtor;
         this.idTypeDebt = idTypeDebt;
@@ -50,7 +50,7 @@ public class DebtBill {
     
     
 
-    public DebtBill(int id, int idDebtor, int idTypeDebt, String amount, String description, String debtTerm, String evidenceImg1, String evidenceImg2, String evidenceImg3, String evidenceImg4, String evidenceImg5, boolean isDelete, String createdAt, String createdBy, String updatedAt, String deletedAt, String deletedBy, String type) {
+    public DebtBill(int id, int idDebtor, int idTypeDebt, float amount, String description, String debtTerm, String evidenceImg1, String evidenceImg2, String evidenceImg3, String evidenceImg4, String evidenceImg5, boolean isDelete, String createdAt, String createdBy, String updatedAt, String deletedAt, String deletedBy, String type) {
         this.id = id;
         this.idDebtor = idDebtor;
         this.idTypeDebt = idTypeDebt;
@@ -95,11 +95,11 @@ public class DebtBill {
         this.idTypeDebt = idTypeDebt;
     }
 
-    public String getAmount() {
+    public float getAmount() {
         return amount;
     }
 
-    public void setAmount(String amount) {
+    public void setAmount(float amount) {
         this.amount = amount;
     }
 
