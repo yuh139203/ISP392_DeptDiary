@@ -32,6 +32,7 @@
             <section class="table__body">
 
                 <table>
+
                     <thead>
                         <tr>
                             <th> Id <span class="icon-arrow">&UpArrow;</span></th>
@@ -43,44 +44,47 @@
                         </tr>
 
                         <tr class="search-wrapper">
+                    <form action="debtDetailController" method="post">
+                        <th class="searchById">
+                            <input  type="text" placeholder="Enter ID" name="id" style="width: 100%; padding: 5px; border-radius: 5px;">
+                        </th>
 
-                            <th class="searchById">
-                                <input  type="text" placeholder="Enter ID" name="id" style="width: 100%; padding: 5px;">
-                            </th>
+                        <th class="searchByDescription">
+                            <input  type="text" placeholder="Enter Description" name="description" style="width: 100%; padding: 5px; border-radius: 5px;">
+                        </th>
 
-                            <th class="searchByDescription">
-                                <input  type="text" placeholder="Enter Description" name="description" style="width: 100%; padding: 5px;">
-                            </th>
+                        <th class="searchByType">
+                            <select name="type" style="width: 100%; padding: 5px; border-radius: 5px;">
+                                <option value="1">All</option>
+                                <option value="2">You lend ${debtor.fullName} money</option>
+                                <option value="1">You borrow money ${debtor.fullName}</option>
+                                <option value="4">${debtor.fullName} lend you money</option>
+                                <option value="3">${debtor.fullName} borrow money you</option>
+                            </select>
+                        </th>
 
-                            <th class="searchByType">
-                                <select name="type" style="width: 100%; padding: 5px;">
-                                    <option value="1">All</option>
-                                    <option value="2">You lend ${debtor.fullName} money</option>
-                                    <option value="1">You borrow money ${debtor.fullName}</option>/-strong/-heart:>:o:-((:-h<option value="4">${debtor.fullName} lend you money</option>
-                                    <option value="3">${debtor.fullName} borrow money you</option>
-                                </select>
-                            </th>
+                        <th class="searchByAmount" style="white-space: nowrap; ">
+                            <div style="display: inline-block;">
+                                <input type="text" placeholder="from" name="fromAmount"  style="width: 75px; padding: 5px; border-radius: 5px;">
+                                <input type="text" placeholder="to" name="toAmount"  style="width: 75px; padding: 5px; border-radius: 5px;">
+                            </div>
+                        </th>
 
-                            <th class="searchByAmount" style="white-space: nowrap;">
-                                <div style="display: inline-block;">
-                                    <input type="text" placeholder="from" name="fromAmount"  style="width: 75px; padding: 5px;">
-                                    <input type="text" placeholder="to" name="toAmount"  style="width: 75px; padding: 5px;">
-                                </div>
-                            </th>
+                        <th class="searchByTime" style="white-space: nowrap;">
+                            <div style="display: inline-block;">
+                                <input type="text" placeholder="from" name="fromTime" style="width: 75px; padding: 5px; border-radius: 5px;">
+                                <input type="text" placeholder="to" name="toTime" style="width: 75px; padding: 5px; border-radius: 5px;">
+                            </div>
+                        </th>
 
-                            <th class="searchByTime" style="white-space: nowrap;">
-                                <div style="display: inline-block;">
-                                    <input type="text" placeholder="from" name="fromTime" style="width: 75px; padding: 5px;">
-                                    <input type="text" placeholder="to" name="toTime" style="width: 75px; padding: 5px;">
-                                </div>
-                            </th>
-
-                            <th> 
-                                <a href="#"><img src="assets/img/clear-filter.png" style="max-width: 30px; margin-left: 7px;"></a>
-                            </th>
-                        </tr>
+                        <th> 
+                            <a href="debtDetailController?id=${debtor.id}"><img src="assets/img/clear-filter.png" style="max-width: 30px; margin-left: 7px; border-radius: 5px;"></a>
+                        </th>
+                    </form>
+                    </tr>
 
                     </thead>
+
                     <tbody>
 
 
@@ -92,20 +96,29 @@
                                 <td>
                                     <c:choose>
                                         <c:when test="${debtBill.idTypeDebt == 1}">
-                                            You borrow ${debtor.fullName}
+                                            (-)You borrow ${debtor.fullName}
                                         </c:when>
                                         <c:when test="${debtBill.idTypeDebt == 2}">
-                                            You lend ${debtor.fullName}
+                                            (+)You lend ${debtor.fullName}
                                         </c:when>
                                         <c:when test="${debtBill.idTypeDebt == 3}">
-                                            ${debtor.fullName} borrow You
+                                            (+)${debtor.fullName} borrow You
                                         </c:when>
                                         <c:when test="${debtBill.idTypeDebt == 4}">
-                                            ${debtor.fullName} lend You
+                                            (-)${debtor.fullName} lend You
                                         </c:when>
                                     </c:choose>
                                 </td>
-                                <td> <strong> ${debtBill.amount}VND</strong></td>
+                                <td> 
+                                    <c:choose>
+                                        <c:when test="${debtBill.idTypeDebt == 4 || debtBill.idTypeDebt == 1}">
+                                            <strong style="color: red;">${debtBill.amount}VND</strong>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <strong>${debtBill.amount}VND</strong>
+                                        </c:otherwise>
+                                    </c:choose>
+                                </td>
                                 <td>${debtBill.createdAt}</td>
                                 <td> <a href="viewBill?id=${debtBill.id}" class="status delivered">Detail</a></td>
                             </tr>

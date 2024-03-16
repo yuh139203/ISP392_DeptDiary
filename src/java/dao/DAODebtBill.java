@@ -44,27 +44,37 @@ public class DAODebtBill {
                     ps.setNull(5 + i, java.sql.Types.VARCHAR);
                 }
             }
-            ps.setString(10, debtTerm); 
-            ps.setInt(11, createdBy); 
+            ps.setString(10, debtTerm);
+            ps.setInt(11, createdBy);
             int result = ps.executeUpdate();
-            if(result > 0) {        
-         String updateSql = "UPDATE Debtor SET Amount = Amount + ? WHERE ID = ?";
-         
-         try(PreparedStatement psUpdate = db.getConnection().prepareStatement(updateSql)) {
-            psUpdate.setFloat(1, amount);
-            psUpdate.setInt(2, idDebtor);            
-            psUpdate.executeUpdate();          
-         } catch(SQLException e) {
+            if (result > 0) {
+                if (IDTypeDebt == 2 || IDTypeDebt == 3) {
+                    String updateSql = "UPDATE Debtor SET Amount = Amount + ? WHERE ID = ?";
+                    try ( PreparedStatement psUpdate = db.getConnection().prepareStatement(updateSql)) {
+                        psUpdate.setFloat(1, amount);
+                        psUpdate.setInt(2, idDebtor);
+                        psUpdate.executeUpdate();
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+                }else if(IDTypeDebt == 1 || IDTypeDebt == 4){
+                    String updateSql = "UPDATE Debtor SET Amount = Amount - ? WHERE ID = ?";
+                    try ( PreparedStatement psUpdate = db.getConnection().prepareStatement(updateSql)) {
+                        psUpdate.setFloat(1, amount);
+                        psUpdate.setInt(2, idDebtor);
+                        psUpdate.executeUpdate();
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+            return result > 0;
+        } catch (SQLException e) {
             e.printStackTrace();
-         }   
-      }    
-      return result > 0;     
-  } catch (SQLException e) {
-     e.printStackTrace();
-     return false;
-  }
+            return false;
+        }
 
-}
+    }
 
     public List<DebtBill> getDebtbillByDebtorID(int debtorID) {
         List<DebtBill> list = new ArrayList<>();
@@ -149,8 +159,7 @@ public class DAODebtBill {
         }
         return list;
     }
-    
-    
+
     public DebtBill findByID(int id) {
         String sql = "SELECT * FROM DebtBill where ID = ?";
         try {
@@ -179,9 +188,7 @@ public class DAODebtBill {
         return null;
     }
 
-    
 //    (String IDTypeDebt, int idDebtor, float amount, String note, String debtTerm, List<String> imgPathsForDB, int createdBy)
-    
     public static void main(String[] args) {
         DAODebtBill dao = new DAODebtBill();
 //        boolean insert = dao.insertDebtBill("1", 1, 340, "new", "2024-04-06", imgPathsForDB, 0);

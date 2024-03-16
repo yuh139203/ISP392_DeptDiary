@@ -21,8 +21,8 @@ import utils.DBContext;
  * @author yuh
  */
 public class DAODebtor {
-    
-    DBContext db;
+
+    static DBContext db;
 
     public DAODebtor() {
         db = DBContext.getInstance();
@@ -63,6 +63,26 @@ public class DAODebtor {
 
     public Vector<Debtor> getAllDebtor(int id) {
         String sql = "select * from Debtor where  isDelete = 0 and CreatedBy =" + id;
+        return getAll(sql);
+    }
+
+    public List<Debtor> searchDebtor(String name, String address, String phoneNumber, String email, int amountFrom, int amountTo) {
+        String sql = "select * from Debtor where  isDelete = 0 ";
+        if (name != null && !name.isEmpty()) {
+            sql += " AND FullName LIKE '%" + name + "%'";
+        }
+        if (address != null && !address.isEmpty()) {
+            sql += " AND Address LIKE '%" + address + "%'";
+        }
+        if (phoneNumber != null && !phoneNumber.isEmpty()) {
+            sql += " AND PhoneNumber LIKE '%" + phoneNumber + "%'";
+        }
+        if (email != null && !email.isEmpty()) {
+            sql += " AND Email LIKE '%" + email + "%'";
+        }
+        if (amountFrom >= 0 && amountTo >= 0 && amountFrom <= amountTo) {
+            sql += " AND Amount BETWEEN " + amountFrom + " AND " + amountTo;
+        }
         return getAll(sql);
     }
 
@@ -139,14 +159,37 @@ public class DAODebtor {
         }
         return false;
     }
-    
-        public static void main(String[] args) {
+
+    public static void main(String[] args) {
         DAODebtor dao = new DAODebtor();
-        boolean add=dao.addProfileOfDebtor("as", "sw", "sca", "ssda", "sass", 1);
-        if(add){
-            System.out.println("sucess");
-        }else{
-            System.out.println("fail");
+        String name = "";
+        String address = "";
+        String phoneNumber = "";
+        String email = "";
+        int amountFrom = 0;
+        int amountTo = 1000;
+        List<Debtor> list = new ArrayList();
+        list = dao.searchDebtor(name, address, phoneNumber, email, amountFrom, amountTo);
+        for (Debtor debtor : list) {
+            System.out.println(debtor);
         }
-        }
+
+//        String sql = "select * from Debtor where  isDelete = 0 ";
+//        if (name != null && !name.isEmpty()) {
+//            sql += " AND FullName LIKE '%" + name + "%'";
+//        }
+//        if (address != null && !address.isEmpty()) {
+//            sql += " AND Address LIKE '%" + address + "%'";
+//        }
+//        if (phoneNumber != null && !phoneNumber.isEmpty()) {
+//            sql += " AND PhoneNumber LIKE '%" + phoneNumber + "%'";
+//        }
+//        if (email != null && !email.isEmpty()) {
+//            sql += " AND Email LIKE '%" + email + "%'";
+//        }
+//        if (amountFrom >= 0 && amountTo >= 0 && amountFrom <= amountTo) {
+//            sql += " AND Amount BETWEEN " + amountFrom + " AND " + amountTo;
+//        }
+//        System.out.println(sql);
+    }
 }

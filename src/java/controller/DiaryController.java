@@ -12,6 +12,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.List;
 import model.Debtor;
 import model.User;
@@ -76,7 +77,40 @@ public class DiaryController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        String name = request.getParameter("name");
+        String address = request.getParameter("address");
+        String email = request.getParameter("email");
+        String phoneNumber = request.getParameter("phoneNumber");
+        int amountFrom = Integer.parseInt(request.getParameter("amountFrom"));
+        int amountTo = Integer.parseInt(request.getParameter("amountTo"));
+
+        
+        DAODebtor dao = new DAODebtor();
+        List<Debtor> list = new ArrayList();
+        list = dao.searchDebtor(name, address, phoneNumber, email, amountFrom, amountTo);
+        int listSize = list.size();
+        int page, numperpage = 8;
+        int num = (listSize % 8 == 0 ? (listSize / 8) : ((listSize / 8)) + 1);
+        String xpage = request.getParameter("page");
+        if (xpage == null) {
+            page = 1;
+        } else {
+            page = Integer.parseInt(xpage);
+        }
+        int start, end;
+        start = (page - 1) * numperpage;
+        end = Math.min(page * numperpage, listSize);
+        List<Debtor> data = dao.getListByPage(list, start, end);
+        int startPage = start + 1;
+
+        request.setAttribute("page", page);
+        request.setAttribute("data", data);
+        request.setAttribute("startPage", startPage);
+        request.setAttribute("endPage", end);
+        request.setAttribute("num", num);
+        request.setAttribute("listSize", listSize);
+        request.getRequestDispatcher("diary.jsp").forward(request, response);
+        
     }
 
     @Override

@@ -159,16 +159,14 @@ a.sidebar-link:hover {
 }
 
 .profile-card {
-    margin-top: 60px;
-    margin-left: 50px;
+    margin-top: 30px;
+    margin-left: 30px;
     width: 160px;
-    border: 1px solid #ccc;
+    border: 1px solid #0e2238;
     border-radius: 8px;
     padding-top: 0px;
     text-align: center;
-    border: 2px solid #0e2238;
-    /*    background-color: rgba(147, 193, 208, 0.8);*/
-    background-color: #FFF;
+    background-color: #fff5;
 }
 
 .profile-image {
@@ -296,7 +294,7 @@ a.sidebar-link:hover {
 }
 
 .paggi {
-    margin-top: 60px;
+    margin-top: 50px;
     position: relative;
 }
 
@@ -429,4 +427,69 @@ a.sidebar-link:hover {
 .pagination a:hover:not(.active) {
     background-color: #5864ff;
     color: #ffffff;
+}
+
+
+/*SEARCH*/
+.container {
+    width: 1000px;
+    background: #fff5;
+    margin: 0 auto;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    padding-left: 20px;
+    padding-right: 20px;
+    font: 16px Arial, Verdana, Tahoma, Sans-serif;
+    border-radius: 35px;
+}
+
+.search-wrapper {
+    margin: 8px 0;
+}
+
+.search-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    align-content: stretch;
+    align-items: flex-start;
+    align-items: center;
+}
+
+input {
+    min-width: 20px;
+    padding: 2px;
+    margin: 0 4px 0 0;
+    border-radius: 5px;
+    height: 25px;
+}
+
+.search-button {
+    padding: 2px;
+    min-height: 40px;
+    min-width: 40px;
+    word-wrap: nowrap;
+    background: #3a65bb;
+    color: #fff;
+    border: 1px solid #fff;
+    border-radius: 50%;
+    display: flex; 
+    justify-content: center; 
+    align-items: center;
+}
+
+.search-container input {
+    order: 0;
+    align-self: auto;
+}
+
+.search {
+    flex: 2 1 auto;
+}
+
+.search-button {
+    order: 4;
+    flex: 0 1 auto;
+    align-self: auto;
 }

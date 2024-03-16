@@ -113,7 +113,7 @@
                     </div>
                     <div class="col-md-12 total-debt">
                         <label class="labels">Total Debt</label>
-                        <input type="text" class="form-control" value="${debtor.amount}" readonly>
+                        <input type="text" class="form-control" value="${debtor.amount}" readonly style="color: ${debtor.amount < 0 ? 'red' : 'black'};">
                     </div>
                 </div>
                 <div class="mt-3 text-center">

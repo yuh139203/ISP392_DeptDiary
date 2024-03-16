@@ -101,13 +101,36 @@
             <div class="main p-3">
                 <div class="text-center">
 
-                    <div style="display: inline-block; font-size: 20px; font-weight: bold;">
+                    <div style="display: inline-block; font-size: 30px; font-weight: bold;">
                         List of Debtors
                     </div>
 
-                    <a href="addDebtor" class="link-wrapper" >
-                        <img class="plus-bt" src="assets/img/plus.png">
-                    </a>
+
+                    <div class="top-bar">
+
+                        <a href="addDebtor" class="link-wrapper" >
+                            <img class="plus-bt" src="assets/img/plus.png"><strong>Add Debtor</strong>
+                        </a>
+                        <!--SEARCH BAR-->
+
+                        <div class="container">
+                            <form action="diary" method="post">
+                                <div class="search-wrapper">
+                                    <div class="search-container">
+                                        <input type="text" class="search" placeholder="Name" name="name">  
+                                        <input type="text" class="search" placeholder="Address" name="address">
+                                        <input type="text" class="search" placeholder="Phone Number" name="phoneNumber">
+                                        <input type="text" class="search" placeholder="Email" name="email">
+                                        <input type="text" class="search" placeholder="Amount from" name="amountFrom" style="width: 150px">
+                                        <input type="text" class="search" placeholder="Amount to" name="amountTo" style="width: 150px">
+                                        <button type="submit" class="search-button"><img src="assets/img/search-debtor.png" style="max-width: 25px; "></button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+
+                    </div>
+
                     <!-- CARDS -->
                     <div class="profile-container">
                         <table>
@@ -125,7 +148,7 @@
                                             <img src="${debtor.avatar}" alt="Avatar" class="profile-image">
                                             <div class="profile-name">${debtor.fullName}</div>
                                             <div class="total-debt">Total debt</div>
-                                            <div class="money">${debtor.amount}VND</div>
+                                            <div class="money" style="color: ${debtor.amount < 0 ? 'red' : 'inherit'}">${debtor.amount}</div>
                                             <a href="debtDetailController?id=${debtor.id}" class="view-detail">View detail</a>  
                                         </div>
                                     </td>
@@ -175,16 +198,16 @@
 
             </div>
         </div>
-    
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
-    crossorigin="anonymous"></script>
-    <script src="js/diary.js"></script>
-    <script type="module" src="node_modules/@material-tailwind/html@latest/scripts/popover.js"></script>
 
-    <!-- from cdn -->
-    <script type="module" src="https://unpkg.com/@material-tailwind/html@latest/scripts/popover.js"></script>
-</body>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
+                integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
+        crossorigin="anonymous"></script>
+        <script src="js/diary.js"></script>
+        <script type="module" src="node_modules/@material-tailwind/html@latest/scripts/popover.js"></script>
+
+        <!-- from cdn -->
+        <script type="module" src="https://unpkg.com/@material-tailwind/html@latest/scripts/popover.js"></script>
+    </body>
 
 </html>

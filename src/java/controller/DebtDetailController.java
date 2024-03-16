@@ -113,7 +113,13 @@ public class DebtDetailController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        String id = request.getParameter("id");
+        String description = request.getParameter("description");
+        int type = Integer.parseInt(request.getParameter("type"));
+        int fromAmount = Integer.parseInt(request.getParameter("fromAmount"));
+        int toAmount = Integer.parseInt(request.getParameter("toAmount"));
+        
+        
     }
 
     /**

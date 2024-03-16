@@ -20,11 +20,9 @@
             <file>file:/D:/GitHub3/ISP392_DeptDiary/src/java/utils/GetFileName.java</file>
         </group>
         <group>
-            <file>file:/C:/Users/yuh/Documents/GitHub/ISP392_DeptDiary/src/java/dao/DAODebtBill.java</file>
-            <file>file:/C:/Users/yuh/Documents/GitHub/ISP392_DeptDiary/src/java/controller/ViewBillController.java</file>
+            <file>file:/C:/Users/yuh/Documents/GitHub/ISP392_DeptDiary/web/debtBillDetail.jsp</file>
+            <file>file:/C:/Users/yuh/Documents/GitHub/ISP392_DeptDiary/web/diary.jsp</file>
             <file>file:/C:/Users/yuh/Documents/GitHub/ISP392_DeptDiary/src/java/dao/DAODebtor.java</file>
-            <file>file:/C:/Users/yuh/Documents/GitHub/ISP392_DeptDiary/web/debtbill.jsp</file>
-            <file>file:/C:/Users/yuh/Documents/GitHub/ISP392_DeptDiary/src/java/controller/LoginController.java</file>
             <file>file:/C:/Users/yuh/Documents/GitHub/ISP392_DeptDiary/src/java/controller/DebtDetailController.java</file>
         </group>
     </open-files>

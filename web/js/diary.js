@@ -60,3 +60,6 @@ function openUpdateDebtPopupForm(debtor) {
     document.getElementById('UpdateDebtPopup').style.display = 'block';
     document.getElementById("overlay").style.display = "block";
 }
+
+
+
