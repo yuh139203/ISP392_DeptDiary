@@ -69,7 +69,7 @@ public class DebtDetailController extends HttpServlet {
 //            numPerPage = Integer.parseInt(resultLimitParameter);
 //        }
         HttpSession session = request.getSession();
-        
+
         int idDebtor = Integer.parseInt(request.getParameter("id"));
         DAODebtor daoDebtor = new DAODebtor();
         Debtor d = daoDebtor.findByID(idDebtor);
@@ -113,13 +113,73 @@ public class DebtDetailController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String id = request.getParameter("id");
+        String idParam = request.getParameter("idDebtBill");
+        int id;
+
+        if (idParam != null && !idParam.isEmpty()) {
+            id = Integer.parseInt(idParam);
+        } else {
+            id = -1;
+        }
         String description = request.getParameter("description");
-        int type = Integer.parseInt(request.getParameter("type"));
-        int fromAmount = Integer.parseInt(request.getParameter("fromAmount"));
-        int toAmount = Integer.parseInt(request.getParameter("toAmount"));
-        
-        
+        int idDebtor = Integer.parseInt(request.getParameter("idDebtor"));
+
+        String typeParam = request.getParameter("idDebtBill");
+        int type=-1;
+
+        if (typeParam != null && !typeParam.isEmpty()) {
+            id = Integer.parseInt(typeParam);
+        } else {
+            type = -1;
+        }
+
+        String fromAmountParam = request.getParameter("fromAmount");
+        String toAmountParam = request.getParameter("toAmount");
+
+        int fromAmount;
+        int toAmount;
+
+        if (fromAmountParam != null && !fromAmountParam.isEmpty()) {
+            fromAmount = Integer.parseInt(fromAmountParam);
+        } else {
+            fromAmount = Integer.MIN_VALUE;
+        }
+
+        if (toAmountParam != null && !toAmountParam.isEmpty()) {
+            toAmount = Integer.parseInt(toAmountParam);
+        } else {
+            toAmount = Integer.MAX_VALUE;
+        }
+        DAODebtor daoDebtor = new DAODebtor();
+        Debtor d = daoDebtor.findByID(idDebtor);
+        DAODebtBill dao = new DAODebtBill();
+        List<DebtBill> list = dao.searchDebtBill(idDebtor, id, description, type, fromAmount, toAmount);
+        int listSize = list.size();
+        int numPerPage = 10;
+        int page;
+        int num = (listSize % numPerPage == 0 ? (listSize / numPerPage) : ((listSize / numPerPage)) + 1);
+        String xpage = request.getParameter("page");
+        if (xpage == null) {
+            page = 1;
+        } else {
+            page = Integer.parseInt(xpage);
+        }
+        int start, end;
+        start = (page - 1) * numPerPage;
+        end = Math.min(page * numPerPage, listSize);
+        List<DebtBill> data = dao.getListByPage(list, start, end);
+        int startPage = start + 1;
+
+        request.setAttribute("data", data);
+        request.setAttribute("startPage", startPage);
+        request.setAttribute("endPage", end);
+        request.setAttribute("num", num);
+        request.setAttribute("listSize", listSize);
+        request.setAttribute("listSizePerPage", data.size());
+        request.setAttribute("numperpage", numPerPage);
+        request.setAttribute("debtor", d);
+        request.getRequestDispatcher("debtBillDetail.jsp").forward(request, response);
+
     }
 
     /**

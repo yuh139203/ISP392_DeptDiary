@@ -17,7 +17,6 @@ import java.util.List;
 import model.Debtor;
 import model.User;
 
-
 /**
  *
  * @author yuh
@@ -32,7 +31,7 @@ public class DiaryController extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet DiaryController</title>");            
+            out.println("<title>Servlet DiaryController</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet DiaryController at " + request.getContextPath() + "</h1>");
@@ -41,13 +40,12 @@ public class DiaryController extends HttpServlet {
         }
     }
 
-
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         DAODebtor dao = new DAODebtor();
         HttpSession session = request.getSession();
-        User u = (User)session.getAttribute("userLogin");
+        User u = (User) session.getAttribute("userLogin");
         List<Debtor> list = dao.getAllDebtor(u.getId());
         int listSize = list.size();
         int page, numperpage = 8;
@@ -73,7 +71,6 @@ public class DiaryController extends HttpServlet {
         request.getRequestDispatcher("diary.jsp").forward(request, response);
     }
 
-
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -81,10 +78,25 @@ public class DiaryController extends HttpServlet {
         String address = request.getParameter("address");
         String email = request.getParameter("email");
         String phoneNumber = request.getParameter("phoneNumber");
-        int amountFrom = Integer.parseInt(request.getParameter("amountFrom"));
-        int amountTo = Integer.parseInt(request.getParameter("amountTo"));
 
-        
+        String amountFromParam = request.getParameter("amountFrom");
+        String amountToParam = request.getParameter("amountTo");
+
+        int amountFrom;
+        int amountTo;
+
+        if (amountFromParam != null && !amountFromParam.isEmpty()) {
+            amountFrom = Integer.parseInt(amountFromParam);
+        } else {
+            amountFrom = Integer.MIN_VALUE;
+        }
+
+        if (amountToParam != null && !amountToParam.isEmpty()) {
+            amountTo = Integer.parseInt(amountToParam);
+        } else {
+            amountTo =  Integer.MAX_VALUE; 
+        }
+
         DAODebtor dao = new DAODebtor();
         List<Debtor> list = new ArrayList();
         list = dao.searchDebtor(name, address, phoneNumber, email, amountFrom, amountTo);
@@ -110,7 +122,7 @@ public class DiaryController extends HttpServlet {
         request.setAttribute("num", num);
         request.setAttribute("listSize", listSize);
         request.getRequestDispatcher("diary.jsp").forward(request, response);
-        
+
     }
 
     @Override

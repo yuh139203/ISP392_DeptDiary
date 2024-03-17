@@ -7,9 +7,11 @@ package dao;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.DebtBill;
@@ -25,6 +27,45 @@ public class DAODebtBill {
 
     public DAODebtBill() {
         db = DBContext.getInstance();
+    }
+
+    public Vector<DebtBill> getAll(String sql) {
+        Vector<DebtBill> vector = new Vector<DebtBill>();
+        try {
+            Statement state = db.getConnection().createStatement(
+                    ResultSet.TYPE_SCROLL_SENSITIVE,
+                    ResultSet.CONCUR_UPDATABLE);
+            ResultSet rs = state.executeQuery(sql);
+            while (rs.next()) {
+                int id = rs.getInt("ID");
+                int idDebtor = rs.getInt("IDDebtor");
+                int idTypeDebt = rs.getInt("IDTypeDebt");
+                float amount = rs.getFloat("Amount");
+                String description = rs.getString("Description");
+                String EvidenceImg1 = rs.getString("EvidenceImg1");
+                String EvidenceImg2 = rs.getString("EvidenceImg2");
+                String EvidenceImg3 = rs.getString("EvidenceImg3");
+                String EvidenceImg4 = rs.getString("EvidenceImg4");
+                String EvidenceImg5 = rs.getString("EvidenceImg5");
+                String debtTerm = rs.getString("DebtTerm");
+                int temp = rs.getInt("isDelete");
+                boolean isDelete = (temp == 1 ? true : false);
+                String createdAt = rs.getString("CreatedAt");
+                String createdBy = rs.getString("CreatedBy");
+                String updatedAt = rs.getString("UpdatedAt");
+                String deletedAt = rs.getString("DeletedAt");
+                String deletedBy = rs.getString("DeletedBy");
+
+                DebtBill pro = new DebtBill(id, idDebtor, idTypeDebt, amount,
+                        description, debtTerm, EvidenceImg1, EvidenceImg2, EvidenceImg3,
+                        EvidenceImg4, EvidenceImg5, isDelete, createdAt,
+                        createdBy, updatedAt, deletedAt, deletedBy);
+                vector.add(pro);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DAODebtor.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return vector;
     }
 
     public boolean insertDebtBill(int IDTypeDebt, int idDebtor, float amount, String note, String debtTerm, List<String> imgPathsForDB, int createdBy) {
@@ -57,7 +98,7 @@ public class DAODebtBill {
                     } catch (SQLException e) {
                         e.printStackTrace();
                     }
-                }else if(IDTypeDebt == 1 || IDTypeDebt == 4){
+                } else if (IDTypeDebt == 1 || IDTypeDebt == 4) {
                     String updateSql = "UPDATE Debtor SET Amount = Amount - ? WHERE ID = ?";
                     try ( PreparedStatement psUpdate = db.getConnection().prepareStatement(updateSql)) {
                         psUpdate.setFloat(1, amount);
@@ -188,15 +229,47 @@ public class DAODebtBill {
         return null;
     }
 
-//    (String IDTypeDebt, int idDebtor, float amount, String note, String debtTerm, List<String> imgPathsForDB, int createdBy)
+    public List<DebtBill> searchDebtBill(int idDebtor, int id, String description, int typeDebt, int amountFrom, int amountTo) {
+        String sql = "select * from DebtBill where isDelete = 0 AND IDDebtor = " + idDebtor;
+        if (id >= 0) {
+            sql += " AND ID = " + id;
+        }
+        if (description != null && !description.isEmpty()) {
+            sql += " AND Description LIKE '%" + description + "%'";
+        }
+        if (typeDebt >=0 && typeDebt == 1 || typeDebt == 2 || typeDebt == 3 || typeDebt == 4) {
+            sql += " AND IDTypeDebt = " + typeDebt;
+        }
+        if (amountFrom >= 0 && amountTo >= 0 && amountFrom <= amountTo) {
+            sql += " AND Amount BETWEEN " + amountFrom + " AND " + amountTo;
+        }
+        return getAll(sql);
+    }
+
     public static void main(String[] args) {
         DAODebtBill dao = new DAODebtBill();
-//        boolean insert = dao.insertDebtBill("1", 1, 340, "new", "2024-04-06", imgPathsForDB, 0);
-//        if (insert){
-//            System.out.println("success");
-//        }else{
-//            System.out.println("fail");
-//        }
+        int idDebtor = 1;
+        int id = 2;
+        String description = "";
+        int typeDebt = -1;
+        int amountFrom = -1;
+        int amountTo = -1;
+
+        String sql = "select * from DebtBill where isDelete = 0 AND IDDebtor = " + idDebtor;
+        if (id >= 0) {
+            sql += " AND ID =" + id;
+        }
+        if (description != null && !description.isEmpty()) {
+            sql += " AND Description LIKE '%" + description + "%'";
+        }
+        if (typeDebt == 1 || typeDebt == 2 || typeDebt == 3 || typeDebt == 4) {
+            sql += " AND IDTypeDebt =" + typeDebt;
+        }
+        if (amountFrom >= 0 && amountTo >= 0 && amountFrom <= amountTo) {
+            sql += " AND Amount BETWEEN " + amountFrom + " AND " + amountTo;
+        }
+
+        System.out.println(sql);
     }
 
 }

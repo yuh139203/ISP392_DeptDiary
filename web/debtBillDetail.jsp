@@ -9,7 +9,7 @@
         <link href="assets/img/logo.png" rel="icon">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <title></title>
+        <title>DebtDiary</title>
         <link rel="stylesheet" type="text/css" href="css/debtBillDetail.css">
     </head>
 
@@ -45,8 +45,10 @@
 
                         <tr class="search-wrapper">
                     <form action="debtDetailController" method="post">
+                        
+                        <input type="hidden" value="${debtor.id}" name="idDebtor">
                         <th class="searchById">
-                            <input  type="text" placeholder="Enter ID" name="id" style="width: 100%; padding: 5px; border-radius: 5px;">
+                            <input  type="text" placeholder="Enter ID" name="idDebtBill" style="width: 100%; padding: 5px; border-radius: 5px;">
                         </th>
 
                         <th class="searchByDescription">
@@ -56,10 +58,10 @@
                         <th class="searchByType">
                             <select name="type" style="width: 100%; padding: 5px; border-radius: 5px;">
                                 <option value="1">All</option>
-                                <option value="2">You lend ${debtor.fullName} money</option>
-                                <option value="1">You borrow money ${debtor.fullName}</option>
-                                <option value="4">${debtor.fullName} lend you money</option>
-                                <option value="3">${debtor.fullName} borrow money you</option>
+                                <option value="2">You lend ${debtor.fullName}</option>
+                                <option value="1">You borrow ${debtor.fullName}</option>
+                                <option value="4">${debtor.fullName} lend you</option>
+                                <option value="3">${debtor.fullName} borrow you</option>
                             </select>
                         </th>
 
@@ -78,6 +80,7 @@
                         </th>
 
                         <th> 
+                            <button type="submit" style="background-color: transparent; border: 0px;  " ><img src="assets/img/search.png" style="max-width: 30px;  border-radius: 5px; cursor: pointer;"></button>
                             <a href="debtDetailController?id=${debtor.id}"><img src="assets/img/clear-filter.png" style="max-width: 30px; margin-left: 7px; border-radius: 5px;"></a>
                         </th>
                     </form>
