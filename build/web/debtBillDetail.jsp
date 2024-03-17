@@ -57,7 +57,7 @@
 
                         <th class="searchByType">
                             <select name="type" style="width: 100%; padding: 5px; border-radius: 5px;">
-                                <option value="1">All</option>
+                                <option value="">All</option>
                                 <option value="2">You lend ${debtor.fullName}</option>
                                 <option value="1">You borrow ${debtor.fullName}</option>
                                 <option value="4">${debtor.fullName} lend you</option>

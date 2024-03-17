@@ -124,11 +124,11 @@ public class DebtDetailController extends HttpServlet {
         String description = request.getParameter("description");
         int idDebtor = Integer.parseInt(request.getParameter("idDebtor"));
 
-        String typeParam = request.getParameter("idDebtBill");
-        int type=-1;
-
+        String typeParam = request.getParameter("type");
+        
+        int type;
         if (typeParam != null && !typeParam.isEmpty()) {
-            id = Integer.parseInt(typeParam);
+            type = Integer.parseInt(typeParam);
         } else {
             type = -1;
         }

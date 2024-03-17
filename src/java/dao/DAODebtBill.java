@@ -68,10 +68,10 @@ public class DAODebtBill {
         return vector;
     }
 
-    public boolean insertDebtBill(int IDTypeDebt, int idDebtor, float amount, String note, String debtTerm, List<String> imgPathsForDB, int createdBy) {
+    public boolean insertDebtBill(int IDTypeDebt, int idDebtor, float amount, String note, String debtTerm, List<String> imgPathsForDB, int createdBy, String createdDate) {
         // Assume db is a properly initialized database connection object
         String sql = "INSERT INTO DebtBill (IDDebtor, IDTypeDebt, Amount, Description, EvidenceImg1, EvidenceImg2, EvidenceImg3, EvidenceImg4, EvidenceImg5, DebtTerm, CreatedAt, CreatedBy, isDelete) "
-                + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP, ?, 0)";
+                + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 0)";
         try ( PreparedStatement ps = db.getConnection().prepareStatement(sql)) {
             ps.setInt(1, idDebtor);
             ps.setInt(2, IDTypeDebt);
@@ -86,7 +86,8 @@ public class DAODebtBill {
                 }
             }
             ps.setString(10, debtTerm);
-            ps.setInt(11, createdBy);
+            ps.setString(11, createdDate);
+            ps.setInt(12, createdBy);
             int result = ps.executeUpdate();
             if (result > 0) {
                 if (IDTypeDebt == 2 || IDTypeDebt == 3) {
@@ -249,9 +250,9 @@ public class DAODebtBill {
     public static void main(String[] args) {
         DAODebtBill dao = new DAODebtBill();
         int idDebtor = 1;
-        int id = 2;
+        int id =-1;
         String description = "";
-        int typeDebt = -1;
+        int typeDebt = 1;
         int amountFrom = -1;
         int amountTo = -1;
 

@@ -83,7 +83,7 @@
                         <!-- Hạn nợ -->
                         <div class="form-group">
                             <label for="debtTerm">Debt Term:</label>
-                            <input type="date" id="debtTerm" name="debtTerm" class="form-control" required>
+                            <input type="datetime-local" id="debtTerm" name="debtTerm" class="form-control" required>
                             <div id="debtTerm-error" class="text-danger"></div>
                         </div>
 

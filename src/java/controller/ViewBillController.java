@@ -5,6 +5,7 @@
 package controller;
 
 import dao.DAODebtBill;
+import dao.DAODebtor;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -12,6 +13,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import model.DebtBill;
+import model.Debtor;
 
 /**
  *
@@ -57,9 +59,11 @@ public class ViewBillController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+
         int idDebtBill= Integer.parseInt(request.getParameter("id"));
         DAODebtBill dao = new DAODebtBill();
         DebtBill db = dao.findByID(idDebtBill);
+
         request.setAttribute("DebtBill", db);
         request.getRequestDispatcher("viewBill.jsp").forward(request, response);
     }

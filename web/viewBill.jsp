@@ -3,7 +3,8 @@
     Created on : 14/02/2024, 9:30:09 PM
     Author     : ussat
 --%>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -35,61 +36,44 @@
                         <div>
                             <a href="debtDetailController?id=${sessionScope.Debtor.id}"><img class="exit-button" type="button" src="assets/img/reject.png" class="refresh-icon" ></a> 
                         </div>
-                        <h2>Debt Bill: ${debtor.fullName}</h2>
+                        <h2>Debt Bill: ${sessionScope.Debtor.fullName}</h2>
                         <input type="hidden" name="idDebtor" value="${debtor.id}">
-                        <!-- Loại nợ: -->
+
+
                         <div class="form-group">
                             <label>Debt Type:</label>
-                            <div class="toggle-buttons">
-                                <input type="radio" id="debit" name="debtType" value="debit">
-                                <label for="debit" class="btn btn-outline-secondary">Debit</label>
-                                <input type="radio" id="credit" name="debtType" value="credit">
-                                <label for="credit" class="btn btn-outline-secondary">Credit</label>
-                            </div>
-                            <div id="debtType-error" class="text-danger"></div> <!-- Added line for displaying error message -->
-                        </div>
-
-                        <div id="debitAttributes" style="display: none;">
-                            <select class="form-control" id="debitOptions" name="debitOption">
-                                <option value="">Select an option</option>
-                                <option value="2">You lend ${debtor.fullName} money</option> <!-- ID 2 từ bảng dữ liệu -->
-                                <option value="3">${debtor.fullName} borrows money from you</option><!-- ID 3 từ bảng dữ liệu -->
-                            </select>
-                            <div id="debitOptions-error" class="text-danger"></div>
-                        </div>
-
-                        <div id="creditAttributes" style="display: none;">
-                            <select class="form-control" id="creditOptions" name="creditOption">
-                                <option value="">Select an option</option>
-                                <option value="1">You borrow money from ${debtor.fullName}</option><!-- ID 1 từ bảng dữ liệu -->
-                                <option value="4">${debtor.fullName} lends you money</option><!-- ID 4 từ bảng dữ liệu -->
-                            </select>
-                            <div id="creditOptions-error" class="text-danger"></div>
+                            <c:choose>
+                                <c:when test="${DebtBill.idTypeDebt == 1}">
+                                    <div style="background: #D60303; color: white; padding: 10px 10px; border-radius: 10px; display: inline-block;">CREDIT </div>-(You borrow money from ${sessionScope.Debtor.fullName})
+                                </c:when>
+                                <c:when test="${DebtBill.idTypeDebt == 4}">
+                                    <div style="background: #D60303; color: white; padding: 10px 10px; border-radius: 10px; display: inline-block;">CREDIT </div>-(${sessionScope.Debtor.fullName} lends you money)
+                                </c:when>
+                                <c:when test="${DebtBill.idTypeDebt == 2}">
+                                    <div style="background: #32850B; color: white; padding: 10px 10px; border-radius: 10px; display: inline-block;">DEBIT </div>-(You lend ${sessionScope.Debtor.fullName} money)
+                                </c:when>
+                                <c:otherwise>
+                                    <div style="background: #32850B; color: white; padding: 10px 10px; border-radius: 10px; display: inline-block;">DEBIT </div>-(${sessionScope.Debtor.fullName} borrows money from you)
+                                </c:otherwise>
+                            </c:choose>
                         </div>
 
 
-                        <!-- Số tiền -->
                         <div class="form-group">
                             <label for="amount">Amount</label>
                             <input type="text" class="form-control" id="amount" name="amount" value="${DebtBill.amount}" disabled>
                             <div id="amount-error" class="text-danger"></div>
                         </div>
-                        <!-- Ngày lập phiếu -->                   
-<!--                        <div class="form-group">
-                            <label for="date">Create Date</label>
-                            <input type="datetime-local" id="date" name="date" required>
-                            <div id="date-error" class="text-danger"></div>
-                        </div>-->
 
                         <div class="form-group">
                             <label for="date">Create Date:</label>
-                            <input type="date" id="date" name="date" value="${DebtBill.debtTerm}" class="form-control" disabled>
+                            <input type="datetime-local" id="date" name="date" value="${DebtBill.createdAt}" class="form-control" disabled>
                             <div id="debtTerm-error" class="text-danger"></div>
                         </div>
-                        <!-- Hạn nợ -->
+
                         <div class="form-group">
                             <label for="debtTerm">Debt Term:</label>
-                            <input type="date" id="debtTerm" name="debtTerm" value="${DebtBill.debtTerm}" class="form-control" disabled>
+                            <input type="datetime-local" id="debtTerm" name="debtTerm" value="${DebtBill.debtTerm}" class="form-control" disabled>
                             <div id="debtTerm-error" class="text-danger"></div>
                         </div>
 
@@ -109,54 +93,11 @@
                 </div>
             </div>
         </section>
-        <!-- Modal Confirmation -->
-        <div class="modal fade" id="confirmationModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="modalLabel">Confirm</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        Do you want to create this debt bill ? 
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary" id="confirmSubmit">Confirm</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Success Modal -->
-        <div class="modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="successModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="successModalLabel">Success</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        Debt Bill add successfully!!!
-                    </div>
-                    <div class="modal-footer">
-                        <!-- Trong modal thành công của bạn -->
-                        <button type="button" id="closeSuccessModalButton" class="btn btn-default">Close</button>
-
-                    </div>
-                </div>
-            </div>
-        </div>
-
-
         <!-- Bootstrap và jQuery -->
         <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-<!--        <script src="js/debtbill.js"></script>      -->
+        <!--        <script src="js/debtbill.js"></script>      -->
 
     </body>
 </html>
