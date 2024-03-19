@@ -78,7 +78,6 @@ public class DiaryController extends HttpServlet {
         String address = request.getParameter("address");
         String email = request.getParameter("email");
         String phoneNumber = request.getParameter("phoneNumber");
-
         String amountFromParam = request.getParameter("amountFrom");
         String amountToParam = request.getParameter("amountTo");
 

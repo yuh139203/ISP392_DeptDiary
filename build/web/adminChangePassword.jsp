@@ -16,6 +16,7 @@
                 padding: 20px;
                 border-radius: 8px;
                 box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Đổ bóng */
+                max-width: 500px;
             }
             .form-group label {
                 font-weight: bold;
@@ -43,26 +44,20 @@
                     <p style="color: red;">${notificationError}</p>
                 </c:if>
                 <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-md-12">
                         <div class="form-group">
                             <label for="account">Account</label>
                             <input type="text" readonly name="account" value="${user.userName}" class="form-control" placeholder="Account">
                         </div>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-12">
                         <div class="form-group">
                             <label for="newPassword">New Password</label>
                             <input type="password" name="newPassword" value="${newPassword}" class="form-control" id="newPassword" placeholder="New Password">
                         </div>
                     </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="oldPassword">Old Password</label>
-                            <input type="password" name="oldPassword" value="${user.passWord}" class="form-control" id="oldPassword" placeholder="Old Password">
-                        </div>
-                    </div>
 
-                    <div class="col-md-6">
+                    <div class="col-md-12">
                         <div class="form-group">
                             <label for="retypePassword">Re-type Password</label>
                             <input type="password" name="retypePassword" value="${retypePassword}" class="form-control" id="retypePassword" placeholder="Re-type Password">

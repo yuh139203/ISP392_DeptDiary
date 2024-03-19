@@ -28,12 +28,7 @@
                     </div>
                 </div>
                 <ul class="sidebar-nav">
-                    <li class="sidebar-item">
-                        <a href="profile?id=${sessionScope.userLogin.id}" class="sidebar-link">
-                            <i class="lni lni-user"></i>
-                            <span>Profile</span>
-                        </a>
-                    </li>
+
                     <li class="sidebar-item">
                         <a href="welcome?id=${sessionScope.userLogin.id}" class="sidebar-link">
                             <i class="lni lni-agenda"></i>
@@ -57,17 +52,12 @@
                     </li>
 
                     <li class="sidebar-item">
-                        <a href="#" class="sidebar-link">
+                        <a href="feedback" class="sidebar-link">
                             <i class="lni lni-popup"></i>
-                            <span>Notification</span>
+                            <span>Feed Back</span>
                         </a>
                     </li>
-                    <li class="sidebar-item">
-                        <a href="#" class="sidebar-link">
-                            <i class="lni lni-cog"></i>
-                            <span>Setting</span>
-                        </a>
-                    </li>
+
                 </ul>
                 <div class="sidebar-footer">
                     <a href="logout" class="sidebar-link">
@@ -144,9 +134,9 @@
 
                 <!--  PAGINATINON -->
                 <div class="paggi">
-                    <div class="flex items-center justify-between  bg-white px-2 py-1 sm:px-3 sm:py-2" style="border-radius: 5px;">
-                        <div class="hidden sm:flex sm:flex-1 sm:items-center sm:justify-between">
-                            <div>
+                    <div class="flex items-center justify-between   px-2 py-1 sm:px-3 sm:py-2" style="border-radius: 5px;">
+                        <div class="hidden sm:flex sm:flex-1 sm:items-center sm:justify-between ">
+                            <div class="bg-white" style="margin-right: 410px; padding: 8px; border-radius: 5px;">
                                 <p class="text-sm text-gray-700">
                                     Showing
                                     <span class="font-medium">${startPage}</span>
@@ -158,7 +148,7 @@
                                 </p>
                             </div>
 
-                            <div class="pagination"> 
+                            <div class="pagination " > 
                                 <c:forEach begin="${1}" end="${num}" var="i">
                                     <a style="height: 35px; width: 32px;" class="${i==page?"active":""}" href="diary?page=${i}">${i}</a>
                                 </c:forEach>

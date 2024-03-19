@@ -99,7 +99,7 @@ public class DAOUser {
     }
 
     public Vector<User> getAllUser() {
-        String sql = "select * from UserInfor where IDRole=1 and isDelete = 0";
+        String sql = "select * from UserInfor where IDRole=1 ";
         return getAll(sql);
     }
 
@@ -306,22 +306,85 @@ public class DAOUser {
         }
         return -1;
     }
+    
+    public int activateUser(User user) {
+        String sql = "UPDATE UserInfor\n"
+                + "SET isDelete = ?\n"
+                + "WHERE ID = ?";
+        try {
+            PreparedStatement ptm = db.getConnection().prepareStatement(sql);
+            ptm.setInt(1, 0);
+            ptm.setInt(2, user.getId());
+            return ptm.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(DAOUser.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return -1;
+    }
+    
+    
+    public List<User> searchUser(int id, String firstName,String lastName , String dob, String address, String phoneNumber, String email, int activation) {
+        String sql = "select * from UserInfor where  1=1 ";
+        if (id >= 0) {
+            sql += " AND ID = " + id;
+        }
+        if (firstName != null && !firstName.isEmpty()) {
+            sql += " AND FirstName LIKE '%" + firstName + "%'";
+        }
+        if (lastName != null && !lastName.isEmpty()) {
+            sql += " AND LastName LIKE '%" + lastName + "%'";
+        }
+        if (dob != null && !dob.isEmpty()) {
+            sql += " AND DateOfBirth LIKE '%" + dob + "%'";
+        }
+        if (address != null && !address.isEmpty()) {
+            sql += " AND Address LIKE '%" + address + "%'";
+        }
+        if (phoneNumber != null && !phoneNumber.isEmpty()) {
+            sql += " AND PhoneNumber LIKE '%" + phoneNumber + "%'";
+        }
+        if (email != null && !email.isEmpty()) {
+            sql += " AND Email LIKE '%" + email + "%'";
+        }
+        if (activation >= 0) {
+            sql += " AND isDelete = " + activation;
+        }
+        return getAll(sql);
+    }
+    
 
     public static void main(String[] args) {
-
         DAOUser daoUser = new DAOUser();
-//        String testUsername = "huy123";
-//        String testPassword = "123456";
-//        User user = daoUser.findByUserName(testUsername);
-//        if (user != null) {
-//            System.out.println("User found:");
-//            System.out.println(user.toString());
-//        } else {
-//            System.out.println("User not found.");
-//        }
-
-       User u = daoUser.findByID(22);
-        System.out.println(u);
+        int id=3;
+        String firstName = "";
+        String lastName = "";
+        String address = "";
+        String phoneNumber = "";
+        String email = "";
+        int activation =-1;
+        String sql = "select * from UserInfor where  1=1 ";
+        if (id >= 0) {
+            sql += " AND ID =" + id;
+        }
+        if (firstName != null && !firstName.isEmpty()) {
+            sql += " AND FirstName LIKE '%" + firstName + "%'";
+        }
+        if (lastName != null && !lastName.isEmpty()) {
+            sql += " AND FirstName LIKE '%" + lastName + "%'";
+        }
+        if (address != null && !address.isEmpty()) {
+            sql += " AND Address LIKE '%" + address + "%'";
+        }
+        if (phoneNumber != null && !phoneNumber.isEmpty()) {
+            sql += " AND PhoneNumber LIKE '%" + phoneNumber + "%'";
+        }
+        if (email != null && !email.isEmpty()) {
+            sql += " AND Email LIKE '%" + email + "%'";
+        }
+        if (activation >= 0) {
+            sql += " AND isDelete =" + activation;
+        }
+        System.out.println(sql);
     }
 
 }

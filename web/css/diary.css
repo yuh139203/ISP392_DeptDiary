@@ -294,8 +294,8 @@ a.sidebar-link:hover {
 }
 
 .paggi {
-    margin-top: 50px;
-    position: relative;
+    bottom: 20px;
+    position: fixed;
 }
 
 .add-debtor {

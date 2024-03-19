@@ -4,21 +4,21 @@
  */
 package controller;
 
-import dao.DAOUser;
+import dao.DAOFeedback;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.util.List;
+import jakarta.servlet.http.HttpSession;
 import model.User;
 
 /**
  *
  * @author yuh
  */
-public class DeleteUserAccount extends HttpServlet {
+public class FeedbackController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -37,10 +37,10 @@ public class DeleteUserAccount extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet DeleteUserAccount</title>");            
+            out.println("<title>Servlet FeedbackController</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet DeleteUserAccount at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet FeedbackController at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -58,7 +58,7 @@ public class DeleteUserAccount extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        request.getRequestDispatcher("feedback.jsp").forward(request, response);
     }
 
     /**
@@ -72,42 +72,25 @@ public class DeleteUserAccount extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        int id = Integer.parseInt(request.getParameter("id"));
-        DAOUser daoUser = new DAOUser();
-        User user = daoUser.findByID(id);
-        int deletedUser = daoUser.deleteUser(user);
-        if (deletedUser == 1) {
-            request.setAttribute("noti", "Delete success!");
-        } else {
-            request.setAttribute("noti", "Delete fail!");
-        }
-        DAOUser userDao = new DAOUser();
-        List<User> users = userDao.getAllUser();
-        int page, numperpage = 9;
-        int size = users.size();
-        int num =(size%9==0?(size/9):((size/9))+1);
-        String xpage = request.getParameter("page");
-        if (xpage == null){
-            page =1;
+        HttpSession session = request.getSession();
+        User u = (User) session.getAttribute("userLogin");
+        int star = Integer.parseInt(request.getParameter("star"));
+        String comment = request.getParameter("comment");
+        DAOFeedback dao = new DAOFeedback();
+        boolean add = dao.addFeedback(star, comment, u.getId());
+        if(add){
+            response.sendRedirect("diary?id="+u.getId());
         }else{
-            page = Integer.parseInt(xpage);
+            
         }
-        int start, end;
-        start = (page-1)*numperpage;
-        end = Math.min(page*numperpage, size);
-        List<User> list = userDao.getListByPage(users, start, end);
-        
-        request.setAttribute("data", list);
-        request.setAttribute("page", page);
-        request.setAttribute("num", num);
-        request.getRequestDispatcher("listUser.jsp").forward(request, response);
-        
-        
-        
         
     }
 
-    
+    /**
+     * Returns a short description of the servlet.
+     *
+     * @return a String containing servlet description
+     */
     @Override
     public String getServletInfo() {
         return "Short description";

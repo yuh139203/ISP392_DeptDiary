@@ -11,8 +11,6 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
-import java.util.ArrayList;
 import java.util.List;
 import model.User;
 
@@ -20,7 +18,7 @@ import model.User;
  *
  * @author yuh
  */
-public class ListUserController extends HttpServlet {
+public class ActivateUserAccountController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -39,10 +37,10 @@ public class ListUserController extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet ListUserController</title>");
+            out.println("<title>Servlet ActivateUserAccountController</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet ListUserController at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet ActivateUserAccountController at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -60,26 +58,7 @@ public class ListUserController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        DAOUser userDao = new DAOUser();
-        List<User> users = userDao.getAllUser();
-        int page, numperpage = 8;
-        int size = users.size();
-        int num = (size % numperpage == 0 ? (size / numperpage) : ((size / numperpage)) + 1);
-        String xpage = request.getParameter("page");
-        if (xpage == null) {
-            page = 1;
-        } else {
-            page = Integer.parseInt(xpage);
-        }
-        int start, end;
-        start = (page - 1) * numperpage;
-        end = Math.min(page * numperpage, size);
-        List<User> list = userDao.getListByPage(users, start, end);
-
-        request.setAttribute("data", list);
-        request.setAttribute("page", page);
-        request.setAttribute("num", num);
-        request.getRequestDispatcher("listUser.jsp").forward(request, response);
+        processRequest(request, response);
     }
 
     /**
@@ -93,50 +72,36 @@ public class ListUserController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String idParam = request.getParameter("id");
-        int id;
-
-        if (idParam != null && !idParam.isEmpty()) {
-            id = Integer.parseInt(idParam);
+        int id = Integer.parseInt(request.getParameter("id"));
+        DAOUser daoUser = new DAOUser();
+        User user = daoUser.findByID(id);
+        int deletedUser = daoUser.activateUser(user);
+        request.setAttribute("user", user);
+        if (deletedUser == 1) {
+            request.setAttribute("noti", "Activate success!");
         } else {
-            id = -1;
+            request.setAttribute("noti", "Activate fail!");
         }
-        String firstName = request.getParameter("firstName");
-        String lastName = request.getParameter("lastName");
-        String dob = request.getParameter("dob");
-        String address = request.getParameter("address");
-        String email = request.getParameter("email");
-        String phoneNumber = request.getParameter("phoneNumber");
-        String activationParam = request.getParameter("activation");
-        int activation;
-        if (activationParam != null && !activationParam.isEmpty()) {
-            activation = Integer.parseInt(activationParam);
-        } else {
-            activation = -1;
-        }
-        
-        DAOUser dao = new DAOUser();
-        List<User> users= new ArrayList();
-        users=dao.searchUser(id, firstName, lastName, dob, address, phoneNumber, email, activation);
-        int page, numperpage = 8;
+        DAOUser userDao = new DAOUser();
+        List<User> users = userDao.getAllUser();
+        int page, numperpage = 9;
         int size = users.size();
-        int num = (size % numperpage == 0 ? (size / numperpage) : ((size / numperpage)) + 1);
+        int num =(size%9==0?(size/9):((size/9))+1);
         String xpage = request.getParameter("page");
-        if (xpage == null) {
-            page = 1;
-        } else {
+        if (xpage == null){
+            page =1;
+        }else{
             page = Integer.parseInt(xpage);
         }
         int start, end;
-        start = (page - 1) * numperpage;
-        end = Math.min(page * numperpage, size);
-        List<User> list = dao.getListByPage(users, start, end);
-
+        start = (page-1)*numperpage;
+        end = Math.min(page*numperpage, size);
+        List<User> list = userDao.getListByPage(users, start, end);
+        
         request.setAttribute("data", list);
         request.setAttribute("page", page);
         request.setAttribute("num", num);
         request.getRequestDispatcher("listUser.jsp").forward(request, response);
-
     }
 
     /**
