@@ -17,6 +17,11 @@
         <meta content="noindex, nofollow" name="robots" />
         <link rel="stylesheet" href="css/signup.css">
         <link href="assets/img/logo.png" rel="icon">
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/cleave.js/1.6.0/cleave.min.js"></script>
+
     </head>
 
     <body>
@@ -29,51 +34,69 @@
 
                         <div class="form-group">
                             <label for="email">Email</label>
-                            <input class="form-control" id="email" name="email" placeholder="Enter your email" value="${email}"
-                                   type="email" />
+                            <input class="form-control" id="email" name="email" placeholder="Enter your email" type="email" value="${email}"/>
+                            <div id="email-error" class="text-danger"></div>
                         </div>
+
                         <div class="form-group">
                             <label for="name">UserName</label>
-                            <input class="form-control" id="name" name="name" placeholder="Enter your name" value="${username}" type="text" />
-                        </div>
-                        <div>
-                            <span class="error-message" style="color: red;">${userNameErrorMessage}</span>                            
+                            <input class="form-control" id="name" name="name" placeholder="Enter your name" type="text" value="${username}" />
+                            <div id="username-error" class="text-danger"></div>
+                            <span class="text-danger">${userNameErrorMessage}</span>
                         </div>
 
                         <div class="form-group">
                             <label for="password">Password</label>
-                            <input class="form-control" id="password" name="password" placeholder="Enter your password" value="${password}"
-                                   type="password" />
+                            <input class="form-control" id="password" name="password" placeholder="Enter your password" type="password" value="${password}"/>
+                            <div id="password-error" class="text-danger"></div>
                         </div>
+
                         <div class="form-group">
                             <label for="confirmPassword">Confirm Password</label>
-                            <input class="form-control" id="confirmPassword" name="confirmPassword" placeholder="Confirm your password" value="${confirmPassword}"
-                                   type="password" />
+                            <input class="form-control" id="confirmPassword" name="confirmPassword" placeholder="Confirm your password" type="password" value="${confirmPassword}"/>
+                            <div id="confirm-password-error" class="text-danger"></div>
+                            <span class="text-danger">${confirmPasswordErrorMessage}</span>
                         </div>
-                        <div>
-                            <span class="error-message" style="color: red;">${confirmPasswordErrorMessage}</span>                            
-                        </div>
-                        <div class="captcha"> 
+
+                        <div class="captcha">
                             <img src="captcha" alt="CAPTCHA" style="border: 1px solid #000;">
-                            <input class="input" type="text" name="captchaInput" placeholder="Enter captcha" >
-                            <c:if test="${not empty captchaError}">
-                                <div style="color: red;">${captchaError}</div>
-                            </c:if>
-                            <img class="captcha-image" src="assets/img/refreshIcon.png" alt="Refresh Captcha" class="refresh-icon" onclick="refreshCaptcha()">
+                            <input class="form-control" type="text" name="captchaInput" placeholder="Enter captcha" value="${captchaInput}">
+                            <img class="captcha-image" src="assets/img/refreshIcon.png" alt="Refresh Captcha" onclick="refreshCaptcha()">
+                            <div id="captcha-error" class="text-danger"></div>
+                            <span class="text-danger">${errorCaptcha}</span>
                         </div>
-                        <div>
-                            <span class="error-message" style="color: red;">${error}</span>                            
-                        </div>
-                        <button 
-                            class="btn btn-primary w-100" type="submit">Sign Up
+                        <button class="btn btn-primary w-100" type="button" id="signUpButton">Sign Up
                         </button>
+
                         <a href="login.jsp">Back to Login</a>
                     </form>
-
-                </div>
+                </div> 
             </div>
         </section>
+        <!-- Modal Confirmation -->
+        <div class="modal fade" id="confirmationModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modalLabel">Confirm</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        Do you want to create new account ? 
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" id="confirmSubmit">Confirm</button>
+                    </div>
+                </div>
+            </div>
+        </div>   
         <!-- Bootstrap & jQuery JS -->
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
         <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
         <script src="js/signup.js"></script>
     </body>

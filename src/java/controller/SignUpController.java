@@ -13,7 +13,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
-
 /**
  *
  * @author yuh
@@ -80,8 +79,7 @@ public class SignUpController extends HttpServlet {
         String confirmPassword = request.getParameter("confirmPassword");
         String captchaInput = request.getParameter("captchaInput");
         String captchaGen = (String) session.getAttribute("captchaText");
-          
-        
+
         // đối chứng 2 mật khẩu xem có đúng không
         if (!password.equals(confirmPassword)) {
             // Nếu mật khẩu không khớp, gửi thông báo lỗi
@@ -89,6 +87,7 @@ public class SignUpController extends HttpServlet {
             request.setAttribute("password", password);
             request.setAttribute("email", email);
             request.setAttribute("confirmPassword", confirmPassword);
+
             request.setAttribute("confirmPasswordErrorMessage", "The confirmation password doesn't match.");
             request.getRequestDispatcher("signup.jsp").forward(request, response);
             return;
@@ -106,17 +105,20 @@ public class SignUpController extends HttpServlet {
             return;
         }
 
-
-        session.setAttribute("emailSignUp", email);   
-        session.setAttribute("username", username);   
+        session.setAttribute("emailSignUp", email);
+        session.setAttribute("username", username);
         session.setAttribute("password", password);
         if (captchaInput != null && captchaInput.equals(captchaGen)) {
-                request.getRequestDispatcher("otp").forward(request, response);
-            } else {
-                request.setAttribute("error", "Captcha invalid!!!");
-                request.getRequestDispatcher("signup.jsp").forward(request, response);
-            }
-        
+            request.getRequestDispatcher("otp").forward(request, response);
+        } else {
+            request.setAttribute("username", username);
+            request.setAttribute("password", password);
+            request.setAttribute("email", email);
+            request.setAttribute("confirmPassword", confirmPassword);
+            request.setAttribute("errorCaptcha", "Captcha invalid!!!");
+            request.getRequestDispatcher("signup.jsp").forward(request, response);
+        }
+
     }
 
     /**

@@ -20,20 +20,23 @@
     <body>
         <div class="login-form">
             <c:set var="cookie" value="${pageContext.request.cookies}"/>
-            <form action="login" method="post">
+            <form id="loGin" action="login" method="post">
 
                 <div class="form-title">
                     Login
                 </div>
-
+                <span class="error-message">${errorWrongInforLogin}</span>
                 <div class="form-input">
                     <label for="username">Username</label>
                     <input type="text" id="username" name="username" placeholder="Enter username" value="${cookie.cuser.value}">
+                    <span class="error-message" id="username-error"></span>
+
                 </div>
 
                 <div class="form-input">
                     <label for="password">Password</label>
                     <input type="password" id="password" name="password" placeholder="Enter password" value="${cookie.cpass.value}">
+                    <span class="error-message" id="password-error"></span>
                 </div>
 
                 <div class="row mb-4">
@@ -43,11 +46,7 @@
                             <label class="form-check-label" for="rem"> Remember me </label>
                         </div>
 
-                        <div>
-                            <span class="error-message">${error}</span> 
-                            <span class="error-message">${noti}</span> 
-                            <span class="success-message">${notif}</span> 
-                        </div>
+
                     </div>
                 </div>  
 
@@ -55,14 +54,11 @@
                 <div class="captcha"> 
                     <img src="captcha" alt="CAPTCHA" style="border: 1px solid #000;">
                     <input class="input" type="text" name="captchaInput" placeholder="Enter captcha" >
-                    <c:if test="${not empty captchaError}">
-                        <div style="color: red;">${captchaError}</div>
-                    </c:if>
+                    <span class="error-message" id="captcha-error"></span>
+                    <span class="error-message">${errorWrongCaptcha}</span>
                     <img class="captcha-image" src="assets/img/refreshIcon.png" alt="Refresh Captcha" class="refresh-icon" onclick="refreshCaptcha()">
+
                 </div>
-
-
-
 
                 <div class="form-input">
                     <button type="submit" id="login-btn">Login</button>
@@ -70,8 +66,9 @@
             </form>
             <div class="form-links">
                 <a href="signup.jsp">Register</a> | <a href="forgotPassword.jsp">Forgot Password?</a> | <a href="home.jsp">Back</a>
-            </div>
+            </div>                 
         </div>
+
         <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
         <script src="js/login.js"></script>
     </body>

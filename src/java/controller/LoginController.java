@@ -65,58 +65,62 @@ public class LoginController extends HttpServlet {
 
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        HttpSession session = request.getSession();
-        String user = request.getParameter("username");
-        String pass = request.getParameter("password");
-        String rem = request.getParameter("rem");
-        String captchaInput = request.getParameter("captchaInput");
-        String captchaGen = (String) session.getAttribute("captchaText");
-        String encryptedPassword = SHA256.hashPassword(pass);
+protected void doPost(HttpServletRequest request, HttpServletResponse response)
+        throws ServletException, IOException {
+    HttpSession session = request.getSession();
+    String user = request.getParameter("username");
+    String pass = request.getParameter("password");
+    String rem = request.getParameter("rem");
+    String captchaInput = request.getParameter("captchaInput");
+    String captchaGen = (String) session.getAttribute("captchaText");
+    String encryptedPassword = SHA256.hashPassword(pass);
 
+    // Check if CAPTCHA input is correct
+    if (captchaInput == null || !captchaInput.equals(captchaGen)) {
+//        request.setAttribute("user", user);
+//        request.setAttribute("pass", pass);
+        request.getRequestDispatcher("login.jsp").forward(request, response);
+        return;
+    }
+
+    DAOUser daoUser = new DAOUser();
+    User u = daoUser.checkExistentUser(user, encryptedPassword);
+    
+    if (u == null) {
+        // Không tìm thấy người dùng
+        request.setAttribute("errorWrongInforLogin", "Incorrect username or password.");
+        request.getRequestDispatcher("login.jsp").forward(request, response);
+    } else {
+        // Tìm thấy người dùng
         Cookie cu = new Cookie("cuser", user);
         Cookie cp = new Cookie("cpass", pass);
         Cookie cr = new Cookie("crem", rem);
 
         if (rem != null) {
-            cu.setMaxAge(60 * 60 * 24 * 7); //7 ngay
-            cp.setMaxAge(60 * 60 * 24 * 7); //7 ngay
-            // cr.setMaxAge(60 * 60 * 24 * 7); //7 ngay
-        } else {// khong tich
+            cu.setMaxAge(60 * 60 * 24 * 7); // 7 ngày
+            cp.setMaxAge(60 * 60 * 24 * 7); // 7 ngày
+        } else {
             cu.setMaxAge(0);
             cp.setMaxAge(0);
             cr.setMaxAge(0);
         }
-        response.addCookie(cu);//luu vao browser
+        response.addCookie(cu);
         response.addCookie(cp);
         response.addCookie(cr);
 
-        DAOUser daoUser = new DAOUser();
-        User u = daoUser.checkExistentUser(user, encryptedPassword);
-        
-        if (u == null ) {
-            //khong thay
-            request.setAttribute("errorWrongInforLogin", "Incorrect username or password.");
-            request.getRequestDispatcher("login.jsp").forward(request, response);
+        // Kiểm tra idRole của người dùng
+        if (u.getIdRole() == 2) {
+            // Nếu idRole là 2, chuyển hướng đến trang admin.jsp
+            session.setAttribute("userLogin", u);
+            response.sendRedirect("admin");
         } else {
-            //tim thay
-            if (captchaInput != null && captchaInput.equals(captchaGen)) {
-                if (u.getIdRole() == 2) {
-                    // Nếu idRole là 2, chuyển hướng đến trang admin.jsp
-                    response.sendRedirect("admin");
-                    session.setAttribute("userLogin", u);
-                } else {
-                    // Nếu idRole không phải là 2, chuyển hướng đến trang welcome.jsp
-                    session.setAttribute("userLogin", u);
-                    response.sendRedirect("welcome?id="+u.getId());
-                }
-            } else {
-                request.setAttribute("errorWrongCaptcha", "Captcha invalid!!!");
-                request.getRequestDispatcher("login.jsp").forward(request, response);
-            }
+            // Nếu idRole không phải là 2, chuyển hướng đến trang welcome.jsp
+            session.setAttribute("userLogin", u);
+            response.sendRedirect("welcome?id=" + u.getId());
         }
     }
+}
+
 
     /**
      * Returns a short description of the servlet.

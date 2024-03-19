@@ -20,11 +20,10 @@
             <file>file:/D:/GitHub3/ISP392_DeptDiary/src/java/utils/GetFileName.java</file>
         </group>
         <group>
-            <file>file:/C:/Users/yuh/Documents/GitHub/ISP392_DeptDiary/src/java/controller/FeedbackController.java</file>
-            <file>file:/C:/Users/yuh/Documents/GitHub/ISP392_DeptDiary/src/java/model/Feedback.java</file>
-            <file>file:/C:/Users/yuh/Documents/GitHub/ISP392_DeptDiary/src/java/dao/DAOFeedback.java</file>
-            <file>file:/C:/Users/yuh/Documents/GitHub/ISP392_DeptDiary/web/feedback.jsp</file>
-            <file>file:/C:/Users/yuh/Documents/GitHub/ISP392_DeptDiary/src/java/dao/DAODebtor.java</file>
+            <file>file:/C:/Users/yuh/Documents/GitHub/ISP392_DeptDiary/web/signup.jsp</file>
+            <file>file:/C:/Users/yuh/Documents/GitHub/ISP392_DeptDiary/src/java/controller/SignUpController.java</file>
+            <file>file:/C:/Users/yuh/Documents/GitHub/ISP392_DeptDiary/web/login.jsp</file>
+            <file>file:/C:/Users/yuh/Documents/GitHub/ISP392_DeptDiary/src/java/controller/LoginController.java</file>
         </group>
     </open-files>
 </project-private>

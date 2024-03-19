@@ -108,20 +108,16 @@ public class AddDebtorController extends HttpServlet {
             String impPath = "uploads/"+fileName;
             boolean added = daoDebtor.addProfileOfDebtor(impPath, fullName, phoneNumber, email, address, u.getId());
             if (added) {
-                request.setAttribute("noti", "Success!!");
-                request.getRequestDispatcher("addDebtor.jsp").forward(request, response);
+                response.sendRedirect("diary?id="+u.getId()); 
             } else {
-                request.setAttribute("noti", "Failed!!");
                 request.getRequestDispatcher("addDebtor.jsp").forward(request, response);
             }
         } else { // Trường hợp người dùng không chọn ảnh
             String avatarFilePath = "assets/img/team/Blank-Avatar.png";
             boolean added = daoDebtor.addProfileOfDebtor(avatarFilePath, fullName, phoneNumber, email, address, u.getId());
             if (added) {
-                request.setAttribute("noti", "Success!!");
-                request.getRequestDispatcher("addDebtor.jsp").forward(request, response);
+                response.sendRedirect("diary?id="+u.getId()); 
             } else {
-                request.setAttribute("noti", "Failed!!");
                 request.getRequestDispatcher("addDebtor.jsp").forward(request, response);
             }
         }
