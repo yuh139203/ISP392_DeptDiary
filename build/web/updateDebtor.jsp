@@ -5,11 +5,11 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>DebtDiary</title>
+        <title>Debtor information</title>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css"
               integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I" crossorigin="anonymous">
         <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
-
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
         <style>
             body {
                 font-family: Arial, sans-serif;
@@ -74,14 +74,14 @@
                 top: 10px;
                 right: 10px;
                 cursor: pointer;
-                 max-width: 30px;
+                max-width: 30px;
             }
 
         </style>
     </head>
 
     <body>
-        <form id="debt-form" action="updateDebtor" method="post"enctype="multipart/form-data">
+        <form id="debt-form" action="updateDebtor" method="post"enctype="multipart/form-data" novalidate onsubmit="return validateForm()">
             <div id="debt-info">
                 <div>
                     <a href="diary?id=${sessionScope.userLogin.id}"><img class="exit-button" type="button" src="assets/img/reject.png" class="refresh-icon" ></a> 
@@ -89,7 +89,7 @@
                 <div class="form-title">
                     Debtor information
                 </div>
-                <div>${noti}</div>
+
 
                 <input type="hidden" name="idDebtor" value="${debtor.id}">
                 <div class="row mt-2">
@@ -102,14 +102,17 @@
                     <div class="col-md-12">
                         <label class="labels">Full Name</label>
                         <input type="text" class="form-control" name="fullName" value="${debtor.fullName}" placeholder="Enter full name" required>
+                        <div id="fullName-error" class="text-danger"></div>
                     </div>
                     <div class="col-md-12">
                         <label class="labels">Phone Number</label>
                         <input type="text" class="form-control" name="phoneNumber" placeholder="Enter phone number" value="${debtor.phoneNumber}" required>
+                        <div id="phoneNumber-error" class="text-danger"></div>
                     </div>
                     <div class="col-md-12">
                         <label class="labels">Address</label>
                         <input type="address" class="form-control" name="address" placeholder="Enter address" value="${debtor.address}" required>
+                        <div id="address-error" class="text-danger"></div>
                     </div>
                     <div class="col-md-12 total-debt">
                         <label class="labels">Total Debt</label>
@@ -117,14 +120,33 @@
                     </div>
                 </div>
                 <div class="mt-3 text-center">
-                    <button class="btn btn-primary profile-button add-button" type="submit" style="width: 200px;"> <i class="fas fa-sync-alt"></i> UPDATE</button>
+                    <button class="btn btn-primary profile-button add-button" type="button" style="width: 200px;" id="update"> <i class="fas fa-sync-alt"></i> UPDATE</button>
                 </div>
             </div>
         </form>
     </body>
-    
-    
-        <!-- Modal Success -->
+
+    <!-- Modal Confirmation -->
+    <div class="modal fade" id="confirmationModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalLabel">Confirm</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Do you want to change this debtor  ? 
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="confirmSubmit">Confirm</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Success Modal -->
     <div class="modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="successModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -135,13 +157,21 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    Add new debtor successfully!!!
+                    Change debtor successfully!!!
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <!-- Trong modal thành công c?a b?n -->
+                    <button type="button" id="closeSuccessModalButton" class="btn btn-default">Close</button>
+
                 </div>
             </div>
         </div>
     </div>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="js/updateDebtor.js"></script>      
+
 
 </html>

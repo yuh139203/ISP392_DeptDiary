@@ -29,11 +29,27 @@
                 </div>
                 <ul class="sidebar-nav">
 
+                    <!--                    <li class="sidebar-item">
+                                            <a href="welcome?id=${sessionScope.userLogin.id}" class="sidebar-link">
+                                                <i class="lni lni-agenda"></i>
+                                                <span>Home</span>
+                                            </a>
+                                        </li>-->
                     <li class="sidebar-item">
-                        <a href="welcome?id=${sessionScope.userLogin.id}" class="sidebar-link">
-                            <i class="lni lni-agenda"></i>
-                            <span>Home</span>
-                        </a>
+                        <c:choose>
+                            <c:when test="${sessionScope.userLogin.idRole eq 2}">
+                                <a href="admin" class="sidebar-link">
+                                    <i class="lni lni-agenda"></i>
+                                    <span>Home</span>
+                                </a>
+                            </c:when>
+                            <c:when test="${sessionScope.userLogin.idRole eq 1}">
+                                <a href="welcome?id=${sessionScope.userLogin.id}" class="sidebar-link">
+                                    <i class="lni lni-agenda"></i>
+                                    <span>Home</span>
+                                </a>
+                            </c:when>
+                        </c:choose>
                     </li>
                     <li class="sidebar-item">
                         <a href="#" class="sidebar-link collapsed has-dropdown" data-bs-toggle="collapse"

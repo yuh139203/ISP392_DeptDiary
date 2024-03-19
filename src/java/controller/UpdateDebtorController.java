@@ -10,11 +10,13 @@ import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import jakarta.servlet.http.Part;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import model.Debtor;
+import model.User;
 import utils.GetFileName;
 
 @MultipartConfig(
@@ -59,6 +61,8 @@ public class UpdateDebtorController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        User u = (User) session.getAttribute("userLogin");
         int idDebtor = Integer.parseInt(request.getParameter("idDebtor"));
         String avatar = request.getParameter("avatar");
         Part avatarPart = request.getPart("avatar");
@@ -84,8 +88,7 @@ public class UpdateDebtorController extends HttpServlet {
             String impPath = "uploads/" + fileName;
             boolean added = daoDebtor.updateProfile(impPath, fullName, phoneNumber, address, idDebtor);
             if (added) {
-                request.setAttribute("noti", "Success!!");
-                request.getRequestDispatcher("updateDebtor.jsp").forward(request, response);
+                response.sendRedirect("diary?id=" + u.getId());
             } else {
                 request.setAttribute("noti", "Failed!!");
                 request.getRequestDispatcher("updateDebtor.jsp").forward(request, response);
@@ -94,8 +97,7 @@ public class UpdateDebtorController extends HttpServlet {
             if (avatar != null && !avatar.isEmpty()) {
                 boolean added = daoDebtor.updateProfile(avatar, fullName, phoneNumber, address, idDebtor);
                 if (added) {
-                    request.setAttribute("noti", "Success!!");
-                    request.getRequestDispatcher("updateDebtor.jsp").forward(request, response);
+                    response.sendRedirect("diary?id=" + u.getId());
                 } else {
                     request.setAttribute("noti", "Failed!!");
                     request.getRequestDispatcher("updateDebtor.jsp").forward(request, response);

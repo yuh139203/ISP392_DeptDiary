@@ -5,7 +5,7 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>List of Users</title>
+        <title>DebtDiary</title>
         <link href="assets/img/logo.png" rel="icon">
         <link href="css/listUser.css" rel="stylesheet">
     </head>
