@@ -84,8 +84,11 @@
                         </div>
                         <div class="form-group">
                             <label>Evidence Image:</label>
-                            <button type="button" class="btn btn-primary" id="addImageButton"><i class="fa fa-plus-circle"></i> Add Photos</button>
-                            <div id="imageInputsContainer" style="margin-top: 10px;"></div>
+                            <img style="width: 200px;" src="${DebtBill.evidenceImg1}">
+                            <img style="width: 200px;" src="${DebtBill.evidenceImg2}">
+                            <img style="width: 200px;" src="${DebtBill.evidenceImg3}">
+                            <img style="width: 200px;" src="${DebtBill.evidenceImg4}">
+                            <img style="width: 200px;" src="${DebtBill.evidenceImg5}">
                         </div>
 
 

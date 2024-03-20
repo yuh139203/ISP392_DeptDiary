@@ -40,7 +40,7 @@ public class DAODebtBill {
                 int id = rs.getInt("ID");
                 int idDebtor = rs.getInt("IDDebtor");
                 int idTypeDebt = rs.getInt("IDTypeDebt");
-                float amount = rs.getFloat("Amount");
+                int amount = rs.getInt("Amount");
                 String description = rs.getString("Description");
                 String EvidenceImg1 = rs.getString("EvidenceImg1");
                 String EvidenceImg2 = rs.getString("EvidenceImg2");
@@ -129,7 +129,7 @@ public class DAODebtBill {
                             rs.getInt("ID"),
                             rs.getInt("IDDebtor"),
                             rs.getInt("IDTypeDebt"),
-                            rs.getFloat("Amount"),
+                            rs.getInt("Amount"),
                             rs.getString("Description"),
                             rs.getString("DebtTerm"),
                             rs.getString("EvidenceImg1"),
@@ -176,7 +176,7 @@ public class DAODebtBill {
                             rs.getInt("ID"),
                             rs.getInt("IDDebtor"),
                             rs.getInt("IDTypeDebt"),
-                            rs.getFloat("Amount"),
+                            rs.getInt("Amount"),
                             rs.getString("Description"),
                             rs.getString("DebtTerm"),
                             rs.getString("EvidenceImg1"),
@@ -213,7 +213,7 @@ public class DAODebtBill {
                 db.setId(rs.getInt("ID"));
                 db.setIdDebtor(rs.getInt("IDDebtor"));
                 db.setIdTypeDebt(rs.getInt("IDTypeDebt"));
-                db.setAmount(rs.getFloat("Amount"));
+                db.setAmount(rs.getInt("Amount"));
                 db.setDescription(rs.getString("Description"));
                 db.setEvidenceImg1(rs.getString("EvidenceImg1"));
                 db.setEvidenceImg2(rs.getString("EvidenceImg2"));
@@ -252,7 +252,7 @@ public class DAODebtBill {
         int idDebtor = 1;
         int id =-1;
         String description = "";
-        int typeDebt = 1;
+        int typeDebt = -1;
         int amountFrom = -1;
         int amountTo = -1;
 
@@ -271,6 +271,10 @@ public class DAODebtBill {
         }
 
         System.out.println(sql);
+        List<DebtBill> list = dao.getAll(sql);
+        for (DebtBill debtBill : list) {
+            System.out.println(debtBill);
+        }
     }
 
 }

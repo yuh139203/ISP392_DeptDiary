@@ -74,7 +74,13 @@ public class FeedbackController extends HttpServlet {
             throws ServletException, IOException {
         HttpSession session = request.getSession();
         User u = (User) session.getAttribute("userLogin");
-        int star = Integer.parseInt(request.getParameter("star"));
+        String starParam = request.getParameter("star");      
+        int star;
+        if(starParam!=null){
+            star=Integer.parseInt(starParam);
+        }else{
+            star=3;
+        }
         String comment = request.getParameter("comment");
         DAOFeedback dao = new DAOFeedback();
         boolean add = dao.addFeedback(star, comment, u.getId());

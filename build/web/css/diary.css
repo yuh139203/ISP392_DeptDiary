@@ -167,6 +167,8 @@ a.sidebar-link:hover {
     padding-top: 0px;
     text-align: center;
     background-color: #fff5;
+     align-items: center;
+    
 }
 
 .profile-image {

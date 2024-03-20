@@ -93,7 +93,7 @@ public class DebtBillController extends HttpServlet {
             throws ServletException, IOException {
         // Lấy các giá trị cơ bản từ form
         String debtType = request.getParameter("debtType");
-        float amount = Float.parseFloat(request.getParameter("amount").replace(",", ""));
+        int amount = Integer.parseInt(request.getParameter("amount").replace(",", ""));
         String note = request.getParameter("note");
         String createdDate = request.getParameter("date");
         String debtTerm = request.getParameter("debtTerm"); 
@@ -114,7 +114,7 @@ public class DebtBillController extends HttpServlet {
         Collection<Part> parts = request.getParts();
 
         // Đường dẫn lưu ảnh trong project
-        String projectPath = "C:/Users/ussat/Documents/New Folder/ISP392_DeptDiary/web";
+        String projectPath = "C:/Users/yuh/Documents/GitHub/ISP392_DeptDiary/web";
         String savePath = projectPath + File.separator + "uploads"; // Đường dẫn lưu ảnh
 
         File fileSaveDir = new File(savePath);

@@ -42,7 +42,7 @@ public class DAODebtor {
                 String phoneNumber = rs.getString("PhoneNumber");
                 String email = rs.getString("Email");
                 String address = rs.getString("Address");
-                float amount = rs.getFloat("Amount");
+                int amount = rs.getInt("Amount");
                 int temp = rs.getInt("isDelete");
                 boolean isDelete = (temp == 1 ? true : false);
                 String createdAt = rs.getString("CreatedAt");
@@ -128,7 +128,7 @@ public class DAODebtor {
                 d.setPhoneNumber(rs.getString("PhoneNumber"));
                 d.setEmail(rs.getString("Email"));
                 d.setAddress(rs.getString("Address"));
-                d.setAmount(rs.getFloat("Amount"));
+                d.setAmount(rs.getInt("Amount"));
                 return d;
             }
         } catch (Exception ex) {

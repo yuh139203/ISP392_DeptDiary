@@ -16,7 +16,7 @@ public class Debtor {
     private String phoneNumber;
     private String email;
     private String address;
-    private float amount;
+    private int amount;
     private boolean isDelete;
     private String createdAt;
     private String createdBy;
@@ -27,7 +27,7 @@ public class Debtor {
     public Debtor() {
     }
 
-    public Debtor(int id, String avatar, String fullName, String phoneNumber, String email, String address, float amount, boolean isDelete, String createdAt, String createdBy, String updatedAt, String deletedAt, String deletedBy) {
+    public Debtor(int id, String avatar, String fullName, String phoneNumber, String email, String address, int amount, boolean isDelete, String createdAt, String createdBy, String updatedAt, String deletedAt, String deletedBy) {
         this.id = id;
         this.avatar = avatar;
         this.fullName = fullName;
@@ -114,7 +114,7 @@ public class Debtor {
         return amount;
     }
 
-    public void setAmount(float amount) {
+    public void setAmount(int amount) {
         this.amount = amount;
     }
 

@@ -115,10 +115,10 @@
                                 <td> 
                                     <c:choose>
                                         <c:when test="${debtBill.idTypeDebt == 4 || debtBill.idTypeDebt == 1}">
-                                            <strong style="color: red;">${debtBill.amount}VND</strong>
+                                            <strong style="color: red;">${debtBill.amount}</strong>
                                         </c:when>
                                         <c:otherwise>
-                                            <strong>${debtBill.amount}VND</strong>
+                                            <strong>${debtBill.amount}</strong>
                                         </c:otherwise>
                                     </c:choose>
                                 </td>
