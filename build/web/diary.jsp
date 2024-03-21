@@ -67,8 +67,24 @@
                         </ul>
                     </li>
 
+                    <!--                    <li class="sidebar-item">
+                                            <a href="feedback" class="sidebar-link">
+                                                <i class="lni lni-popup"></i>
+                                                <span>Feed Back</span>
+                                            </a>
+                                        </li>-->
+                    <c:set var="sizeFeed" value="${sizeFeed}" />
+
                     <li class="sidebar-item">
-                        <a href="feedback" class="sidebar-link">
+                        <c:choose>
+                            <c:when test="${sizeFeed == 1}">
+                                <c:set var="hrefValue" value="updatefeedback" />
+                            </c:when>
+                            <c:otherwise>
+                                <c:set var="hrefValue" value="feedback" />
+                            </c:otherwise>
+                        </c:choose>
+                        <a href="${hrefValue}" class="sidebar-link">
                             <i class="lni lni-popup"></i>
                             <span>Feed Back</span>
                         </a>
@@ -109,7 +125,7 @@
                                         <input type="text" class="search" placeholder="Amount from" name="amountFrom" style="width: 150px">
                                         <input type="text" class="search" placeholder="Amount to" name="amountTo" style="width: 150px">
                                         <button type="submit" class="search-button"><img src="assets/img/search-debtor.png" style="max-width: 25px; "></button>
-                                        
+
                                     </div>
                                 </div>
                             </form>

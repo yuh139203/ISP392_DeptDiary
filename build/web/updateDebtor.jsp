@@ -96,8 +96,9 @@
                     <div class="col-md-12">
                         <label class="labels">Avatar</label>
                         <img src="${debtor.avatar}" alt="Avatar" style="max-width: 20%; height: auto;  border-radius: 50%">
-                        <input type="file" class="form-control" name="avatar"  >
-                        <input type="hidden" name="avatar" value="${debtor.avatar}" >
+                        <input type="file" class="form-control" name="avatar" id="avatar" onchange="previewImage(event)"  >
+<!--                        <input type="hidden" name="avatar" value="${debtor.avatar}" >-->
+                        <img id="avatar-preview" src="#" alt="Preview" style="max-width: 100px; max-height: 100px; margin-top: 10px; display: none; border-radius: 50%">
                     </div>
                     <div class="col-md-12">
                         <label class="labels">Full Name</label>
@@ -109,6 +110,12 @@
                         <input type="text" class="form-control" name="phoneNumber" placeholder="Enter phone number" value="${debtor.phoneNumber}" required>
                         <div id="phoneNumber-error" class="text-danger"></div>
                     </div>
+                    <div class="col-md-12">
+                        <label class="labels">Email</label>
+                        <input type="text" class="form-control" name="email" placeholder="Enter email" value="${debtor.email}" required>
+                        <div id="email-error" class="text-danger"></div>
+                    </div>
+
                     <div class="col-md-12">
                         <label class="labels">Address</label>
                         <input type="address" class="form-control" name="address" placeholder="Enter address" value="${debtor.address}" required>

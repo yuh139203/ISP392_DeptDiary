@@ -31,8 +31,8 @@ public class SendMail {
         properties.put("mail.smtp.host", "smtp.gmail.com");
         properties.put("mail.smtp.port", "587");
         properties.put("mail.smtp.ssl.protocols", "TLSv1.2");
-        String myAccountEmail = "huydang139203@gmail.com";
-        String password = "gdhwygwcnhlnbzzz";
+        String myAccountEmail = "deptdiary1704@gmail.com";
+        String password = "jskdepvjryzmxglk";
 
         Session session = Session.getInstance(properties, new Authenticator() {
             @Override
@@ -73,34 +73,6 @@ public class SendMail {
             System.out.println("Mã OTP mới #" + (i + 1) + ": " + newOTP);
         }
     }
-
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
     public static String generateRandomToken() {

@@ -5,6 +5,7 @@
 package controller;
 
 import dao.DAODebtor;
+import dao.DAOFeedback;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -15,6 +16,7 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 import model.Debtor;
+import model.Feedback;
 import model.User;
 
 /**
@@ -43,9 +45,12 @@ public class DiaryController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        DAODebtor dao = new DAODebtor();
         HttpSession session = request.getSession();
         User u = (User) session.getAttribute("userLogin");
+        DAOFeedback feed = new DAOFeedback();
+        List<Feedback> feedback = feed.getAllFeedbackByCreatedBy(u.getId());
+        int sizeFeed = feedback.size();
+        DAODebtor dao = new DAODebtor();
         List<Debtor> list = dao.getAllDebtor(u.getId());
         int listSize = list.size();
         int page, numperpage = 8;
@@ -62,6 +67,7 @@ public class DiaryController extends HttpServlet {
         List<Debtor> data = dao.getListByPage(list, start, end);
         int startPage = start + 1;
 
+        request.setAttribute("sizeFeed", sizeFeed);
         request.setAttribute("page", page);
         request.setAttribute("data", data);
         request.setAttribute("startPage", startPage);
