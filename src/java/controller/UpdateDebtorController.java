@@ -51,11 +51,17 @@ public class UpdateDebtorController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        User u = (User) session.getAttribute("userLogin");
         int idDebtor = Integer.parseInt(request.getParameter("id"));
         DAODebtor dao = new DAODebtor();
         Debtor d = dao.findByID(idDebtor);
         request.setAttribute("debtor", d);
-        request.getRequestDispatcher("updateDebtor.jsp").forward(request, response);
+        if (d.getCreatedBy() == u.getId()) {
+            request.getRequestDispatcher("updateDebtor.jsp").forward(request, response);
+        } else {
+            response.sendRedirect("wrongDebtorError.jsp");
+        }
     }
 
     @Override

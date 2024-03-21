@@ -73,6 +73,7 @@
                             <label for="amount">Amount(*)</label>
                             <input type="text" class="form-control" id="amount" name="amount" placeholder="0" required>
                             <div id="amount-error" class="text-danger"></div>
+                            <div class="text-danger">${negativeAmountError}</div>
                         </div>
                         <!-- Ngày lập phiếu -->                   
                         <div class="form-group">

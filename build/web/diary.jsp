@@ -101,6 +101,7 @@
                             <form action="diary" method="post">
                                 <div class="search-wrapper">
                                     <div class="search-container">
+                                        <a href="diary?id=${sessionScope.userLogin.id}"><img src="assets/img/reload.png" style="max-width: 30px; margin-right: 7px; border-radius: 5px;"></a>
                                         <input type="text" class="search" placeholder="Name" name="name">  
                                         <input type="text" class="search" placeholder="Address" name="address">
                                         <input type="text" class="search" placeholder="Phone Number" name="phoneNumber">
@@ -108,6 +109,7 @@
                                         <input type="text" class="search" placeholder="Amount from" name="amountFrom" style="width: 150px">
                                         <input type="text" class="search" placeholder="Amount to" name="amountTo" style="width: 150px">
                                         <button type="submit" class="search-button"><img src="assets/img/search-debtor.png" style="max-width: 25px; "></button>
+                                        
                                     </div>
                                 </div>
                             </form>

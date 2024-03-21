@@ -38,6 +38,12 @@
                         <input type="text" class="form-control" name="phoneNumber" id="phoneNumber" placeholder="Enter phone number" value="">
 
                     </div>
+                    
+                    <div class="col-md-12">
+                        <label class="labels">Email</label>
+                        <input type="text" class="form-control" name="email" id="email" placeholder="Enter email" value="">
+
+                    </div>
                     <div class="col-md-12">
                         <label class="labels">Address</label>
                         <input type="text" class="form-control" name="address" id="address" placeholder="Enter address" value="">

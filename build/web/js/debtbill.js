@@ -149,7 +149,11 @@ function validateForm() {
     if (!amount) {
         document.getElementById('amount-error').textContent = 'Amount is required.';
         isValid = false;
+    } else if (parseFloat(amount) < 0) { // Check if amount is negative
+        document.getElementById('amount-error').textContent = 'Amount cannot be negative.';
+        isValid = false;
     }
+
 
     // Validate date
     if (!date) {

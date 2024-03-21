@@ -38,7 +38,7 @@ public class ChangePasswordAdmin extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet ChangePasswordAdmin</title>");            
+            out.println("<title>Servlet ChangePasswordAdmin</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet ChangePasswordAdmin at " + request.getContextPath() + "</h1>");
@@ -59,11 +59,17 @@ public class ChangePasswordAdmin extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        User u = (User) session.getAttribute("userLogin");
         DAOUser userDao = new DAOUser();
         int id = Integer.parseInt(request.getParameter("id"));
         User user = userDao.findByID(id);
-        request.setAttribute("user", user);
-        request.getRequestDispatcher("adminChangePassword.jsp").forward(request, response);
+        if (u.getId() == user.getId()) {
+            request.setAttribute("user", user);
+            request.getRequestDispatcher("adminChangePassword.jsp").forward(request, response);
+        } else {
+            response.sendRedirect("wrongDebtorError.jsp");
+        }
     }
 
     /**

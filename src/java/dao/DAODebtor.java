@@ -46,7 +46,7 @@ public class DAODebtor {
                 int temp = rs.getInt("isDelete");
                 boolean isDelete = (temp == 1 ? true : false);
                 String createdAt = rs.getString("CreatedAt");
-                String createdBy = rs.getString("CreatedBy");
+                int createdBy = rs.getInt("CreatedBy");
                 String updatedAt = rs.getString("UpdatedAt");
                 String deletedAt = rs.getString("DeletedAt");
                 String deletedBy = rs.getString("DeletedBy");
@@ -129,6 +129,8 @@ public class DAODebtor {
                 d.setEmail(rs.getString("Email"));
                 d.setAddress(rs.getString("Address"));
                 d.setAmount(rs.getInt("Amount"));
+                d.setCreatedBy(rs.getInt("CreatedBy"));
+                d.setCreatedAt(rs.getString("CreatedAt"));
                 return d;
             }
         } catch (Exception ex) {
@@ -162,34 +164,16 @@ public class DAODebtor {
 
     public static void main(String[] args) {
         DAODebtor dao = new DAODebtor();
+        int id=34;
         String name = "";
         String address = "";
         String phoneNumber = "";
         String email = "";
         int amountFrom = 0;
         int amountTo = 1000;
-        List<Debtor> list = new ArrayList();
-        list = dao.searchDebtor(name, address, phoneNumber, email, amountFrom, amountTo);
-        for (Debtor debtor : list) {
-            System.out.println(debtor);
-        }
+        Debtor d = dao.findByID(id);
+        System.out.println(d);
+        System.out.println(d.getCreatedBy());
 
-//        String sql = "select * from Debtor where  isDelete = 0 ";
-//        if (name != null && !name.isEmpty()) {
-//            sql += " AND FullName LIKE '%" + name + "%'";
-//        }
-//        if (address != null && !address.isEmpty()) {
-//            sql += " AND Address LIKE '%" + address + "%'";
-//        }
-//        if (phoneNumber != null && !phoneNumber.isEmpty()) {
-//            sql += " AND PhoneNumber LIKE '%" + phoneNumber + "%'";
-//        }
-//        if (email != null && !email.isEmpty()) {
-//            sql += " AND Email LIKE '%" + email + "%'";
-//        }
-//        if (amountFrom >= 0 && amountTo >= 0 && amountFrom <= amountTo) {
-//            sql += " AND Amount BETWEEN " + amountFrom + " AND " + amountTo;
-//        }
-//        System.out.println(sql);
     }
 }

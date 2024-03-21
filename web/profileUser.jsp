@@ -12,7 +12,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <title>Update Profile</title>
+        <title>DebtDiary</title>
         <link href="assets/img/logo.png" rel="icon">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.2.1/dist/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
     </head>
@@ -70,8 +70,8 @@
                     <span style="color: white;">Update Profile &#10004;</span>
                 </button>
 
-                <a class="btn btn-primary" style="color: white"href="change_password?id=${userLogin.id}">Change Password</a>
-                <a class="btn btn-primary ml-4" href="welcome?id=${userLogin.id}">Back</a>
+                <a class="btn btn-primary" style="color: white"href="change_password?id=${sessionScope.userLogin.id}">Change Password</a>
+                <a class="btn btn-primary ml-4" href="welcome?id=${sessionScope.userLogin.id}">Back</a>
             </form>
         </div>
 

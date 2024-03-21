@@ -73,11 +73,17 @@ public class DebtBillController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        User u = (User) session.getAttribute("userLogin");
         int idDebtor = Integer.parseInt(request.getParameter("id"));
         DAODebtor dao = new DAODebtor();
         Debtor d = dao.findByID(idDebtor);
         request.setAttribute("debtor", d);
-        request.getRequestDispatcher("debtbill.jsp").forward(request, response);
+        if (d.getCreatedBy() == u.getId()) {
+            request.getRequestDispatcher("debtbill.jsp").forward(request, response);
+        } else {
+            response.sendRedirect("wrongDebtorError.jsp");
+        }
     }
 
     /**
@@ -92,22 +98,23 @@ public class DebtBillController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         // Lấy các giá trị cơ bản từ form
+        int idDebtor = Integer.parseInt(request.getParameter("idDebtor"));
         String debtType = request.getParameter("debtType");
         int amount = Integer.parseInt(request.getParameter("amount").replace(",", ""));
         String note = request.getParameter("note");
         String createdDate = request.getParameter("date");
-        String debtTerm = request.getParameter("debtTerm"); 
+        String debtTerm = request.getParameter("debtTerm");
         HttpSession session = request.getSession();
         User u = (User) session.getAttribute("userLogin");
         //id debtor
-        int idDebtor = Integer.parseInt(request.getParameter("idDebtor"));
+
         DAODebtBill DAOdebtBill = new DAODebtBill();
         // Xử lý giá trị tuỳ chọn cho debit và credit
-        int IDTypeDebt=0;
+        int IDTypeDebt = 0;
         if ("debit".equals(debtType)) {
-            IDTypeDebt = Integer.parseInt(request.getParameter("debitOption")); 
+            IDTypeDebt = Integer.parseInt(request.getParameter("debitOption"));
         } else if ("credit".equals(debtType)) {
-            IDTypeDebt = Integer.parseInt(request.getParameter("creditOption")); 
+            IDTypeDebt = Integer.parseInt(request.getParameter("creditOption"));
         }
 
         // Lấy tất cả các parts từ request
@@ -137,15 +144,13 @@ public class DebtBillController extends HttpServlet {
         }
 
         //Insert thông tin vào database
-        boolean insertResult = DAOdebtBill.insertDebtBill(IDTypeDebt, idDebtor, amount, note, debtTerm, imgPathsForDB,u.getId(),createdDate );
-
+        boolean insertResult = DAOdebtBill.insertDebtBill(IDTypeDebt, idDebtor, amount, note, debtTerm, imgPathsForDB, u.getId(), createdDate);
         if (insertResult) {
             response.sendRedirect("diary"); // Redirect sau khi insert thành công
-            
+
         } else {
             request.setAttribute("errorMessage", "Không thể chèn dữ liệu vào cơ sở dữ liệu.");
             request.getRequestDispatcher("/errorPage.jsp").forward(request, response);
         }
     }
-
 }

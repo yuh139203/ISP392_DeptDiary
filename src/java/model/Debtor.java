@@ -19,7 +19,7 @@ public class Debtor {
     private int amount;
     private boolean isDelete;
     private String createdAt;
-    private String createdBy;
+    private int createdBy;
     private String updatedAt;
     private String deletedAt;
     private String deletedBy;
@@ -27,7 +27,7 @@ public class Debtor {
     public Debtor() {
     }
 
-    public Debtor(int id, String avatar, String fullName, String phoneNumber, String email, String address, int amount, boolean isDelete, String createdAt, String createdBy, String updatedAt, String deletedAt, String deletedBy) {
+    public Debtor(int id, String avatar, String fullName, String phoneNumber, String email, String address, int amount, boolean isDelete, String createdAt, int createdBy, String updatedAt, String deletedAt, String deletedBy) {
         this.id = id;
         this.avatar = avatar;
         this.fullName = fullName;
@@ -43,25 +43,6 @@ public class Debtor {
         this.deletedBy = deletedBy;
     }
 
-    public Debtor(String avatar, String fullName, String phoneNumber, String email, String address) {
-        this.avatar = avatar;
-        this.fullName = fullName;
-        this.phoneNumber = phoneNumber;
-        this.email = email;
-        this.address = address;
-    }
-
-    public Debtor(String fullName, String phoneNumber, String email, String address) {
-        this.fullName = fullName;
-        this.phoneNumber = phoneNumber;
-        this.email = email;
-        this.address = address;
-    }
-    
-    
-
-    
-    
     public int getId() {
         return id;
     }
@@ -110,7 +91,7 @@ public class Debtor {
         this.address = address;
     }
 
-    public float getAmount() {
+    public int getAmount() {
         return amount;
     }
 
@@ -134,11 +115,11 @@ public class Debtor {
         this.createdAt = createdAt;
     }
 
-    public String getCreatedBy() {
+    public int getCreatedBy() {
         return createdBy;
     }
 
-    public void setCreatedBy(String createdBy) {
+    public void setCreatedBy(int createdBy) {
         this.createdBy = createdBy;
     }
 
@@ -170,6 +151,7 @@ public class Debtor {
     public String toString() {
         return "Debtor{" + "id=" + id + ", avatar=" + avatar + ", fullName=" + fullName + ", phoneNumber=" + phoneNumber + ", email=" + email + ", address=" + address + ", amount=" + amount + ", isDelete=" + isDelete + ", createdAt=" + createdAt + ", createdBy=" + createdBy + ", updatedAt=" + updatedAt + ", deletedAt=" + deletedAt + ", deletedBy=" + deletedBy + '}';
     }
+
 
     
 
