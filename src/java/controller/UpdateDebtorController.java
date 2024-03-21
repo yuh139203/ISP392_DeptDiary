@@ -73,6 +73,7 @@ public class UpdateDebtorController extends HttpServlet {
         String avatar = request.getParameter("avatar");
         Part avatarPart = request.getPart("avatar");
         String fullName = request.getParameter("fullName");
+        String email = request.getParameter("email");
         String phoneNumber = request.getParameter("phoneNumber");
         String address = request.getParameter("address");
         DAODebtor daoDebtor = new DAODebtor();
@@ -92,7 +93,7 @@ public class UpdateDebtorController extends HttpServlet {
             }
 
             String impPath = "uploads/" + fileName;
-            boolean added = daoDebtor.updateProfile(impPath, fullName, phoneNumber, address, idDebtor);
+            boolean added = daoDebtor.updateProfile(impPath, fullName, phoneNumber,email, address, idDebtor);
             if (added) {
                 response.sendRedirect("diary?id=" + u.getId());
             } else {
@@ -101,7 +102,7 @@ public class UpdateDebtorController extends HttpServlet {
             }
         } else {
             if (avatar != null && !avatar.isEmpty()) {
-                boolean added = daoDebtor.updateProfile(avatar, fullName, phoneNumber, address, idDebtor);
+                boolean added = daoDebtor.updateProfile(avatar, fullName, phoneNumber,email, address, idDebtor);
                 if (added) {
                     response.sendRedirect("diary?id=" + u.getId());
                 } else {

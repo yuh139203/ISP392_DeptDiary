@@ -139,12 +139,13 @@ public class DAODebtor {
         return null;
     }
 
-    public boolean updateProfile(String avatar, String name, String phoneNumber, String address, int id) {
+    public boolean updateProfile(String avatar, String name, String phoneNumber, String email, String address, int id) {
         String sql = "UPDATE Debtor\n"
                 + "SET FullName   = ?\n"
                 + "  , Avatar = ?\n"
                 + "  , PhoneNumber = ?\n"
                 + "  , Address     = ?\n"
+                + "  , Email     = ?\n"
                 + "  , UpdatedAt   = CURRENT_TIMESTAMP\n"
                 + "WHERE ID = ?";
         try {
@@ -153,7 +154,8 @@ public class DAODebtor {
             ptm.setString(2, avatar);
             ptm.setString(3, phoneNumber);
             ptm.setString(4, address);
-            ptm.setInt(5, id);
+            ptm.setString(5, email);
+            ptm.setInt(6, id);
             int result = ptm.executeUpdate();
             return result > 0;
         } catch (SQLException ex) {
