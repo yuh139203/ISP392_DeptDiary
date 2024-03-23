@@ -26,6 +26,7 @@
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/cleave.js/1.6.0/cleave.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
     </head>
     <body>
@@ -61,21 +62,17 @@
 
                         <div class="form-group">
                             <label for="amount">Amount</label>
-                            <input type="text" class="form-control" id="amount" name="amount" value="${DebtBill.amount}" disabled>
+                            <input type="text" class="form-control" id="amount" name="amount" value="<fmt:formatNumber value="${DebtBill.amount}" type="number"/>" disabled>
+                            
                             <div id="amount-error" class="text-danger"></div>
                         </div>
 
                         <div class="form-group">
                             <label for="date">Create Date:</label>
                             <input type="datetime-local" id="date" name="date" value="${DebtBill.createdAt}" class="form-control" disabled>
-                            <div id="debtTerm-error" class="text-danger"></div>
+                            
                         </div>
 
-                        <div class="form-group">
-                            <label for="debtTerm">Debt Term:</label>
-                            <input type="datetime-local" id="debtTerm" name="debtTerm" value="${DebtBill.debtTerm}" class="form-control" disabled>
-                            <div id="debtTerm-error" class="text-danger"></div>
-                        </div>
 
                         <div class="form-group">
                             <label for="note">Description</label>

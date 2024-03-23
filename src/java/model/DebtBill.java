@@ -11,7 +11,6 @@ public class DebtBill {
     private int idTypeDebt;
     private int amount;
     private String description;
-    private String debtTerm;
     private String evidenceImg1;
     private String evidenceImg2;
     private String evidenceImg3;
@@ -28,13 +27,12 @@ public class DebtBill {
     public DebtBill() {
     }
 
-    public DebtBill(int id, int idDebtor, int idTypeDebt, int amount, String description, String debtTerm, String evidenceImg1, String evidenceImg2, String evidenceImg3, String evidenceImg4, String evidenceImg5, boolean isDelete, String createdAt, String createdBy, String updatedAt, String deletedAt, String deletedBy) {
+    public DebtBill(int id, int idDebtor, int idTypeDebt, int amount, String description, String evidenceImg1, String evidenceImg2, String evidenceImg3, String evidenceImg4, String evidenceImg5, boolean isDelete, String createdAt, String createdBy, String updatedAt, String deletedAt, String deletedBy) {
         this.id = id;
         this.idDebtor = idDebtor;
         this.idTypeDebt = idTypeDebt;
         this.amount = amount;
         this.description = description;
-        this.debtTerm = debtTerm;
         this.evidenceImg1 = evidenceImg1;
         this.evidenceImg2 = evidenceImg2;
         this.evidenceImg3 = evidenceImg3;
@@ -50,13 +48,12 @@ public class DebtBill {
     
     
 
-    public DebtBill(int id, int idDebtor, int idTypeDebt, int amount, String description, String debtTerm, String evidenceImg1, String evidenceImg2, String evidenceImg3, String evidenceImg4, String evidenceImg5, boolean isDelete, String createdAt, String createdBy, String updatedAt, String deletedAt, String deletedBy, String type) {
+    public DebtBill(int id, int idDebtor, int idTypeDebt, int amount, String description, String evidenceImg1, String evidenceImg2, String evidenceImg3, String evidenceImg4, String evidenceImg5, boolean isDelete, String createdAt, String createdBy, String updatedAt, String deletedAt, String deletedBy, String type) {
         this.id = id;
         this.idDebtor = idDebtor;
         this.idTypeDebt = idTypeDebt;
         this.amount = amount;
         this.description = description;
-        this.debtTerm = debtTerm;
         this.evidenceImg1 = evidenceImg1;
         this.evidenceImg2 = evidenceImg2;
         this.evidenceImg3 = evidenceImg3;
@@ -95,7 +92,7 @@ public class DebtBill {
         this.idTypeDebt = idTypeDebt;
     }
 
-    public float getAmount() {
+    public int getAmount() {
         return amount;
     }
 
@@ -109,14 +106,6 @@ public class DebtBill {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public String getDebtTerm() {
-        return debtTerm;
-    }
-
-    public void setDebtTerm(String debtTerm) {
-        this.debtTerm = debtTerm;
     }
 
     public String getEvidenceImg1() {
@@ -217,7 +206,9 @@ public class DebtBill {
 
     @Override
     public String toString() {
-        return "DebtBill{" + "id=" + id + ", idDebtor=" + idDebtor + ", idTypeDebt=" + idTypeDebt + ", amount=" + amount + ", description=" + description + ", debtTerm=" + debtTerm + ", evidenceImg1=" + evidenceImg1 + ", evidenceImg2=" + evidenceImg2 + ", evidenceImg3=" + evidenceImg3 + ", evidenceImg4=" + evidenceImg4 + ", evidenceImg5=" + evidenceImg5 + ", isDelete=" + isDelete + ", createdAt=" + createdAt + ", createdBy=" + createdBy + ", updatedAt=" + updatedAt + ", deletedAt=" + deletedAt + ", deletedBy=" + deletedBy + ", type=" + type + '}';
+        return "DebtBill{" + "id=" + id + ", idDebtor=" + idDebtor + ", idTypeDebt=" + idTypeDebt + ", amount=" + amount + ", description=" + description + ", evidenceImg1=" + evidenceImg1 + ", evidenceImg2=" + evidenceImg2 + ", evidenceImg3=" + evidenceImg3 + ", evidenceImg4=" + evidenceImg4 + ", evidenceImg5=" + evidenceImg5 + ", isDelete=" + isDelete + ", createdAt=" + createdAt + ", createdBy=" + createdBy + ", updatedAt=" + updatedAt + ", deletedAt=" + deletedAt + ", deletedBy=" + deletedBy + ", type=" + type + '}';
     }
 
+    
+    
 }

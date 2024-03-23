@@ -76,17 +76,17 @@
                             <div class="text-danger">${negativeAmountError}</div>
                         </div>
                         <!-- Ngày lập phiếu -->                   
-                        <div class="form-group">
+<!--                        <div class="form-group">
                             <label for="date">Create Date</label>
                             <input type="datetime-local" id="date" name="date" required>
                             <div id="date-error" class="text-danger"></div>
                         </div>                
-                        <!-- Hạn nợ -->
+                         Hạn nợ 
                         <div class="form-group">
                             <label for="debtTerm">Debt Term:</label>
                             <input type="datetime-local" id="debtTerm" name="debtTerm" class="form-control" required>
                             <div id="debtTerm-error" class="text-danger"></div>
-                        </div>
+                        </div>-->
 
                         <!-- Ghi chú -->
                         <div class="form-group">

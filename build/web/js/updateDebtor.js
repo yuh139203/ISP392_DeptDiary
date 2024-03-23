@@ -28,7 +28,9 @@ function validateForm() {
 
     var phoneNumber = document.getElementsByName("phoneNumber")[0].value;
     var phoneNumberPattern = /^\d{10,15}$/;
-    if (!phoneNumberPattern.test(phoneNumber)) {
+    if (!phoneNumber) {
+        document.getElementById("phoneNumber-error").innerText = "";
+    } else if (!phoneNumberPattern.test(phoneNumber)) {
         document.getElementById("phoneNumber-error").innerText = "Phone Number must be between 10 to 15 digits.";
         isValid = false;
     } else {
@@ -36,13 +38,13 @@ function validateForm() {
     }
 
 
-    var address = document.getElementsByName("address")[0].value;
-    if (address.trim() === "") {
-        document.getElementById("address-error").innerText = "Address cannot be empty.";
-        isValid = false;
-    } else {
-        document.getElementById("address-error").innerText = "";
-    }
+//    var address = document.getElementsByName("address")[0].value;
+//    if (address.trim() === "") {
+//        document.getElementById("address-error").innerText = "Address cannot be empty.";
+//        isValid = false;
+//    } else {
+//        document.getElementById("address-error").innerText = "";
+//    }
     if (!isValid) {
         event.preventDefault();
     }
@@ -82,3 +84,10 @@ $('#successModal .close, #successModal').on('click', function () {
 document.getElementById('debt-form').addEventListener('submit', function (e) {
     e.preventDefault();
 });
+
+
+
+
+
+
+

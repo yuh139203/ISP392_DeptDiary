@@ -6,78 +6,13 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Debtor information</title>
+        <link href="assets/img/logo.png" rel="icon">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css"
               integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I" crossorigin="anonymous">
         <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-        <style>
-            body {
-                font-family: Arial, sans-serif;
-                margin: 0;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                min-height: 100vh;
-                background-color: #83b3e3;
-            }
-
-            #debt-info {
-                position: relative;
-                width: 500px;
-                background-color: #ffffff;
-                padding: 20px;
-                border-radius: 10px;
-                border:1px solid rgba(17, 12, 46, 0.15);
-                box-shadow: rgba(17, 12, 46, 0.15) 0px 48px 100px 0px;
-            }
-
-            .form-title {
-                text-align:center;
-                font-size:30px;
-                font-weight:600;
-                margin:20px 0px 30px;
-                color:#111;
-            }
-
-            #debt-info h1 {
-                font-size: 24px;
-                margin-bottom: 10px;
-                text-align: center;
-            }
-
-            #debt-info label {
-                display: block;
-                margin-top: 10px;
-                font-size: 16px;
-            }
-
-            #debt-info input:not([readonly]),
-            #debt-info textarea,
-            #debt-info button {
-                width: calc(100% - 16px);
-                padding: 8px;
-                margin-top: 5px;
-                box-sizing: border-box;
-            }
-
-            .total-debt input {
-                pointer-events: none;
-            }
-
-            .fa-plus{
-                content: "\F067";
-            }
-
-
-            .exit-button {
-                position: absolute;
-                top: 10px;
-                right: 10px;
-                cursor: pointer;
-                max-width: 30px;
-            }
-
-        </style>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+        <link rel="stylesheet" href="css/updateDebtor.css">
     </head>
 
     <body>
@@ -105,22 +40,25 @@
                     </div>
                     <div class="col-md-12">
                         <label class="labels">Phone Number</label>
-                        <input type="text" class="form-control" name="phoneNumber" placeholder="Enter phone number" value="${debtor.phoneNumber}" required>
+                        <input type="text" class="form-control" name="phoneNumber" placeholder="Enter phone number" value="${debtor.phoneNumber}" >
                         <div id="phoneNumber-error" class="text-danger"></div>
                     </div>
                     <div class="col-md-12">
                         <label class="labels">Email</label>
-                        <input type="text" class="form-control" name="email" placeholder="Enter email" value="${debtor.email}" required>
+                        <input type="text" class="form-control" name="email" placeholder="Enter email" value="${debtor.email}" >
                         <div id="email-error" class="text-danger"></div>
                     </div>
                     <div class="col-md-12">
                         <label class="labels">Address</label>
-                        <input type="address" class="form-control" name="address" placeholder="Enter address" value="${debtor.address}" required>
+                        <input type="address" class="form-control" name="address" placeholder="Enter address" value="${debtor.address}" >
                         <div id="address-error" class="text-danger"></div>
                     </div>
                     <div class="col-md-12 total-debt">
                         <label class="labels">Total Debt</label>
-                        <input type="text" class="form-control" value="${debtor.amount}" readonly style="color: ${debtor.amount < 0 ? 'red' : 'black'};">
+                        <div class="form-control money" id="totalDebtInput" style="color: ${debtor.amount < 0 ? 'red' : 'black'};">
+                            ${debtor.amount}
+                        </div>
+
                     </div>
                 </div>
                 <div class="mt-3 text-center">
@@ -128,6 +66,18 @@
                 </div>
             </div>
         </form>
+
+        <script>
+            $(document).ready(function () {
+                $(".money").each(function () {
+                    var text = $(this).text();
+                    console.log(text)
+                    text = (+text).toLocaleString();
+                    $(this).text(text);
+                });
+            });
+        </script>
+
     </body>
 
     <!-- Modal Confirmation -->
@@ -175,7 +125,7 @@
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-    <script src="js/updateDebtor.js"></script>      
+    <script src="js/updateDebtor.js"></script>  
 
 
 </html>

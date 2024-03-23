@@ -12,6 +12,7 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
               integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
         <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
         <link rel="stylesheet" href="css/diary.css">
     </head>
@@ -29,12 +30,6 @@
                 </div>
                 <ul class="sidebar-nav">
 
-                    <!--                    <li class="sidebar-item">
-                                            <a href="welcome?id=${sessionScope.userLogin.id}" class="sidebar-link">
-                                                <i class="lni lni-agenda"></i>
-                                                <span>Home</span>
-                                            </a>
-                                        </li>-->
                     <li class="sidebar-item">
                         <c:choose>
                             <c:when test="${sessionScope.userLogin.idRole eq 2}">
@@ -130,7 +125,7 @@
                                 </div>
                             </form>
                         </div>
-
+                                        
                     </div>
 
                     <!-- CARDS -->
@@ -150,7 +145,7 @@
                                             <img src="${debtor.avatar}" alt="Avatar" class="profile-image">
                                             <div class="profile-name">${debtor.fullName}</div>
                                             <div class="total-debt">Total debt</div>
-                                            <div class="money" style="color: ${debtor.amount < 0 ? 'red' : 'inherit'}">${debtor.amount}</div>
+                                            <div class="money" id="debtorAmount" style="color: ${debtor.amount < 0 ? 'red' : 'inherit'}">${debtor.amount}</div>
                                             <a href="debtDetailController?id=${debtor.id}" class="view-detail">View detail</a>  
                                         </div>
                                     </td>
@@ -210,6 +205,16 @@
 
         <!-- from cdn -->
         <script type="module" src="https://unpkg.com/@material-tailwind/html@latest/scripts/popover.js"></script>
+        <script>
+            $(document).ready(function () {
+                $(".money").each(function () {
+                    var text = $(this).text();
+                    console.log(text)
+                    text = (+text).toLocaleString();
+                    $(this).text(text);
+                });
+            });
+        </script>
     </body>
 
 </html>

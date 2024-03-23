@@ -57,7 +57,7 @@ public class DAODebtBill {
                 String deletedBy = rs.getString("DeletedBy");
 
                 DebtBill pro = new DebtBill(id, idDebtor, idTypeDebt, amount,
-                        description, debtTerm, EvidenceImg1, EvidenceImg2, EvidenceImg3,
+                        description, EvidenceImg1, EvidenceImg2, EvidenceImg3,
                         EvidenceImg4, EvidenceImg5, isDelete, createdAt,
                         createdBy, updatedAt, deletedAt, deletedBy);
                 vector.add(pro);
@@ -68,10 +68,10 @@ public class DAODebtBill {
         return vector;
     }
 
-    public boolean insertDebtBill(int IDTypeDebt, int idDebtor, float amount, String note, String debtTerm, List<String> imgPathsForDB, int createdBy, String createdDate) {
+    public boolean insertDebtBill(int IDTypeDebt, int idDebtor, float amount, String note, List<String> imgPathsForDB, int createdBy) {
         // Assume db is a properly initialized database connection object
-        String sql = "INSERT INTO DebtBill (IDDebtor, IDTypeDebt, Amount, Description, EvidenceImg1, EvidenceImg2, EvidenceImg3, EvidenceImg4, EvidenceImg5, DebtTerm, CreatedAt, CreatedBy, isDelete) "
-                + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 0)";
+        String sql = "INSERT INTO DebtBill (IDDebtor, IDTypeDebt, Amount, Description, EvidenceImg1, EvidenceImg2, EvidenceImg3, EvidenceImg4, EvidenceImg5, CreatedAt, CreatedBy, isDelete) "
+                + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP, ?, 0)";
         try ( PreparedStatement ps = db.getConnection().prepareStatement(sql)) {
             ps.setInt(1, idDebtor);
             ps.setInt(2, IDTypeDebt);
@@ -85,9 +85,7 @@ public class DAODebtBill {
                     ps.setNull(5 + i, java.sql.Types.VARCHAR);
                 }
             }
-            ps.setString(10, debtTerm);
-            ps.setString(11, createdDate);
-            ps.setInt(12, createdBy);
+            ps.setInt(10, createdBy);
             int result = ps.executeUpdate();
             if (result > 0) {
                 if (IDTypeDebt == 2 || IDTypeDebt == 3) {
@@ -131,7 +129,6 @@ public class DAODebtBill {
                             rs.getInt("IDTypeDebt"),
                             rs.getInt("Amount"),
                             rs.getString("Description"),
-                            rs.getString("DebtTerm"),
                             rs.getString("EvidenceImg1"),
                             rs.getString("EvidenceImg2"),
                             rs.getString("EvidenceImg3"),
@@ -178,7 +175,6 @@ public class DAODebtBill {
                             rs.getInt("IDTypeDebt"),
                             rs.getInt("Amount"),
                             rs.getString("Description"),
-                            rs.getString("DebtTerm"),
                             rs.getString("EvidenceImg1"),
                             rs.getString("EvidenceImg2"),
                             rs.getString("EvidenceImg3"),
@@ -220,7 +216,6 @@ public class DAODebtBill {
                 db.setEvidenceImg3(rs.getString("EvidenceImg3"));
                 db.setEvidenceImg4(rs.getString("EvidenceImg4"));
                 db.setEvidenceImg5(rs.getString("EvidenceImg5"));
-                db.setDebtTerm(rs.getString("DebtTerm"));
                 db.setCreatedAt(rs.getString("CreatedAt"));
                 return db;
             }
@@ -249,32 +244,9 @@ public class DAODebtBill {
 
     public static void main(String[] args) {
         DAODebtBill dao = new DAODebtBill();
-        int idDebtor = 1;
-        int id =-1;
-        String description = "";
-        int typeDebt = -1;
-        int amountFrom = -1;
-        int amountTo = -1;
+        DebtBill db = dao.findByID(1);
+            System.out.println(db);
 
-        String sql = "select * from DebtBill where isDelete = 0 AND IDDebtor = " + idDebtor;
-        if (id >= 0) {
-            sql += " AND ID =" + id;
-        }
-        if (description != null && !description.isEmpty()) {
-            sql += " AND Description LIKE '%" + description + "%'";
-        }
-        if (typeDebt == 1 || typeDebt == 2 || typeDebt == 3 || typeDebt == 4) {
-            sql += " AND IDTypeDebt =" + typeDebt;
-        }
-        if (amountFrom >= 0 && amountTo >= 0 && amountFrom <= amountTo) {
-            sql += " AND Amount BETWEEN " + amountFrom + " AND " + amountTo;
-        }
-
-        System.out.println(sql);
-        List<DebtBill> list = dao.getAll(sql);
-        for (DebtBill debtBill : list) {
-            System.out.println(debtBill);
-        }
     }
 
 }

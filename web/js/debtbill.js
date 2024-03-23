@@ -119,15 +119,15 @@ function validateForm() {
     let isValid = true;
     const debtType = document.querySelector('input[name="debtType"]:checked');
     const amount = document.getElementById('amount').value.trim();
-    const date = document.getElementById('date').value.trim();
-    const debtTerm = document.getElementById('debtTerm').value.trim(); // Get the debt term value
+//    const date = document.getElementById('date').value.trim();
+//    const debtTerm = document.getElementById('debtTerm').value.trim(); // Get the debt term value
     const debitOptions = document.getElementById('debitOptions');
     const creditOptions = document.getElementById('creditOptions');
     // Reset error messages
     document.getElementById('debtType-error').textContent = '';
     document.getElementById('amount-error').textContent = '';
-    document.getElementById('date-error').textContent = '';
-    document.getElementById('debtTerm-error').textContent = ''; // Reset debt term error message
+//    document.getElementById('date-error').textContent = '';
+//    document.getElementById('debtTerm-error').textContent = ''; // Reset debt term error message
     document.getElementById('debitOptions-error').textContent = '';
     document.getElementById('creditOptions-error').textContent = '';
 
@@ -156,15 +156,15 @@ function validateForm() {
 
 
     // Validate date
-    if (!date) {
-        document.getElementById('date-error').textContent = 'Create date is required.';
-        isValid = false;
-    }
-    // Validate debt term
-    if (!debtTerm) {
-        document.getElementById('debtTerm-error').textContent = 'Debt term is required.';
-        isValid = false;
-    }
+//    if (!date) {
+//        document.getElementById('date-error').textContent = 'Create date is required.';
+//        isValid = false;
+//    }
+//    // Validate debt term
+//    if (!debtTerm) {
+//        document.getElementById('debtTerm-error').textContent = 'Debt term is required.';
+//        isValid = false;
+//    }
 
     return isValid;
 }
@@ -193,13 +193,13 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 
-window.onload = function () {
-    var today = new Date();
-    var date = today.getFullYear() + '-' + (today.getMonth() + 1).toString().padStart(2, '0') + '-' + today.getDate().toString().padStart(2, '0');
-    var time = today.getHours().toString().padStart(2, '0') + ":" + today.getMinutes().toString().padStart(2, '0');
-    var dateTime = date + 'T' + time;
-    document.getElementById("date").value = dateTime;
-};
+//window.onload = function () {
+//    var today = new Date();
+//    var date = today.getFullYear() + '-' + (today.getMonth() + 1).toString().padStart(2, '0') + '-' + today.getDate().toString().padStart(2, '0');
+//    var time = today.getHours().toString().padStart(2, '0') + ":" + today.getMinutes().toString().padStart(2, '0');
+//    var dateTime = date + 'T' + time;
+//    document.getElementById("date").value = dateTime;
+//};
 
 // JavaScript để cho phép uncheck các nút radio
 document.addEventListener('DOMContentLoaded', () => {

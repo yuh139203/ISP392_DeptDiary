@@ -102,8 +102,8 @@ public class DebtBillController extends HttpServlet {
         String debtType = request.getParameter("debtType");
         int amount = Integer.parseInt(request.getParameter("amount").replace(",", ""));
         String note = request.getParameter("note");
-        String createdDate = request.getParameter("date");
-        String debtTerm = request.getParameter("debtTerm");
+//        String createdDate = request.getParameter("date");
+//        String debtTerm = request.getParameter("debtTerm");
         HttpSession session = request.getSession();
         User u = (User) session.getAttribute("userLogin");
         //id debtor
@@ -144,7 +144,7 @@ public class DebtBillController extends HttpServlet {
         }
 
         //Insert thông tin vào database
-        boolean insertResult = DAOdebtBill.insertDebtBill(IDTypeDebt, idDebtor, amount, note, debtTerm, imgPathsForDB, u.getId(), createdDate);
+        boolean insertResult = DAOdebtBill.insertDebtBill(IDTypeDebt, idDebtor, amount, note, imgPathsForDB, u.getId());
         if (insertResult) {
             response.sendRedirect("diary"); // Redirect sau khi insert thành công
 
