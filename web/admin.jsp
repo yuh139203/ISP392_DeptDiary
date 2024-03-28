@@ -128,23 +128,23 @@
 
                     <div class="row gy-4">
 
-                        <div class="col-lg-3 col-md-6 d-flex align-items-stretch" data-aos="fade-up" data-aos-delay="100">
+                        <div class="col-lg-3 col-md-6 d-flex align-items-stretch smaller-card" data-aos="fade-up" data-aos-delay="100">
                             <div class="member">
                                 <div class="member-img">
-                                    <img src="assets/img/team/team-1.jpg" class="img-fluid" alt="">
+                                    <img style="width: 240px; height: 240px" src="assets/img/team/huy.png"  class="img-fluid" alt="">
                                 </div>
                                 <div class="member-info">
                                     <h4>Dang Xuan Huy</h4>
-                                    <span>Chief Executive Officer</span>
+                                    <span>Team Leader</span>
                                     <p>Velit aut quia fugit et et. Dolorum ea voluptate vel tempore tenetur ipsa quae aut. Ipsum exercitationem iure minima enim corporis et voluptate.</p>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="col-lg-3 col-md-6 d-flex align-items-stretch" data-aos="fade-up" data-aos-delay="200">
+                        <div class="col-lg-3 col-md-6 d-flex align-items-stretch smaller-card" data-aos="fade-up" data-aos-delay="200">
                             <div class="member">
                                 <div class="member-img">
-                                    <img src="assets/img/team/team-2.jpg" class="img-fluid" alt="">
+                                    <img style="width: 240px; height: 240px" src="assets/img/team/thang.jpg" class="img-fluid" alt="">
                                 </div>
                                 <div class="member-info">
                                     <h4>Do Viet Thang</h4>
@@ -154,10 +154,10 @@
                             </div>
                         </div>
 
-                        <div class="col-lg-3 col-md-6 d-flex align-items-stretch" data-aos="fade-up" data-aos-delay="300">
+                        <div class="col-lg-3 col-md-6 d-flex align-items-stretch smaller-card" data-aos="fade-up" data-aos-delay="300">
                             <div class="member">
                                 <div class="member-img">
-                                    <img src="assets/img/team/team-3.jpg" class="img-fluid" alt="">
+                                    <img style="width: 240px; height: 240px" src="assets/img/team/khai.jpg" class="img-fluid" alt="">
                                 </div>
                                 <div class="member-info">
                                     <h4>Luong Duy Khai</h4>
@@ -167,10 +167,10 @@
                             </div>
                         </div>
 
-                        <div class="col-lg-3 col-md-6 d-flex align-items-stretch" data-aos="fade-up" data-aos-delay="400">
+                        <div class="col-lg-3 col-md-6 d-flex align-items-stretch smaller-card " data-aos="fade-up" data-aos-delay="400">
                             <div class="member">
                                 <div class="member-img">
-                                    <img src="assets/img/team/team-4.jpg" class="img-fluid" alt="">
+                                    <img style="width: 240px; height: 240px" src="assets/img/team/dat.jpg" class="img-fluid" alt="">
                                 </div>
                                 <div class="member-info">
                                     <h4>Nguyen Tien Dat</h4>
@@ -180,10 +180,10 @@
                             </div>
                         </div>
 
-                        <div class="col-lg-3 col-md-6 d-flex align-items-stretch" data-aos="fade-up" data-aos-delay="500">
+                        <div class="col-lg-3 col-md-6 d-flex align-items-stretch smaller-card" data-aos="fade-up" data-aos-delay="500">
                             <div class="member">
                                 <div class="member-img">
-                                    <img src="assets/img/team/team-4.jpg" class="img-fluid" alt="">
+                                    <img style="width: 240px; height: 240px" src="assets/img/team/nam.jpg" class="img-fluid" alt="">
                                 </div>
                                 <div class="member-info">
                                     <h4>Nguy?n Ti?n ??t</h4>
