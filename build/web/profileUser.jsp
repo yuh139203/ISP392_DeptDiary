@@ -14,14 +14,27 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <title>DebtDiary</title>
         <link href="assets/img/logo.png" rel="icon">
+        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.2.1/dist/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
     </head>
     <body class="bg-light">
 
+
+        <c:if test="${noti != null}">
+
+            <script>
+                <c:if test="${noti=='success'}">
+                swal("Successful!", "You clicked the button!", "success");
+                </c:if>
+                <c:if test="${noti=='fail'}">
+                swal("Fail!", "You clicked the button!", "error");
+                </c:if>
+            </script>
+            <c:remove var="noti" scope="request"/>
+        </c:if>
+
         <div class="container mt-5">
             <h1 class="mb-4">Update Profile</h1>
-<!--            <p style="color: green;">${noti}</p>-->
-
             <c:if test="${phoneError ne null}">
                 <p style="color: red;">${phoneError}</p>
             </c:if>
@@ -71,7 +84,12 @@
                 </button>
 
                 <a class="btn btn-primary" style="color: white"href="change_password?id=${sessionScope.userLogin.id}">Change Password</a>
-                <a class="btn btn-primary ml-4" href="welcome?id=${sessionScope.userLogin.id}">Back</a>
+<!--                <a class="btn btn-primary ml-4" href="welcome?id=${sessionScope.userLogin.id}">Back</a>-->
+                <a class="btn btn-primary ml-4" 
+                   href="${sessionScope.userLogin.idRole == 2 ? 'admin' : 'welcome?id=' + sessionScope.userLogin.id}">
+                    Back
+                </a>
+
             </form>
         </div>
 

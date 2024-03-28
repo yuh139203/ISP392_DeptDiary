@@ -3,7 +3,7 @@
     Created on : Jan 15, 2024, 8:24:00 PM
     Author     : yuh
 --%>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -15,9 +15,15 @@
         <link rel="stylesheet" href="css/login.css">
         <link rel="icon" href="assets/img/logo.png" type="image/png">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     </head>
     <body>
+        <c:if test="${notif != null}">
+            <script>
+                swal("Congratulations!!", "You're now registered!", "success");
+            </script>
+            <c:remove var="noti" scope="request"/>
+        </c:if>
         <div class="login-form">
             <c:set var="cookie" value="${pageContext.request.cookies}"/>
             <form id="loGin" action="login" method="post">

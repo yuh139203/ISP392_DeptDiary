@@ -59,8 +59,18 @@ public class UpdateProfileController extends HttpServlet {
         user.setDateOfBirth(dob);
 
         DAOUser userDAO = new DAOUser();
-        userDAO.updateProfile(user);
-        response.sendRedirect("profile");
+        int update = userDAO.updateProfile(user);
+        User userUpdate = userDAO.findByID(id);
+        if(update != -1){
+            request.setAttribute("user", userUpdate);
+            request.setAttribute("noti", "success");
+            request.getRequestDispatcher("profileUser.jsp").forward(request, response);
+        }else{
+            request.setAttribute("noti", "fail");
+            request.setAttribute("user", userUpdate);
+            request.getRequestDispatcher("profileUser.jsp").forward(request, response);
+        }
+        
     }
 
     @Override

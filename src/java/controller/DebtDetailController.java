@@ -61,16 +61,21 @@ public class DebtDetailController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        //        String resultLimitParameter = request.getParameter("resultlimit");
         int numPerPage;
-//        if (resultLimitParameter == null || resultLimitParameter.isEmpty()) {
         numPerPage = 10; // giá trị mặc định
-//        } else {
-//            numPerPage = Integer.parseInt(resultLimitParameter);
-//        }
-        HttpSession session = request.getSession();
 
-        int idDebtor = Integer.parseInt(request.getParameter("id"));
+        HttpSession session = request.getSession();
+//        int idDebtor = Integer.parseInt(request.getParameter("id"));
+        int idDebtor;
+        String idStr = request.getParameter("id");
+        if (idStr != null) {
+            idDebtor = Integer.parseInt(idStr);
+        } else {
+            idDebtor = (Integer) session.getAttribute("debtorId");
+        }
+        if (session.getAttribute("debtorId") == null) {
+            session.setAttribute("debtorId", idDebtor);
+        }
         DAODebtor daoDebtor = new DAODebtor();
         Debtor d = daoDebtor.findByID(idDebtor);
         session.setAttribute("Debtor", d);
@@ -125,7 +130,7 @@ public class DebtDetailController extends HttpServlet {
         int idDebtor = Integer.parseInt(request.getParameter("idDebtor"));
 
         String typeParam = request.getParameter("type");
-        
+
         int type;
         if (typeParam != null && !typeParam.isEmpty()) {
             type = Integer.parseInt(typeParam);

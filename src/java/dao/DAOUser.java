@@ -128,7 +128,7 @@ public class DAOUser {
         }
         return null;
     }
-    
+
     public int editProfileOfUser(User user) {
         String sql = "UPDATE UserInfor\n"
                 + "SET FirstName   = ?\n"
@@ -306,7 +306,7 @@ public class DAOUser {
         }
         return -1;
     }
-    
+
     public int activateUser(User user) {
         String sql = "UPDATE UserInfor\n"
                 + "SET isDelete = ?\n"
@@ -321,9 +321,8 @@ public class DAOUser {
         }
         return -1;
     }
-    
-    
-    public List<User> searchUser(int id, String firstName,String lastName , String dob, String address, String phoneNumber, String email, int activation) {
+
+    public List<User> searchUser(int id, String firstName, String lastName, String dob, String address, String phoneNumber, String email, int activation) {
         String sql = "select * from UserInfor where  1=1 ";
         if (id >= 0) {
             sql += " AND ID = " + id;
@@ -351,40 +350,22 @@ public class DAOUser {
         }
         return getAll(sql);
     }
-    
 
     public static void main(String[] args) {
-        DAOUser daoUser = new DAOUser();
-        int id=3;
-        String firstName = "";
-        String lastName = "";
-        String address = "";
-        String phoneNumber = "";
-        String email = "";
-        int activation =-1;
-        String sql = "select * from UserInfor where  1=1 ";
-        if (id >= 0) {
-            sql += " AND ID =" + id;
+        User user = new User();
+        user.setId(12);
+        user.setFirstName("John");
+
+        DAOUser dao = new DAOUser();
+
+        int result = dao.updateProfile(user);
+        if (result != -1) {
+            System.out.println("success");
         }
-        if (firstName != null && !firstName.isEmpty()) {
-            sql += " AND FirstName LIKE '%" + firstName + "%'";
+        else{
+            System.out.println("fail");
         }
-        if (lastName != null && !lastName.isEmpty()) {
-            sql += " AND FirstName LIKE '%" + lastName + "%'";
-        }
-        if (address != null && !address.isEmpty()) {
-            sql += " AND Address LIKE '%" + address + "%'";
-        }
-        if (phoneNumber != null && !phoneNumber.isEmpty()) {
-            sql += " AND PhoneNumber LIKE '%" + phoneNumber + "%'";
-        }
-        if (email != null && !email.isEmpty()) {
-            sql += " AND Email LIKE '%" + email + "%'";
-        }
-        if (activation >= 0) {
-            sql += " AND isDelete =" + activation;
-        }
-        System.out.println(sql);
     }
 
 }
+

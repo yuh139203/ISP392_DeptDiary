@@ -64,14 +64,7 @@
                         </div>
                     </div>
                 </div>
-                <!--                <div>
-                                    <img src="login" alt="CAPTCHA">
-                                    <input class="input" type="text" name="captchaInput" placeholder="Enter CAPTCHA" required>
-                                    <c:if test="${not empty captchaError}">
-                                        <div style="color: red;">${captchaError}</div>
-                                    </c:if>
-                                    <button type="submit" name="refreshCaptcha" value="true">Refresh Captcha</button>
-                                </div>-->
+
 
 
                 <button type="submit" class="btn btn-primary">Update Password</button>

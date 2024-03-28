@@ -8,11 +8,27 @@
         <title>DebtDiary</title>
         <link href="assets/img/logo.png" rel="icon">
         <link href="css/listUser.css" rel="stylesheet">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/toastify/1.x.x/toastify.min.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastify/1.x.x/toastify.min.css">
+        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     </head>
     <body>
 
         <h1 class="title">List of users</h1>
-        <p style="color: green;">${noti}</p>
+<!--        <p style="color: green;">${noti}</p>-->
+        <c:if test="${noti != null}">
+
+            <script> 
+                <c:if test="${noti=='success'}"> 
+                    swal("Successful!", "You clicked the button!", "success");
+                </c:if>
+                <c:if test="${noti=='fail'}"> 
+                    swal("Fail!", "You clicked the button!", "error");
+                </c:if>
+            </script>
+            <c:remove var="noti" scope="request"/>
+        </c:if>
+
         <c:set var="page" value="${page}" />
 
         <table>

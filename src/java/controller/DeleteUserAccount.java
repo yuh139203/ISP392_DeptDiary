@@ -77,9 +77,9 @@ public class DeleteUserAccount extends HttpServlet {
         User user = daoUser.findByID(id);
         int deletedUser = daoUser.deleteUser(user);
         if (deletedUser == 1) {
-            request.setAttribute("noti", "Delete success!");
+            request.setAttribute("noti", "success");
         } else {
-            request.setAttribute("noti", "Delete fail!");
+            request.setAttribute("noti", "fail");
         }
         DAOUser userDao = new DAOUser();
         List<User> users = userDao.getAllUser();

@@ -72,7 +72,7 @@
                 $(".money").each(function () {
                     var text = $(this).text();
                     console.log(text)
-                    text = (+text).toLocaleString();
+                    text = (+text).toLocaleString()+"VND";
                     $(this).text(text);
                 });
             });

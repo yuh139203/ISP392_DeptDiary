@@ -104,9 +104,9 @@ public class EditProfileUserController extends HttpServlet {
         User updatedUser = userDAO.findByID(id);
         request.setAttribute("user", updatedUser);
         if (update == 1) {
-            request.setAttribute("noti", "Update success!");
+            request.setAttribute("noti", "success");
         } else {
-            request.setAttribute("errorNoti", "Update fail!");
+            request.setAttribute("noti", "fail");
         }
         request.getRequestDispatcher("editProfileUser.jsp").forward(request, response);
 

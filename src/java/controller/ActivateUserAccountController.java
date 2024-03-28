@@ -78,9 +78,9 @@ public class ActivateUserAccountController extends HttpServlet {
         int deletedUser = daoUser.activateUser(user);
         request.setAttribute("user", user);
         if (deletedUser == 1) {
-            request.setAttribute("noti", "Activate success!");
+            request.setAttribute("noti", "success");
         } else {
-            request.setAttribute("noti", "Activate fail!");
+            request.setAttribute("noti", "fail");
         }
         DAOUser userDao = new DAOUser();
         List<User> users = userDao.getAllUser();

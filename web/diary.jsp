@@ -145,7 +145,7 @@
                                             <img src="${debtor.avatar}" alt="Avatar" class="profile-image">
                                             <div class="profile-name">${debtor.fullName}</div>
                                             <div class="total-debt">Total debt</div>
-                                            <div class="money" id="debtorAmount" style="color: ${debtor.amount < 0 ? 'red' : 'inherit'}">${debtor.amount}</div>
+                                            <div class="money" id="debtorAmount" style="color: ${debtor.amount < 0 ? 'red' : 'inherit'}">${debtor.amount}</div> 
                                             <a href="debtDetailController?id=${debtor.id}" class="view-detail">View detail</a>  
                                         </div>
                                     </td>
@@ -210,7 +210,7 @@
                 $(".money").each(function () {
                     var text = $(this).text();
                     console.log(text)
-                    text = (+text).toLocaleString();
+                    text = (+text).toLocaleString() + "VND";
                     $(this).text(text);
                 });
             });

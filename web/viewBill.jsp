@@ -62,7 +62,7 @@
 
                         <div class="form-group">
                             <label for="amount">Amount</label>
-                            <input type="text" class="form-control" id="amount" name="amount" value="<fmt:formatNumber value="${DebtBill.amount}" type="number"/>" disabled>
+                            <input type="text" class="form-control" id="amount" name="amount" value="<fmt:formatNumber value="${DebtBill.amount}" type="number"/>VND" disabled>
                             
                             <div id="amount-error" class="text-danger"></div>
                         </div>

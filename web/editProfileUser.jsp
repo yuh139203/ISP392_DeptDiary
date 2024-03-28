@@ -1,8 +1,4 @@
-<%-- 
-    Document   : Profile
-    Created on : Jan 14, 2024, 9:35:11 PM
-    Author     : thang
---%>
+
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-/4Q9wpyT3YpkJB60uN2iaJZCJPCmC3P1hpebOW9Uj6enP3q5BbMyTKRLzE2hW8eT9s9jK5R5OJU8vJ1UO1bRSg==" crossorigin="anonymous" />
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -14,9 +10,26 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <title>Update Profile</title>
         <link href="assets/img/logo.png" rel="icon">
+        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.2.1/dist/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
     </head>
     <body class="bg-light">
+
+
+
+        <c:if test="${noti != null}">
+
+            <script>
+                <c:if test="${noti=='success'}">
+                swal("Successful!", "You clicked the button!", "success");
+                </c:if>
+                <c:if test="${noti=='fail'}">
+                swal("Fail!", "You clicked the button!", "error");
+                </c:if>
+            </script>
+            <c:remove var="noti" scope="request"/>
+        </c:if>
+
 
         <div class="container mt-5">
             <h1 class="mb-4">Update Profile</h1>
@@ -50,7 +63,7 @@
 
                 <div class="form-group">
                     <label for="dob">Date Of Birth</label>
- 
+
                     <input type="date" name="dob" value="${user.dateOfBirth}" class="form-control" id="dob" placeholder="Date Of Birth">
                 </div>
 
