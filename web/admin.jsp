@@ -51,7 +51,7 @@
                         </li>
                         <li class="dropdown  "><a href="#"><span>Hello: ${sessionScope.userLogin.userName} </span> <i class="bi bi-chevron-down"></i></a>
                             <ul>
-                                <li><a href="profile?id=${sessionScope.userLogin.id}">Your information</a></li>
+                                <li><a href="profile_of_admin?id=${sessionScope.userLogin.id}">Your information</a></li>
                                 <li><a href="logout">Log Out</a></li>
                             </ul>
                         </li>

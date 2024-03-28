@@ -86,8 +86,7 @@
                 <a class="btn btn-primary" style="color: white"href="change_password?id=${sessionScope.userLogin.id}">Change Password</a>
 <!--                <a class="btn btn-primary ml-4" href="welcome?id=${sessionScope.userLogin.id}">Back</a>-->
                 <a class="btn btn-primary ml-4" 
-                   href="${sessionScope.userLogin.idRole == 2 ? 'admin' : 'welcome?id=' + sessionScope.userLogin.id}">
-                    Back
+                   href="welcome?id= + ${sessionScope.userLogin.id }">Back
                 </a>
 
             </form>

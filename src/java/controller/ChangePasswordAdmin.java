@@ -83,7 +83,7 @@ public class ChangePasswordAdmin extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        
         HttpSession session = request.getSession();
         DAOUser userDao = new DAOUser();
 
@@ -93,22 +93,46 @@ public class ChangePasswordAdmin extends HttpServlet {
         String retypePassword = request.getParameter("retypePassword");
         User user = userDao.findByID(userId);
         request.setAttribute("user", user);
-        if (newPassword.isEmpty() || retypePassword.isEmpty()) {
-            request.setAttribute("notificationError", "New password and re-type password must not be blank");
-        } else if (SHA256.hashPassword(newPassword).equals(oldPassword)) {
-            request.setAttribute("notificationError", "New password must not be the same as old password");
-        } else if (!newPassword.equals(retypePassword)) {
-            request.setAttribute("notificationError", "Re-type password must be the same as new password");
-        } else {
-            String encryptedPassword = SHA256.hashPassword(newPassword);
-            user.setPassWord(encryptedPassword);
-            int updatePassword = userDao.updatePassWord(user);
-            if (updatePassword == 1) {
-                request.setAttribute("notification", "Update password success");
+
+        if (oldPassword.isEmpty()) {
+            request.setAttribute("newPassword", newPassword);
+            request.setAttribute("retypePassword", retypePassword);
+            request.setAttribute("oldPassBlankError", "Old password must not be blank");
+        }
+
+        if (newPassword.isEmpty() ) {
+            request.setAttribute("oldPassword", oldPassword);
+            request.setAttribute("newPassBlankError", "New password must not be blank");
+        }
+        
+        if (retypePassword.isEmpty() || retypePassword.isEmpty()) {
+            request.setAttribute("oldPassword", oldPassword);
+            request.setAttribute("newPassword", newPassword);
+            request.setAttribute("retypePassBlankError", "Re-type password must not be blank");
+        }
+
+        if (!oldPassword.isEmpty() && !newPassword.isEmpty() && !retypePassword.isEmpty()) {
+            if (!SHA256.hashPassword(oldPassword).equals(user.getPassWord())) {
+                request.setAttribute("newPassword", newPassword);
+                request.setAttribute("retypePassword", retypePassword);
+                request.setAttribute("oldPassError", "Old password is incorrect. Please try again.");
+            } else if (SHA256.hashPassword(newPassword).equals(oldPassword)) {
+                request.setAttribute("oldPassword", oldPassword);
+                request.setAttribute("newNotOldError", "New password must not be the same as old password");
+            } else if (!newPassword.equals(retypePassword)) {
+                request.setAttribute("oldPassword", oldPassword);
+                request.setAttribute("newPassword", newPassword);
+                request.setAttribute("retypePassError", "Re-type password must be the same as new password");
             } else {
-                request.setAttribute("notificationError", "Update password fail.");
+                String encryptedPassword = SHA256.hashPassword(newPassword);
+                user.setPassWord(encryptedPassword);
+                int updatePassword = userDao.updatePassWord(user);
+                if (updatePassword == 1) {
+                    request.setAttribute("noti", "success");
+                } else {
+                    request.setAttribute("noti", "fail");
+                }
             }
-            request.getRequestDispatcher("adminChangePassword.jsp").forward(request, response);
         }
         request.getRequestDispatcher("adminChangePassword.jsp").forward(request, response);
     }

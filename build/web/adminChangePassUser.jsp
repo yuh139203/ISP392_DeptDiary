@@ -29,9 +29,28 @@
                 background-color: #0056b3; /* Màu nền khi di chuột qua nút */
                 border-color: #0056b3;
             }
+            .notiError{
+                color: red;
+                size: 8px;
+            }
+            
         </style>
     </head>
     <body>
+        
+        <c:if test="${noti != null}">
+
+            <script>
+                <c:if test="${noti=='success'}">
+                swal("Successful!", "You clicked the button!", "success");
+                </c:if>
+                <c:if test="${noti=='fail'}">
+                swal("Fail!", "You clicked the button!", "error");
+                </c:if>
+            </script>
+            <c:remove var="noti" scope="request"/>
+        </c:if>
+        
         <div class="container">
             <form action="admin_change_user_pass" method="post">
 
@@ -43,24 +62,38 @@
                 <c:if test="${noti ne null}">
                     <p style="color: red;">${notificationError}</p>
                 </c:if>
+                
                 <div class="row">
                     <div class="col-md-12">
                         <div class="form-group">
                             <label for="account">Account</label>
                             <input type="text" readonly name="account" value="${user.userName}" class="form-control" placeholder="Account">
                         </div>
+                    </div><br>
+
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label for="oldPassword">Old Password</label>
+                            <input type="password" name="oldPassword" value="${oldPassword}" class="form-control" id="oldPassword" placeholder="Enter old password">
+                            <div class="notiError">${oldPassBlankError}</div>
+                            <div class="notiError">${oldPassError}</div>
+                        </div>
                     </div>
                     <div class="col-md-12">
                         <div class="form-group">
                             <label for="newPassword">New Password</label>
-                            <input type="password" name="newPassword" value="${newPassword}" class="form-control" id="newPassword" placeholder="New Password">
+                            <input type="password" name="newPassword" value="${newPassword}" class="form-control" id="newPassword" placeholder="Enter new password">
+                            <div class="notiError">${newPassBlankError}</div>
+                            <div class="notiError">${newNotOldError}</div>
                         </div>
                     </div>
 
                     <div class="col-md-12">
                         <div class="form-group">
                             <label for="retypePassword">Re-type Password</label>
-                            <input type="password" name="retypePassword" value="${retypePassword}" class="form-control" id="retypePassword" placeholder="Re-type Password">
+                            <input type="password" name="retypePassword" value="${retypePassword}" class="form-control" id="retypePassword" placeholder="Re-type password">
+                            <div class="notiError">${retypePassBlankError}</div>
+                            <div class="notiError">${retypePassError}</div>
                         </div>
                     </div>
                 </div>

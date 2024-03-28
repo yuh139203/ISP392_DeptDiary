@@ -106,9 +106,9 @@ public class ProfileOfAdmin extends HttpServlet {
         User updatedUser = userDAO.findByID(id);
         request.setAttribute("user", updatedUser);
         if (update == 1) {
-            request.setAttribute("noti", "Update success!");
+            request.setAttribute("noti", "success");
         } else {
-            request.setAttribute("noti", "Update fail!");
+            request.setAttribute("noti", "fail");
         }
         request.getRequestDispatcher("profileOfAdmin.jsp").forward(request, response);
 

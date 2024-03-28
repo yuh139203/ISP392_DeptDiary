@@ -19,6 +19,11 @@
             <file>file:/D:/GitHub3/ISP392_DeptDiary/src/java/dao/DAODebtor.java</file>
             <file>file:/D:/GitHub3/ISP392_DeptDiary/src/java/utils/GetFileName.java</file>
         </group>
-        <group/>
+        <group>
+            <file>file:/C:/Users/yuh/Documents/GitHub/ISP392_DeptDiary/web/profileUser.jsp</file>
+            <file>file:/C:/Users/yuh/Documents/GitHub/ISP392_DeptDiary/src/java/controller/EditProfileUserController.java</file>
+            <file>file:/C:/Users/yuh/Documents/GitHub/ISP392_DeptDiary/web/editProfileUser.jsp</file>
+            <file>file:/C:/Users/yuh/Documents/GitHub/ISP392_DeptDiary/src/java/controller/UpdateProfileController.java</file>
+        </group>
     </open-files>
 </project-private>
